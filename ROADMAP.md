@@ -1,0 +1,64 @@
+# Roadmap
+
+What's actually done vs. what's still open, across the protocol design and the reference SDK.
+Updated as things move — treat this as the current source of truth over any older status note
+elsewhere.
+
+## Protocol (design)
+
+- [x] Manifest format — `GET <manifest-url>` → `{ rcpVersion, auth, tools[] }`.
+- [x] Two roles defined — Client and Server, no third "host" layer, no persistent connection.
+- [x] Auth — three modes specified: `none`, `header`, `oauth2` (same RFC stack MCP's own auth
+      uses: Protected Resource Metadata, AS metadata, Dynamic Client Registration, PKCE, Resource
+      Indicators).
+- [x] Resolvers — a client-side-only mechanism for values that must never reach the model
+      (confirmed MCP has no equivalent).
+- [x] Client-injected headers — attaching headers with no manifest correspondence at all.
+- [x] Security & trust principles adapted from MCP's.
+- [ ] `oauth2` — designed, not implemented by any SDK yet.
+- [ ] Per-tool auth overrides — a tool declaring different auth than its server's default is
+      specified in the schema, but no SDK actually executes it yet.
+- [ ] A `skills`/resources-equivalent primitive — deliberately out of scope for v0.1; only a rough
+      shape sketched (a parallel `skills` array) if real demand shows up.
+- [ ] Open questions not yet decided: `rcpVersion` in the body vs. a header; a required vs.
+      recommended default for what happens when a resolver can't produce a value; whether to
+      recommend a naming convention for commonly-resolved params; whether a server ever needs to
+      push a manifest-changed notification.
+
+## TypeScript SDK (`typescript/`, package `rcp-sdk`)
+
+**Client (`rcp-sdk/client`)**
+- [x] `discover()` — fetch, schema-validate, version-check, strip resolver-bound params.
+- [x] `call()` — template rendering, resolver filling, auth + header attachment, response mapping.
+- [x] Auth: `none`, `header`.
+- [x] Resolvers.
+- [x] Client-injected headers.
+- [x] Pluggable logging (silent by default; never logs secrets, headers, bodies, or resolved
+      values — only tool names, methods, status codes, param names).
+- [x] `describeManifest()` — human-readable printout of what a server is asking for.
+- [ ] `oauth2` — throws a clear "not implemented" error rather than doing nothing.
+- [ ] Per-tool auth overrides — throws a clear "not implemented" error rather than using the
+      wrong credentials.
+
+**Server (`rcp-sdk/server`)**
+- [x] `defineTool()` + `t.arg()` — build a manifest tool entry in code from a zod schema.
+- [x] zod → `params` derivation (type, required, description).
+
+**Tooling & quality**
+- [x] 39 tests passing (schema, template engine, response mapper, client, server).
+- [x] Clean `tsc --noEmit`, `tsup` build (ESM + CJS + `.d.ts`).
+- [x] End-to-end example (`examples/basic`) verified working live.
+- [x] API docs for both entry points (`docs/client.md`, `docs/server.md`).
+- [x] Architecture diagrams (root `README.md`).
+- [ ] Lint/formatting setup (eslint/prettier) — deliberately deferred, not started.
+- [ ] Published to npm — package name decided (`rcp-sdk`, unscoped, confirmed available), not
+      actually published yet.
+- [ ] Pushed to a GitHub remote — local git repo only so far.
+
+## Beyond v1 (not started, no commitment yet)
+
+- [ ] A second-language reference SDK (e.g. `python/`) — the repo is now structured to support
+      this (each language gets its own top-level folder), but nothing has been written.
+- [ ] Any tooling around the `skills`/resources idea, if it turns out to be needed.
+- [ ] A CLI (e.g. `rcp inspect <url>` wrapping `describeManifest()`) — not planned, just a natural
+      extension of what already exists if it'd be useful.

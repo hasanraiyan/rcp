@@ -108,5 +108,5 @@ its own package manifest, tests, and docs.
 
 ## Status
 
-v0.1, in active design. See [`typescript/README.md`](./typescript/README.md) for the reference
-SDK's current implementation status.
+v0.1, in active design. See [`ROADMAP.md`](./ROADMAP.md) for the full done/not-done checklist
+across the protocol design and the reference SDK.
