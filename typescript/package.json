@@ -43,6 +43,16 @@
     "llm"
   ],
   "license": "MIT",
+  "homepage": "https://github.com/hasanraiyan/rcp/tree/master/typescript#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasanraiyan/rcp.git",
+    "directory": "typescript"
+  },
+  "bugs": {
+    "url": "https://github.com/hasanraiyan/rcp/issues"
+  },
+  "sideEffects": false,
   "dependencies": {
     "zod": "^3.25.76"
   },
