@@ -29,7 +29,7 @@ const client = createRcpClient({
 
 | Option | Type | Notes |
 |---|---|---|
-| `auth` | `{ type: 'none' } \| { type: 'header'; header?: string; scheme?: string; secret: string } \| { type: 'oauth2' }` | How this client authenticates to the server. Defaults to `{ type: 'none' }`. **`oauth2` throws immediately** — not implemented in this version (see RCP_SPEC.md's "Implementation phasing"). |
+| `auth` | `{ type: 'none' } \| { type: 'header'; header?: string; scheme?: string; secret: string } \| { type: 'oauth2' }` | How this client authenticates to the server. Defaults to `{ type: 'none' }`. **`oauth2` throws immediately at `createRcpClient()`** — the protocol supports it, but this version doesn't implement the OAuth flow yet; use `'none'` or `'header'`. |
 | `resolvers` | `Record<string, (ctx: unknown) => unknown>` | Param name → resolver function. A param with a registered resolver is (a) removed from `exposedParams` at discovery time and (b) filled from the resolver — never from `agentArgs` — at call time. |
 | `headers` | `Record<string, (ctx: unknown) => string>` | Header name → value function. Attached to every outgoing request (manifest fetch and every tool call), independent of anything the manifest declares. |
 | `logger` | `{ info, warn, error }` (each `(message: string) => void`) | Structural logging only — see "Logging" below. Silent (no-op) by default; pass `console` to see it, or your own logger. |
@@ -126,11 +126,11 @@ Throws:
 | `RcpResolverError` | A registered resolver ran but returned `null`/`undefined`. |
 | `RcpToolAuthOverrideNotImplementedError` | The tool declares its own `auth`, overriding the client's — not implemented in this version; register the tool via a separate `createRcpClient()` instance with the right auth instead. |
 
-Neither error type retries or swallows — a call that can't be safely made throws before any HTTP
-request goes out, per RCP_SPEC.md's resolver-failure posture.
+None of these retry or swallow the problem — a call that can't be safely made throws before any
+HTTP request goes out, rather than sending a request with a missing, empty, or spoofed value.
 
 ## Error classes
 
 All exported from `@rcp/sdk/client`, all plain `Error` subclasses (safe to `instanceof`-check):
 `RcpAuthNotImplementedError`, `RcpVersionMismatchError`, `RcpManifestValidationError`,
-`RcpResolverError`, `RcpToolAuthOverrideNotImplementedError`.
+`RcpResolverError`, `RcpToolAuthOverrideNotImplementedError`, `MissingTemplateValueError`.

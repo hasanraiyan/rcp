@@ -14,6 +14,10 @@ import {
 } from './templateEngine.js';
 import { applyResponseMappings } from './responseMapper.js';
 
+// Re-exported so a caller can `instanceof`-check every error call() can
+// throw from a single import, without also reaching into templateEngine.js.
+export { MissingTemplateValueError } from './templateEngine.js';
+
 const DEFAULT_TIMEOUT_MS = 15000;
 
 /**

@@ -42,7 +42,7 @@ const getWeather = defineTool({
 | `queryParams` | `Record<string, string \| (t) => string>` | |
 | `headers` | `Record<string, string \| (t) => string>` | |
 | `body` | `Record<string, unknown> \| (t) => Record<string, unknown>` | Any string value inside (including nested) may use `t.arg(...)`. |
-| `responseMappings` | `Record<string, string>` | `{ fieldName: '@json.path' }` — see RCP_SPEC.md's "The manifest" section. |
+| `responseMappings` | `Record<string, string>` | `{ fieldName: '@json.path' }` — reshapes the tool endpoint's raw JSON response before it reaches the model. `@` starts every path; dot-separated segments walk the tree, numeric segments index arrays. A path that doesn't resolve returns `undefined` for that field rather than failing the call. |
 
 ### `t.arg(name)`
 
@@ -70,7 +70,7 @@ A type this can't recognize (a wrapped/refined/union field) falls back to `'stri
 ## What this does *not* do
 
 `defineTool()` has no concept of a resolver-bound param, and no way to mark one as "don't ask the
-model for this" — that decision belongs entirely to whoever registers your server as a client
-(RCP_SPEC.md §Resolvers). As a server author, the most you can do is write a clear `description`
-on a param like `userId` so a client operator knows to intercept it — the wire format itself
-carries no such signal.
+model for this" — that decision belongs entirely to whoever registers your server as a client (see
+[`docs/client.md`](./client.md)'s resolvers section). As a server author, the most you can do is
+write a clear `description` on a param like `userId` so a client operator knows to intercept it —
+the manifest itself carries no such signal.

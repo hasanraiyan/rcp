@@ -37,7 +37,7 @@ one tool, and a client discovering + calling it.
 ## Docs
 
 - [`docs/client.md`](./docs/client.md) — `createRcpClient()` API reference: options, `discover()`,
-  `call()`, error classes.
+  `call()`, logging, `describeManifest()`, error classes.
 - [`docs/server.md`](./docs/server.md) — `defineTool()` API reference: options, `t.arg()`, how
   `args` maps to manifest params.
 
@@ -49,6 +49,8 @@ v0.1, in active design. Not yet published to npm.
   "not implemented" at runtime.
 - Per-tool `auth` overrides (a tool declaring different auth than its server's default) aren't
   implemented yet — `call()` throws rather than silently using the wrong credentials.
+- Resolvers, client-injected headers, and pluggable logging (silent by default) are implemented
+  and tested — see `docs/client.md`.
 - No `skills`/resources-equivalent primitive — tools only, for now.
 
 ## Development
