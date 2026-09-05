@@ -32,6 +32,51 @@ const client = createRcpClient({
 | `auth` | `{ type: 'none' } \| { type: 'header'; header?: string; scheme?: string; secret: string } \| { type: 'oauth2' }` | How this client authenticates to the server. Defaults to `{ type: 'none' }`. **`oauth2` throws immediately** — not implemented in this version (see RCP_SPEC.md's "Implementation phasing"). |
 | `resolvers` | `Record<string, (ctx: unknown) => unknown>` | Param name → resolver function. A param with a registered resolver is (a) removed from `exposedParams` at discovery time and (b) filled from the resolver — never from `agentArgs` — at call time. |
 | `headers` | `Record<string, (ctx: unknown) => string>` | Header name → value function. Attached to every outgoing request (manifest fetch and every tool call), independent of anything the manifest declares. |
+| `logger` | `{ info, warn, error }` (each `(message: string) => void`) | Structural logging only — see "Logging" below. Silent (no-op) by default; pass `console` to see it, or your own logger. |
+
+## Logging
+
+Pass `logger: console` (or any object with `info`/`warn`/`error`) to see what the client is doing:
+
+```ts
+const client = createRcpClient({ logger: console });
+
+await client.discover('https://example.com/rcp/manifest');
+// info: [RCP] discover: GET https://example.com/rcp/manifest
+// info: [RCP] discover: found 2 tool(s) at ... (auth: header): get_weather, search
+// info: [RCP] discover: "get_weather" hides 1 resolver-bound param(s) from the model: city
+```
+
+This is also how you find out what a server is asking for before you've configured anything —
+`discover()` always logs each tool's resolver-hidden params, so you can see at setup time which
+ones you might be missing a resolver for. For structured/programmatic access to the same
+information, use [`describeManifest()`](#describemanifest) instead of parsing log lines.
+
+**What's never logged**: header values, request/response bodies, resolved values (including
+whatever a resolver returns), or the auth secret. Only structural facts — tool names, HTTP
+methods, status codes, and param *names* — ever reach the logger.
+
+## `describeManifest(manifest, tools)`
+
+Formats a `discover()` result into a human-readable string — the programmatic way to see what a
+server is asking for, without reading logs:
+
+```ts
+import { createRcpClient, describeManifest } from '@rcp/sdk/client';
+
+const client = createRcpClient({ resolvers: { userId: (ctx) => ctx.currentUserId } });
+const { manifest, tools } = await client.discover('https://example.com/rcp/manifest');
+
+console.log(describeManifest(manifest, tools));
+// RCP manifest v0.1 — auth: header "Authorization" (scheme: Bearer)
+// 1 tool(s):
+//   - get_profile (GET) — Get the current user's profile.
+//       userId: string, required [resolved by client, hidden from model] — the user's id
+```
+
+Useful the first time you register a new server: run `discover()`, print
+`describeManifest(manifest, tools)`, and decide which params need a resolver before wiring the
+server into a live agent.
 
 `ctx` is whatever your own application passes to `discover()`/`call()` — the SDK never defines its
 shape. Typically it's per-request context your host already has (the current user, tenant, trace

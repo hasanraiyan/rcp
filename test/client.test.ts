@@ -1,11 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   createRcpClient,
+  describeManifest,
   RcpAuthNotImplementedError,
   RcpManifestValidationError,
   RcpResolverError,
   RcpToolAuthOverrideNotImplementedError,
   RcpVersionMismatchError,
+  type RcpLogger,
 } from '../src/client.js';
 import type { RcpTool } from '../src/schema.js';
 
@@ -203,5 +205,140 @@ describe('call', () => {
     await expect(client.call(overriddenTool, { city: 'paris' })).rejects.toThrow(
       RcpToolAuthOverrideNotImplementedError
     );
+  });
+});
+
+function fakeLogger(): RcpLogger & { messages: string[] } {
+  const messages: string[] = [];
+  return {
+    messages,
+    info: (m) => messages.push(`info: ${m}`),
+    warn: (m) => messages.push(`warn: ${m}`),
+    error: (m) => messages.push(`error: ${m}`),
+  };
+}
+
+describe('logging', () => {
+  it('is silent by default — no logger means nothing is called', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => jsonResponse({ rcpVersion: '0.1', tools: [] }))
+    );
+    const client = createRcpClient();
+    await client.discover('https://server.example.com/manifest');
+    // Nothing to assert on directly (no logger was even provided) — this
+    // just proves discover() doesn't require one.
+  });
+
+  it('logs discovery events but never the auth secret', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () =>
+        jsonResponse({
+          rcpVersion: '0.1',
+          tools: [
+            {
+              name: 'get_profile',
+              description: 'Get profile.',
+              method: 'GET',
+              url: 'https://api.example.com/users/{{userId}}',
+              params: [{ name: 'userId', type: 'string', required: true }],
+            },
+          ],
+        })
+      )
+    );
+
+    const logger = fakeLogger();
+    const client = createRcpClient({
+      auth: { type: 'header', secret: 'super-secret-value' },
+      resolvers: { userId: () => 'u_1' },
+      logger,
+    });
+    await client.discover('https://server.example.com/manifest');
+
+    const joined = logger.messages.join('\n');
+    expect(joined).toContain('get_profile');
+    expect(joined).toContain('hides 1 resolver-bound param');
+    expect(joined).toContain('userId');
+    expect(joined).not.toContain('super-secret-value');
+  });
+
+  it('logs call events but never headers, body, or resolved values', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => jsonResponse({ data: { temp: 21 } }))
+    );
+
+    const logger = fakeLogger();
+    const client = createRcpClient({
+      resolvers: { userId: () => 'sensitive-user-id-123' },
+      logger,
+    });
+    const identityTool: RcpTool = {
+      name: 'get_profile',
+      description: 'Get profile.',
+      method: 'GET',
+      url: 'https://api.example.com/users/{{userId}}',
+      params: [{ name: 'userId', type: 'string', required: true }],
+    };
+    await client.call(identityTool, {}, {});
+
+    const joined = logger.messages.join('\n');
+    expect(joined).toContain('get_profile');
+    expect(joined).toContain('200');
+    expect(joined).not.toContain('sensitive-user-id-123');
+  });
+
+  it('logs a warning (not silently) when a call comes back non-2xx', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => jsonResponse({}, 500)));
+    const logger = fakeLogger();
+    const client = createRcpClient({ logger });
+    const tool: RcpTool = {
+      name: 'get_weather',
+      description: 'Get current weather.',
+      method: 'GET',
+      url: 'https://api.example.com/weather/{{city}}',
+      params: [{ name: 'city', type: 'string', required: true }],
+    };
+    await client.call(tool, { city: 'paris' });
+
+    expect(logger.messages.some((m) => m.startsWith('warn:') && m.includes('500'))).toBe(true);
+  });
+});
+
+describe('describeManifest', () => {
+  it('describes auth and flags resolver-hidden params', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () =>
+        jsonResponse({
+          rcpVersion: '0.1',
+          auth: { type: 'header', header: 'Authorization', scheme: 'Bearer' },
+          tools: [
+            {
+              name: 'get_profile',
+              description: 'Get profile.',
+              method: 'GET',
+              url: 'https://api.example.com/users/{{userId}}/{{tenantId}}',
+              params: [
+                { name: 'userId', type: 'string', required: true, description: 'user id' },
+                { name: 'tenantId', type: 'string', required: true },
+              ],
+            },
+          ],
+        })
+      )
+    );
+
+    const client = createRcpClient({ resolvers: { userId: () => 'u_1' } });
+    const { manifest, tools } = await client.discover('https://server.example.com/manifest');
+    const description = describeManifest(manifest, tools);
+
+    expect(description).toContain('auth: header "Authorization" (scheme: Bearer)');
+    expect(description).toContain('get_profile');
+    expect(description).toContain('userId: string, required [resolved by client, hidden from model] — user id');
+    expect(description).toContain('tenantId: string, required');
+    expect(description).not.toContain('tenantId: string, required [resolved');
   });
 });
