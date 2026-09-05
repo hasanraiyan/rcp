@@ -1,10 +1,10 @@
-# `@rcp/sdk/server`
+# `rcp-sdk/server`
 
 For whoever is exposing their own REST endpoints as tools — the RCP **server** role. Builds a
 manifest tool entry in code instead of hand-writing the JSON shape.
 
 ```ts
-import { defineTool } from '@rcp/sdk/server';
+import { defineTool } from 'rcp-sdk/server';
 ```
 
 `defineTool()` never touches the network — it returns a plain `RcpTool` object. Serving it is up

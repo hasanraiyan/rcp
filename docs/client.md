@@ -1,10 +1,10 @@
-# `@rcp/sdk/client`
+# `rcp-sdk/client`
 
 For whoever is building the AI application — the RCP **client** role. Discovers a server's
 manifest, exposes its tools, and executes calls against them.
 
 ```ts
-import { createRcpClient } from '@rcp/sdk/client';
+import { createRcpClient } from 'rcp-sdk/client';
 ```
 
 ## `createRcpClient(options?)`
@@ -62,7 +62,7 @@ Formats a `discover()` result into a human-readable string — the programmatic 
 server is asking for, without reading logs:
 
 ```ts
-import { createRcpClient, describeManifest } from '@rcp/sdk/client';
+import { createRcpClient, describeManifest } from 'rcp-sdk/client';
 
 const client = createRcpClient({ resolvers: { userId: (ctx) => ctx.currentUserId } });
 const { manifest, tools } = await client.discover('https://example.com/rcp/manifest');
@@ -131,6 +131,6 @@ HTTP request goes out, rather than sending a request with a missing, empty, or s
 
 ## Error classes
 
-All exported from `@rcp/sdk/client`, all plain `Error` subclasses (safe to `instanceof`-check):
+All exported from `rcp-sdk/client`, all plain `Error` subclasses (safe to `instanceof`-check):
 `RcpAuthNotImplementedError`, `RcpVersionMismatchError`, `RcpManifestValidationError`,
 `RcpResolverError`, `RcpToolAuthOverrideNotImplementedError`, `MissingTemplateValueError`.

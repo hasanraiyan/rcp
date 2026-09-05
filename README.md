@@ -21,14 +21,14 @@ GET  <manifest-url>          -->  200 { "rcpVersion": "0.1", "tools": [...] }
 
 ## This package
 
-`@rcp/sdk` ships two entry points:
+`rcp-sdk` ships two entry points:
 
 ```ts
 // Building the AI application? Import the client.
-import { createRcpClient } from '@rcp/sdk/client';
+import { createRcpClient } from 'rcp-sdk/client';
 
 // Exposing your own REST endpoints as tools? Import the server helper.
-import { defineTool } from '@rcp/sdk/server';
+import { defineTool } from 'rcp-sdk/server';
 ```
 
 See [`examples/basic`](./examples/basic) for a minimal end-to-end example: a tiny server exposing
