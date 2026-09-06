@@ -5,18 +5,62 @@ import { CodeBlock, Callout } from "@/components/docs/code-block";
 const REPO = "https://github.com/hasanraiyan/rcp";
 
 export const metadata: Metadata = {
-  title: "Full example",
+  title: "Examples",
   description:
-    "A minimal end-to-end RCP run: a plain Node http server exposing one tool, and a client discovering + calling it — no framework on either side.",
+    "A real-world Express + OpenAI tool-calling example, plus the smallest possible end-to-end RCP run with no framework on either side.",
 };
 
 export default function ExamplesPage() {
   return (
     <DocPage
-      title="Full example"
-      description="A minimal end-to-end run: a plain Node http server exposing one tool, and a client discovering + calling it — no framework on either side."
+      title="Examples"
+      description="A real-world Express + OpenAI tool-calling example, plus the smallest possible end-to-end run with no framework on either side."
     >
-      <h2>The server</h2>
+      <h2>Express + OpenAI (real-world example)</h2>
+      <p>
+        Two standalone, runnable projects in{" "}
+        <a href={`${REPO}/tree/master/examples`} target="_blank" rel="noopener noreferrer">
+          <code>examples/</code>
+        </a>{" "}
+        — an Express REST API that exposes an RCP manifest, and an AI application that discovers it
+        and calls tools through an OpenAI tool-calling loop. Both install <code>rcp-sdk</code> from
+        the real npm package, not this repo&rsquo;s own source.
+      </p>
+      <CodeBlock
+        label="shell"
+        lang="bash"
+        code={`git clone ${REPO}.git && cd rcp/examples
+
+cd express && npm install && npm start &        # your REST API + one /rcp/manifest route
+cd ../openai-client && npm install               # the AI application side
+cp .env.example .env                             # add your OPENAI_API_KEY
+npm start -- "List my tasks, then mark the first incomplete one as done."`}
+      />
+      <Callout>
+        The two are deliberately split — <code>examples/express</code> has no OpenAI code, and{" "}
+        <code>examples/openai-client</code> has no Express code. See{" "}
+        <a href={`${REPO}/tree/master/examples/express`} target="_blank" rel="noopener noreferrer">
+          examples/express
+        </a>{" "}
+        and{" "}
+        <a
+          href={`${REPO}/tree/master/examples/openai-client`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          examples/openai-client
+        </a>{" "}
+        on GitHub for the full source and README.
+      </Callout>
+
+      <h2>Minimal example (no framework)</h2>
+      <p>
+        The smallest possible end-to-end run — a plain Node <code>http</code> server exposing one
+        tool, and a client discovering + calling it. No Express, no OpenAI, no framework on either
+        side.
+      </p>
+
+      <h3>The server</h3>
       <p>
         One route for the manifest, one route for the tool itself. Auth is <code>header</code>, so
         the manifest fetch requires a bearer token too.
@@ -77,7 +121,7 @@ export function startExampleServer(port = 4310): Server {
 export { MANIFEST_TOKEN };`}
       />
 
-      <h2>The client</h2>
+      <h3>The client</h3>
       <CodeBlock
         label="run.ts"
         lang="typescript"
@@ -115,7 +159,7 @@ main().catch((err) => {
 });`}
       />
 
-      <h2>Output</h2>
+      <h3>Output</h3>
       <CodeBlock
         label="$ pnpm example"
         lang="text"

@@ -9,6 +9,21 @@ RCP is a lightweight, open protocol for making existing REST APIs **AI-callable 
 [![npm](https://img.shields.io/npm/v/rcp-sdk)](https://www.npmjs.com/package/rcp-sdk)
 [![GitHub](https://img.shields.io/github/stars/hasanraiyan/rcp)](https://github.com/hasanraiyan/rcp)
 
+## Turn an existing Express API into AI tools in 5 minutes
+
+```bash
+git clone https://github.com/hasanraiyan/rcp.git && cd rcp/examples
+
+cd express && npm install && npm start &        # your REST API + one /rcp/manifest route
+cd ../openai-client && npm install               # the AI application side
+cp .env.example .env                             # add your OPENAI_API_KEY
+npm start -- "List my tasks, then mark the first incomplete one as done."
+```
+
+That's a real Express app, a real manifest, and a real OpenAI tool-calling
+loop — see [`examples/`](./examples) for both halves in full, plus how to
+point the client at your own API instead.
+
 ---
 
 ## The idea
@@ -68,33 +83,33 @@ npm install rcp-sdk
 Discover tools from an RCP manifest:
 
 ```ts
-import { RCPClient } from "rcp-sdk";
+import { createRcpClient } from "rcp-sdk/client";
 
-const client = new RCPClient();
+const client = createRcpClient();
 
-const tools = await client.discover(
-  "https://api.example.com/manifest"
-);
+const { tools } = await client.discover("https://api.example.com/rcp/manifest");
 ```
 
-The client receives the available tools and can expose them to your AI application.
+`tools` is what you hand to your AI application — each one carries an
+`exposedParams` list (its declared params, minus anything a resolver already
+fills — see "Resolver-Bound Parameters" below).
 
 For example, an API might publish:
 
 ```json
 {
   "rcpVersion": "0.1",
+  "auth": { "type": "none" },
   "tools": [
     {
       "name": "list_orders",
       "description": "List the current user's orders",
       "method": "GET",
       "url": "https://api.example.com/orders",
-      "exposedParams": {
-        "limit": {
-          "type": "integer"
-        }
-      }
+      "queryParams": { "limit": "{{limit}}" },
+      "params": [
+        { "name": "limit", "type": "number", "required": false }
+      ]
     }
   ]
 }
@@ -104,11 +119,19 @@ The model sees the safe, exposed parameters.
 
 It does **not** see resolver-bound parameters such as `userId` or `tenantId`.
 
-The RCP client then makes the ordinary HTTP request:
+Calling the tool makes the ordinary HTTP request the manifest describes:
+
+```ts
+const result = await client.call(tools[0], { limit: 5 });
+```
 
 ```http
 GET /orders?limit=5
 ```
+
+Want the whole loop — manifest, discovery, and an actual model deciding when
+to call a tool? See [`examples/`](./examples) for a full Express server +
+OpenAI tool-calling client.
 
 Your existing API handles the request exactly as it normally would.
 
@@ -604,7 +627,7 @@ The TypeScript implementation is currently the **reference implementation** of R
 ```text
 typescript/
 ├── src/
-├── tests/
+├── test/
 ├── README.md
 └── package.json
 ```
@@ -615,7 +638,7 @@ Package:
 npm install rcp-sdk
 ```
 
-The SDK provides the client-side functionality required to:
+`rcp-sdk/client` provides the client-side functionality required to:
 
 * discover RCP manifests
 * validate protocol information
@@ -625,6 +648,10 @@ The SDK provides the client-side functionality required to:
 * execute REST requests
 * apply response mappings
 
+`rcp-sdk/server` provides one helper, `defineTool()`, for building a
+manifest tool entry in code from a Zod schema — see
+[`examples/express`](./examples/express) for it in use.
+
 ---
 
 # 📁 Repository Structure
@@ -633,31 +660,27 @@ The SDK provides the client-side functionality required to:
 rcp/
 │
 ├── README.md
-├── SPEC.md
+├── SPEC.md              # the protocol itself
 ├── SECURITY.md
-├── ROADMAP.md
+├── ROADMAP.md            # what's done vs. designed-only, kept current
 ├── CONTRIBUTING.md
 ├── LICENSE
 │
-├── typescript/
+├── typescript/           # reference SDK (package `rcp-sdk`)
 │   ├── src/
-│   ├── tests/
-│   ├── README.md
+│   ├── test/
+│   ├── examples/basic/   # minimal in-package example the SDK's own tests reuse
+│   ├── docs/
 │   └── package.json
 │
-├── examples/
-│   ├── express/
-│   ├── fastapi/
-│   └── nextjs/
+├── examples/             # standalone, runnable, install from npm — see examples/README.md
+│   ├── express/          # server: a REST API + one route serving an RCP manifest
+│   └── openai-client/    # client: discovers a manifest, calls tools via OpenAI tool-calling
 │
-└── docs/
-    ├── concepts/
-    ├── authentication/
-    ├── resolvers/
-    └── security/
+└── web/                  # rcp.hasanraiyan.me — marketing site + full docs
 ```
 
-Each language implementation can remain independent while implementing the same protocol and manifest format.
+Each language implementation can remain independent while implementing the same protocol and manifest format — a second-language SDK (e.g. `python/`) is an open roadmap item, not yet started.
 
 ---
 
@@ -685,7 +708,10 @@ Each language implementation can remain independent while implementing the same 
 * [ ] Conformance tests
 * [ ] Improved validation
 * [ ] Expanded security specification
-* [ ] Framework examples
+* [x] Framework examples — [`examples/express`](./examples/express) +
+      [`examples/openai-client`](./examples/openai-client); adapters for
+      other agent frameworks tracked in
+      [issue #1](https://github.com/hasanraiyan/rcp/issues/1)
 * [ ] Better developer tooling
 
 ## RCP v1.0
@@ -711,13 +737,15 @@ RCP is an early-stage protocol and is still evolving.
 
 The specification, SDK APIs and security model may change before v1.0.
 
-See [`ROADMAP.md`](./ROADMAP.md) for the current implementation status.
+See [`ROADMAP.md`](./ROADMAP.md) for the current implementation status, and
+[`SPEC.md`](./SPEC.md) for the full protocol design.
 
 ---
 
 # 🤝 Contributing
 
-RCP is being developed as an open protocol.
+RCP is being developed as an open protocol. See [`CONTRIBUTING.md`](./CONTRIBUTING.md)
+for repo layout and how to run each package's checks.
 
 Contributions are welcome, especially around:
 
@@ -730,6 +758,7 @@ Contributions are welcome, especially around:
 * interoperability testing
 
 If you're building something with RCP, opening an issue or discussion is a great way to share it.
+Found a vulnerability instead? See [`SECURITY.md`](./SECURITY.md).
 
 ---
 

@@ -210,11 +210,18 @@ export default function RoadmapPage() {
             ),
           },
           {
-            done: false,
+            done: true,
             text: (
               <>
-                Published to npm — package name decided (<code>rcp-sdk</code>, unscoped, confirmed
-                available), not actually published yet.
+                Published to npm —{" "}
+                <a
+                  href="https://www.npmjs.com/package/rcp-sdk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  rcp-sdk
+                </a>{" "}
+                is live.
               </>
             ),
           },
@@ -233,6 +240,54 @@ export default function RoadmapPage() {
                 .
               </>
             ),
+          },
+        ]}
+      />
+
+      <h2>Examples</h2>
+      <Checklist
+        items={[
+          {
+            done: true,
+            text: (
+              <>
+                <code>examples/express</code> — an Express REST API + one route serving an RCP
+                manifest via <code>defineTool()</code>. Server-only; no AI/model code.
+              </>
+            ),
+          },
+          {
+            done: true,
+            text: (
+              <>
+                <code>examples/openai-client</code> — discovers a manifest and runs an OpenAI
+                tool-calling loop against it. Client-only; no Express/FastAPI code. Installs{" "}
+                <code>rcp-sdk</code> from the real npm package.
+              </>
+            ),
+          },
+          {
+            done: false,
+            text: (
+              <>
+                Framework adapters (<code>rcp-sdk/adapters/openai</code>, <code>/gemini</code>,{" "}
+                <code>/langchain</code>, ...) so the manifest-to-tool-schema conversion currently
+                hand-rolled in <code>examples/openai-client</code> doesn&rsquo;t have to be
+                re-derived by every consumer — tracked in{" "}
+                <a
+                  href="https://github.com/hasanraiyan/rcp/issues/1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  issue #1
+                </a>
+                .
+              </>
+            ),
+          },
+          {
+            done: false,
+            text: "A Python/FastAPI server example — would double as proof that an RCP server needs no SDK in any language.",
           },
         ]}
       />

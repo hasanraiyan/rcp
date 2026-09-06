@@ -2,6 +2,7 @@ node_modules/
 dist/
 *.log
 .DS_Store
+.env
 
 # Local-only working notes — never pushed to any remote.
 /MCP_RESEARCH.md

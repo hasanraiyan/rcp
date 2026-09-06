@@ -35,7 +35,7 @@ export const docsNav: DocsNavGroup[] = [
   {
     title: null,
     items: [
-      { title: "Full example", href: "/docs/examples" },
+      { title: "Examples", href: "/docs/examples" },
       { title: "RCP vs MCP", href: "/docs/vs-mcp" },
       { title: "Roadmap", href: "/docs/roadmap" },
     ],

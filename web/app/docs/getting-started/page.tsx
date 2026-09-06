@@ -111,8 +111,9 @@ console.log(result.mapped);
       </Callout>
 
       <p>
-        That&rsquo;s the whole loop. For the complete runnable version, including the raw HTTP
-        server, see the <a href="/docs/examples">full example</a>.
+        That&rsquo;s the whole loop. For a real-world Express + OpenAI tool-calling walkthrough, or
+        the smallest possible runnable version with no framework at all, see{" "}
+        <a href="/docs/examples">Examples</a>.
       </p>
     </DocPage>
   );

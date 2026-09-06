@@ -53,9 +53,23 @@ elsewhere.
 - [x] Lint/formatting setup (eslint/prettier) — flat `eslint.config.js` (typescript-eslint
       recommended) + `.prettierrc.json`, wired to `lint`/`format`/`format:check` scripts. `web/`
       got the same Prettier setup layered onto its existing `eslint-config-next` config.
-- [ ] Published to npm — package name decided (`rcp-sdk`, unscoped, confirmed available), not
-      actually published yet.
-- [ ] Pushed to a GitHub remote — local git repo only so far.
+- [x] Published to npm — `rcp-sdk` is live at
+      [npmjs.com/package/rcp-sdk](https://www.npmjs.com/package/rcp-sdk) (currently `0.1.1`).
+- [x] Pushed to a GitHub remote — [github.com/hasanraiyan/rcp](https://github.com/hasanraiyan/rcp).
+
+## Examples (`examples/`)
+
+- [x] `examples/express` — an Express REST API + one route serving an RCP manifest via
+      `defineTool()`. Server-only; no AI/model code.
+- [x] `examples/openai-client` — discovers a manifest and runs an OpenAI tool-calling loop against
+      it. Client-only; no Express/FastAPI code. Installs `rcp-sdk` from the real npm package.
+- [ ] Framework adapters (`rcp-sdk/adapters/openai`, `/gemini`, `/langchain`, ...) so the
+      manifest-to-tool-schema conversion currently hand-rolled in `examples/openai-client` doesn't
+      have to be re-derived by every consumer — tracked in
+      [issue #1](https://github.com/hasanraiyan/rcp/issues/1).
+- [ ] A Python/FastAPI server example — deliberately dropped from this pass; would double as proof
+      that an RCP server needs no SDK in any language (a hand-built manifest dict is fully
+      conformant).
 
 ## Beyond v1 (not started, no commitment yet)
 
