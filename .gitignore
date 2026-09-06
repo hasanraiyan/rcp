@@ -4,5 +4,4 @@ dist/
 .DS_Store
 
 # Local-only working notes — never pushed to any remote.
-/RCP_SPEC.md
 /MCP_RESEARCH.md

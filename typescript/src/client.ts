@@ -24,7 +24,7 @@ const DEFAULT_TIMEOUT_MS = 15000;
  * How this client authenticates itself to one registered server. Unlike
  * the manifest's own `auth` (which only declares a *shape*), this carries
  * the real secret — it's local configuration, never serialized anywhere
- * (RCP_SPEC.md §Security & trust, "Secrets are client-side only").
+ * (SPEC.md §Security & trust, "Secrets are client-side only").
  */
 export type RcpClientAuth =
   | { type: "none" }
@@ -49,9 +49,9 @@ const noopLogger: RcpLogger = {
 
 export interface CreateRcpClientOptions {
   auth?: RcpClientAuth;
-  /** Param name -> value resolver, never asked of the model (RCP_SPEC.md §Resolvers). */
+  /** Param name -> value resolver, never asked of the model (SPEC.md §Resolvers). */
   resolvers?: Record<string, RcpResolver>;
-  /** Header name -> value, attached to every request (RCP_SPEC.md §Client-injected headers). */
+  /** Header name -> value, attached to every request (SPEC.md §Client-injected headers). */
   headers?: Record<string, RcpHeaderInjector>;
   /**
    * Structural logging only — tool name, method, status, param *names*.
@@ -99,12 +99,12 @@ function appendQuery(url: string, queryParams: Record<string, string>): string {
  * Creates one client bound to one server's auth/resolvers/headers
  * configuration. Registering a second server means calling this again —
  * there's no multi-server registry inside a single instance, matching how
- * RCP_SPEC.md's own "Reference SDK" section sketches it.
+ * SPEC.md's own "Reference SDK" section sketches it.
  */
 export function createRcpClient(options: CreateRcpClientOptions = {}) {
   if (options.auth?.type === "oauth2") {
     throw new RcpAuthNotImplementedError(
-      "auth.type 'oauth2' is specified in RCP_SPEC.md but not implemented by this reference " +
+      "auth.type 'oauth2' is specified in SPEC.md but not implemented by this reference " +
         "client yet — use 'none' or 'header'.",
     );
   }

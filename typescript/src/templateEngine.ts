@@ -2,7 +2,7 @@
  * Generic `{{token}}` substitution for a tool's url/queryParams/headers/body.
  * No reserved token names here — RCP has no equivalent of a hardcoded
  * identity token; that's what resolvers (client.ts) exist for instead
- * (RCP_SPEC.md §Resolvers).
+ * (SPEC.md §Resolvers).
  */
 
 const TOKEN_PATTERN = /\{\{\s*([A-Za-z_][A-Za-z0-9_]*)\s*\}\}/g;

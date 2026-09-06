@@ -2,7 +2,7 @@ import { z } from "zod";
 
 /**
  * The auth shape a manifest declares. Only describes *how* auth works —
- * never carries a credential (RCP_SPEC.md §Auth, §Security & trust).
+ * never carries a credential (SPEC.md §Auth, §Security & trust).
  */
 export const RcpAuthSchema = z.discriminatedUnion("type", [
   z.object({ type: z.literal("none") }),
@@ -35,7 +35,7 @@ export const RcpToolSchema = z.object({
   queryParams: z.record(z.string(), z.string()).optional(),
   headers: z.record(z.string(), z.string()).optional(),
   body: z.unknown().optional(),
-  // A tool MAY override the manifest's own top-level auth (RCP_SPEC.md
+  // A tool MAY override the manifest's own top-level auth (SPEC.md
   // §The manifest). The reference client in this package does not yet
   // implement per-tool auth overrides — see client.ts's `call()`.
   auth: RcpAuthSchema.optional(),
@@ -50,5 +50,5 @@ export const RcpManifestSchema = z.object({
 });
 export type RcpManifest = z.infer<typeof RcpManifestSchema>;
 
-/** The only manifest version this package understands (RCP_SPEC.md §Versioning). */
+/** The only manifest version this package understands (SPEC.md §Versioning). */
 export const SUPPORTED_RCP_VERSION = "0.1";

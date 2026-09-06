@@ -1,5 +1,5 @@
 /**
- * `responseMappings`: `{ fieldName: "@json.path" }` (RCP_SPEC.md §The
+ * `responseMappings`: `{ fieldName: "@json.path" }` (SPEC.md §The
  * manifest). `@` starts every path; dot-separated segments walk the JSON
  * tree, numeric segments index arrays. A path that doesn't resolve returns
  * `undefined` for that field rather than failing the whole call.
