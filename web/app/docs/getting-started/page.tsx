@@ -9,11 +9,45 @@ export const metadata: Metadata = {
 };
 
 export default function GettingStartedPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: "Getting started with RCP",
+    description:
+      "Install rcp-sdk, expose one tool from a server, and discover + call it from a client.",
+    step: [
+      {
+        "@type": "HowToStep",
+        name: "Install rcp-sdk",
+        text: "npm install rcp-sdk",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Define a tool on the server",
+        text: "Use defineTool() from rcp-sdk/server to describe your REST endpoint as an AI-callable tool.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Serve the manifest",
+        text: "Return the RCP manifest JSON from a route on your server.",
+      },
+      {
+        "@type": "HowToStep",
+        name: "Discover and call from a client",
+        text: "Use createRcpClient() to fetch the manifest and call tools via client.call().",
+      },
+    ],
+  };
+
   return (
     <DocPage
       title="Getting started"
       description="Install the reference SDK, expose one tool from a server, and call it from a client — end to end."
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h2>Install</h2>
       <CodeBlock label="shell" lang="bash" code={`npm install rcp-sdk`} />
       <p>

@@ -1,0 +1,113 @@
+# RCP — REST Connector Protocol
+
+> A lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server.
+
+## What is RCP?
+
+RCP (REST Connector Protocol) is an open standard and TypeScript SDK for turning existing REST APIs into AI-callable tools. Unlike MCP (Model Context Protocol), which requires a persistent session and a dedicated protocol server, RCP uses plain stateless HTTP requests.
+
+### How it works
+
+1. A server publishes a JSON manifest at a URL describing its available tools.
+2. A client fetches the manifest, builds callable tools from it.
+3. The AI model picks a tool and supplies arguments.
+4. The client calls the tool's own URL directly — no JSON-RPC, no persistent connection.
+
+### Key concepts
+
+- **Manifest**: JSON document at a URL describing tools, parameters, HTTP methods, URL templates, auth requirements, and response mappings.
+- **Client**: Fetches manifests, renders URL templates, injects auth/resolvers, calls endpoints, maps responses.
+- **Server**: Exposes REST endpoints and publishes an RCP manifest via `defineTool()`.
+- **Resolvers**: Client-side-only values (API keys, user IDs) injected at call time, never sent to the model.
+- **Auth**: Supports `none`, `header`, and (specified but not implemented) `oauth2`.
+
+## Installation
+
+```bash
+npm install rcp-sdk
+# or
+pnpm add rcp-sdk
+# or
+yarn add rcp-sdk
+```
+
+## SDK Entry Points
+
+### Client (`rcp-sdk/client`)
+
+```typescript
+import { createRcpClient } from "rcp-sdk/client";
+
+const client = createRcpClient();
+const { manifest, tools } = await client.discover("https://example.com/rcp/manifest");
+const result = await client.call(tool, { city: "Paris" }, { userId: "u_42" });
+```
+
+Key functions:
+- `createRcpClient(options?)` — Create a client instance
+- `client.discover(url, ctx?)` — Fetch and validate a manifest
+- `client.call(tool, agentArgs?, ctx?)` — Execute a tool call
+- `client.describeManifest(manifest)` — Human-readable printout
+
+### Server (`rcp-sdk/server`)
+
+```typescript
+import { defineTool } from "rcp-sdk/server";
+import { z } from "zod";
+
+const tool = defineTool({
+  name: "get_weather",
+  description: "Get current weather for a city",
+  args: z.object({ city: z.string() }),
+  url: (t) => `https://api.weather.com/v1/${t.arg("city")}`,
+});
+```
+
+### Adapters
+
+#### OpenAI (`rcp-sdk/adapters/openai`)
+
+```typescript
+import { rcpToolsToOpenAiTools } from "rcp-sdk/adapters/openai";
+
+const openaiTools = rcpToolsToOpenAiTools(tools);
+```
+
+#### LangChain (`rcp-sdk/adapters/langchain`)
+
+```typescript
+import { rcpToolsToLangChainTools } from "rcp-sdk/adapters/langchain";
+
+const langchainTools = rcpToolsToLangChainTools(tools, rcp);
+```
+
+#### Gemini (`rcp-sdk/adapters/gemini`)
+
+```typescript
+import { rcpToolsToGeminiInteractionsTools } from "rcp-sdk/adapters/gemini";
+
+const geminiTools = rcpToolsToGeminiInteractionsTools(tools);
+```
+
+## RCP vs MCP
+
+| Feature | RCP | MCP |
+|---------|-----|-----|
+| Connection | Stateless HTTP | Persistent session |
+| Server | Your existing REST API | Dedicated protocol server |
+| Best for | Exposing existing endpoints | Rich, stateful capabilities |
+
+## Examples
+
+- `examples/express` — Express REST API serving an RCP manifest
+- `examples/openai-client` — Interactive CLI chat with OpenAI + RCP tools
+- `examples/langchain-client` — Interactive CLI chat with LangChain + RCP tools
+- `examples/gemini-client` — Interactive CLI chat with Gemini + RCP tools
+
+## Links
+
+- GitHub: https://github.com/hasanraiyan/rcp
+- npm: https://www.npmjs.com/package/rcp-sdk
+- Documentation: https://rcp.hasanraiyan.me/docs
+- Specification: https://rcp.hasanraiyan.me/docs/spec
+- Getting Started: https://rcp.hasanraiyan.me/docs/getting-started
