@@ -43,17 +43,45 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Raiyan Hasan", url: "https://hasanraiyan.me" }],
   creator: "Raiyan Hasan",
+  publisher: "Raiyan Hasan",
+  category: "Technology",
+  // Explicit index/follow helps Live Test show Indexing allowed: Yes
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  // Add NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION env to verify Search Console ownership
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
   openGraph: {
     type: "website",
     url: "/",
     siteName: "RCP — REST Connector Protocol",
     title: "RCP — REST Connector Protocol",
     description: SITE_DESCRIPTION,
+    locale: "en_US",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "RCP — Your REST API is already the tool.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "RCP — REST Connector Protocol",
     description: SITE_DESCRIPTION,
+    images: ["/opengraph-image"],
   },
   alternates: {
     canonical: "/",
