@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: SITE_URL,
+      lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 1,
     },
@@ -14,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const docsRoutes: MetadataRoute.Sitemap = flatDocsNav.map((item) => ({
     url: `${SITE_URL}${item.href}`,
+    lastModified: new Date(),
     changeFrequency: "weekly",
     priority: item.href === "/docs" ? 0.9 : 0.7,
   }));
