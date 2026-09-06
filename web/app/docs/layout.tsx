@@ -3,9 +3,34 @@ import { DocsSidebar } from "@/components/docs/sidebar";
 import { VersionBadge } from "@/components/docs/version-badge";
 
 const REPO = "https://github.com/hasanraiyan/rcp";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rcp.hasanraiyan.me";
+
+const breadcrumbJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: "Home",
+      item: SITE_URL,
+    },
+    {
+      "@type": "ListItem",
+      position: 2,
+      name: "Docs",
+      item: `${SITE_URL}/docs`,
+    },
+  ],
+};
 
 export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
     <div className="flex flex-1 flex-col bg-background text-foreground">
       <header className="border-b border-border">
         <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-6">
@@ -77,5 +102,6 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
         </div>
       </footer>
     </div>
+    </>
   );
 }

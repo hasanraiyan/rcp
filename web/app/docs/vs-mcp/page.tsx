@@ -5,14 +5,50 @@ export const metadata: Metadata = {
   title: "RCP vs MCP",
   description:
     "The difference between RCP and MCP, and a concrete checklist for deciding which one fits your case.",
+  alternates: { canonical: "/docs/vs-mcp" },
 };
 
 export default function VsMcpPage() {
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "When should I use RCP instead of MCP?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Use RCP when you already have a REST API and just want an AI to call some of its endpoints as tools, without running a separate protocol server. Every call is a stateless HTTP request.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "When should I use MCP instead of RCP?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Use MCP when you need rich, stateful capabilities — resources, prompt templates, elicitation, sampling, or a long-lived session.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Is RCP a replacement for MCP?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. RCP is a narrower protocol for a narrower, much more common case: exposing existing REST endpoints as tools. If you outgrow that, MCP is the right fit.",
+        },
+      },
+    ],
+  };
+
   return (
     <DocPage
       title="RCP vs MCP"
       description="Not a replacement for MCP — a narrower protocol for a narrower, much more common case."
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <p>
         MCP is the right answer when you want rich, stateful capabilities — resources a user
         browses, prompts a user picks, elicitation or sampling mid-call, a long-lived connection.
@@ -32,6 +68,7 @@ export default function VsMcpPage() {
         to fill.
       </p>
 
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -81,6 +118,7 @@ export default function VsMcpPage() {
           </tr>
         </tbody>
       </table>
+      </div>
 
       <h2>When to use RCP</h2>
       <ul>

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Getting started",
   description:
     "Install rcp-sdk, expose one tool from a server, and discover + call it from a client — a complete end-to-end walkthrough.",
+  alternates: { canonical: "/docs/getting-started" },
 };
 
 export default function GettingStartedPage() {
