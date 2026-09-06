@@ -742,6 +742,13 @@ See [`ROADMAP.md`](./ROADMAP.md) for the current implementation status, and
 
 ---
 
+# 📰 Articles
+
+- [How to Build an AI Agent from Your Existing REST API — Without an MCP Server](https://dev.to/raiyan_hasan_857d2fb07211/how-to-build-an-ai-agent-from-your-existing-rest-api-without-an-mcp-server-3f3c) — 5-min walkthrough: `defineTool()` → `GET /manifest` → `rcp-sdk` adapters for OpenAI / LangChain / Gemini (canonical: https://rcp.hasanraiyan.me/docs/getting-started)
+- [Stop Your AI Agent From Leaking Tenant Data — Params the Model Never Sees](https://dev.to/raiyan_hasan_857d2fb07211/stop-your-ai-agent-from-leaking-tenant-data-params-the-model-never-sees-1fjo) — Secure multi-tenant isolation via resolver-bound params — stop prompt injection from stealing another tenant's data (canonical: https://rcp.hasanraiyan.me/docs/guides/secure-tenant-isolation)
+
+---
+
 # 🤝 Contributing
 
 RCP is being developed as an open protocol. See [`CONTRIBUTING.md`](./CONTRIBUTING.md)

@@ -270,6 +270,26 @@ const result = await client.call(tool, maliciousArgs, { verifiedTenantId: 'TENAN
           tutorial with OpenAI / LangChain / Gemini
         </li>
       </ul>
+
+      <Callout>
+        Also published on{" "}
+        <a
+          href="https://dev.to/raiyan_hasan_857d2fb07211/stop-your-ai-agent-from-leaking-tenant-data-params-the-model-never-sees-1fjo"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Dev.to — Stop Your AI Agent From Leaking Tenant Data
+        </a>{" "}
+        and{" "}
+        <a
+          href="https://dev.to/raiyan_hasan_857d2fb07211/how-to-build-an-ai-agent-from-your-existing-rest-api-without-an-mcp-server-3f3c"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          How to Build an AI Agent from Your Existing REST API
+        </a>
+        .
+      </Callout>
     </DocPage>
   );
 }
