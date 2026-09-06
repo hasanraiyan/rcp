@@ -38,10 +38,9 @@ export default function ClientSdkPage() {
       <Callout>
         Notice there&rsquo;s no URL in this config. <code>createRcpClient()</code> only sets up{" "}
         <em>how</em> to talk to a server — auth, resolvers, headers. <em>Which</em> server (its
-        manifest URL) is passed separately to <code>discover()</code> below, and the tool objects
-        it returns already carry their own URL for every subsequent <code>call()</code>. One
-        client instance can discover any number of servers that share this auth/resolver/header
-        setup.
+        manifest URL) is passed separately to <code>discover()</code> below, and the tool objects it
+        returns already carry their own URL for every subsequent <code>call()</code>. One client
+        instance can discover any number of servers that share this auth/resolver/header setup.
       </Callout>
 
       <h3>Options</h3>
@@ -55,24 +54,50 @@ export default function ClientSdkPage() {
         </thead>
         <tbody>
           <tr>
-            <td><code>auth</code></td>
-            <td><code>{"{type:'none'} | {type:'header',...} | {type:'oauth2'}"}</code></td>
-            <td>Defaults to <code>{"{ type: 'none' }"}</code>. <code>oauth2</code> throws immediately — use <code>none</code> or <code>header</code>.</td>
+            <td>
+              <code>auth</code>
+            </td>
+            <td>
+              <code>{"{type:'none'} | {type:'header',...} | {type:'oauth2'}"}</code>
+            </td>
+            <td>
+              Defaults to <code>{"{ type: 'none' }"}</code>. <code>oauth2</code> throws immediately
+              — use <code>none</code> or <code>header</code>.
+            </td>
           </tr>
           <tr>
-            <td><code>resolvers</code></td>
-            <td><code>Record&lt;string, (ctx) =&gt; unknown&gt;</code></td>
-            <td>Param name → resolver. Removed from <code>exposedParams</code> at discovery time, filled from the resolver at call time.</td>
+            <td>
+              <code>resolvers</code>
+            </td>
+            <td>
+              <code>Record&lt;string, (ctx) =&gt; unknown&gt;</code>
+            </td>
+            <td>
+              Param name → resolver. Removed from <code>exposedParams</code> at discovery time,
+              filled from the resolver at call time.
+            </td>
           </tr>
           <tr>
-            <td><code>headers</code></td>
-            <td><code>Record&lt;string, (ctx) =&gt; string&gt;</code></td>
-            <td>Attached to every outgoing request, independent of anything the manifest declares.</td>
+            <td>
+              <code>headers</code>
+            </td>
+            <td>
+              <code>Record&lt;string, (ctx) =&gt; string&gt;</code>
+            </td>
+            <td>
+              Attached to every outgoing request, independent of anything the manifest declares.
+            </td>
           </tr>
           <tr>
-            <td><code>logger</code></td>
-            <td><code>{"{ info, warn, error }"}</code></td>
-            <td>Silent by default. Pass <code>console</code>, or your own logger.</td>
+            <td>
+              <code>logger</code>
+            </td>
+            <td>
+              <code>{"{ info, warn, error }"}</code>
+            </td>
+            <td>
+              Silent by default. Pass <code>console</code>, or your own logger.
+            </td>
           </tr>
         </tbody>
       </table>
@@ -97,16 +122,24 @@ export default function ClientSdkPage() {
         </thead>
         <tbody>
           <tr>
-            <td><code>Error</code></td>
+            <td>
+              <code>Error</code>
+            </td>
             <td>The manifest URL returned a non-2xx status.</td>
           </tr>
           <tr>
-            <td><code>RcpManifestValidationError</code></td>
+            <td>
+              <code>RcpManifestValidationError</code>
+            </td>
             <td>The response body doesn&rsquo;t match the manifest schema.</td>
           </tr>
           <tr>
-            <td><code>RcpVersionMismatchError</code></td>
-            <td><code>rcpVersion</code> isn&rsquo;t one this client supports.</td>
+            <td>
+              <code>RcpVersionMismatchError</code>
+            </td>
+            <td>
+              <code>rcpVersion</code> isn&rsquo;t one this client supports.
+            </td>
           </tr>
         </tbody>
       </table>
@@ -137,16 +170,28 @@ export default function ClientSdkPage() {
         </thead>
         <tbody>
           <tr>
-            <td><code>MissingTemplateValueError</code></td>
-            <td>A required, non-resolver-bound token has no value in <code>agentArgs</code>.</td>
+            <td>
+              <code>MissingTemplateValueError</code>
+            </td>
+            <td>
+              A required, non-resolver-bound token has no value in <code>agentArgs</code>.
+            </td>
           </tr>
           <tr>
-            <td><code>RcpResolverError</code></td>
-            <td>A registered resolver ran but returned <code>null</code>/<code>undefined</code>.</td>
+            <td>
+              <code>RcpResolverError</code>
+            </td>
+            <td>
+              A registered resolver ran but returned <code>null</code>/<code>undefined</code>.
+            </td>
           </tr>
           <tr>
-            <td><code>RcpToolAuthOverrideNotImplementedError</code></td>
-            <td>The tool declares its own auth, overriding the client&rsquo;s — not implemented yet.</td>
+            <td>
+              <code>RcpToolAuthOverrideNotImplementedError</code>
+            </td>
+            <td>
+              The tool declares its own auth, overriding the client&rsquo;s — not implemented yet.
+            </td>
           </tr>
         </tbody>
       </table>
@@ -157,8 +202,8 @@ export default function ClientSdkPage() {
 
       <h2>Logging</h2>
       <p>
-        Pass <code>logger: console</code> to see what the client is doing. Only structural facts
-        are ever logged — tool names, HTTP methods, status codes, param names. Header values,
+        Pass <code>logger: console</code> to see what the client is doing. Only structural facts are
+        ever logged — tool names, HTTP methods, status codes, param names. Header values,
         request/response bodies, resolved values, and the auth secret are never logged.
       </p>
       <CodeBlock
@@ -173,8 +218,8 @@ await client.discover('https://example.com/rcp/manifest');
 
       <h2>Error classes</h2>
       <p>
-        All exported from <code>rcp-sdk/client</code>, all plain <code>Error</code> subclasses
-        (safe to <code>instanceof</code>-check): <code>RcpAuthNotImplementedError</code>,{" "}
+        All exported from <code>rcp-sdk/client</code>, all plain <code>Error</code> subclasses (safe
+        to <code>instanceof</code>-check): <code>RcpAuthNotImplementedError</code>,{" "}
         <code>RcpVersionMismatchError</code>, <code>RcpManifestValidationError</code>,{" "}
         <code>RcpResolverError</code>, <code>RcpToolAuthOverrideNotImplementedError</code>,{" "}
         <code>MissingTemplateValueError</code>.

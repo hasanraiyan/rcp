@@ -4,7 +4,7 @@ For whoever is exposing their own REST endpoints as tools — the RCP **server**
 manifest tool entry in code instead of hand-writing the JSON shape.
 
 ```ts
-import { defineTool } from 'rcp-sdk/server';
+import { defineTool } from "rcp-sdk/server";
 ```
 
 `defineTool()` never touches the network — it returns a plain `RcpTool` object. Serving it is up
@@ -15,34 +15,34 @@ version with no framework).
 ## `defineTool(options)`
 
 ```ts
-import { z } from 'zod';
+import { z } from "zod";
 
 const getWeather = defineTool({
-  name: 'get_weather',
-  description: 'Get current weather information for a city.',
-  method: 'GET',
+  name: "get_weather",
+  description: "Get current weather information for a city.",
+  method: "GET",
   args: z.object({
     city: z.string().describe('City name, e.g. "Paris"'),
   }),
-  url: 'https://internal.example.com/weather',
-  queryParams: { city: (t) => t.arg('city') },
-  responseMappings: { temperatureC: '@temperatureC', conditions: '@conditions' },
+  url: "https://internal.example.com/weather",
+  queryParams: { city: (t) => t.arg("city") },
+  responseMappings: { temperatureC: "@temperatureC", conditions: "@conditions" },
 });
 ```
 
 ### Options
 
-| Option | Type | Notes |
-|---|---|---|
-| `name` | `string` | Required. |
-| `description` | `string` | Required. What the model sees when deciding whether to call it. |
-| `method` | `'GET' \| 'POST' \| 'PUT' \| 'PATCH' \| 'DELETE'` | Required. |
-| `args` | a `z.object({...})` schema | Optional. Declares the model-fillable arguments — each field becomes one `params` entry. |
-| `url` | `string \| (t) => string` | Required. The callback form gets `t`, typed against `args`. |
-| `queryParams` | `Record<string, string \| (t) => string>` | |
-| `headers` | `Record<string, string \| (t) => string>` | |
-| `body` | `Record<string, unknown> \| (t) => Record<string, unknown>` | Any string value inside (including nested) may use `t.arg(...)`. |
-| `responseMappings` | `Record<string, string>` | `{ fieldName: '@json.path' }` — reshapes the tool endpoint's raw JSON response before it reaches the model. `@` starts every path; dot-separated segments walk the tree, numeric segments index arrays. A path that doesn't resolve returns `undefined` for that field rather than failing the call. |
+| Option             | Type                                                        | Notes                                                                                                                                                                                                                                                                                                |
+| ------------------ | ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`             | `string`                                                    | Required.                                                                                                                                                                                                                                                                                            |
+| `description`      | `string`                                                    | Required. What the model sees when deciding whether to call it.                                                                                                                                                                                                                                      |
+| `method`           | `'GET' \| 'POST' \| 'PUT' \| 'PATCH' \| 'DELETE'`           | Required.                                                                                                                                                                                                                                                                                            |
+| `args`             | a `z.object({...})` schema                                  | Optional. Declares the model-fillable arguments — each field becomes one `params` entry.                                                                                                                                                                                                             |
+| `url`              | `string \| (t) => string`                                   | Required. The callback form gets `t`, typed against `args`.                                                                                                                                                                                                                                          |
+| `queryParams`      | `Record<string, string \| (t) => string>`                   |                                                                                                                                                                                                                                                                                                      |
+| `headers`          | `Record<string, string \| (t) => string>`                   |                                                                                                                                                                                                                                                                                                      |
+| `body`             | `Record<string, unknown> \| (t) => Record<string, unknown>` | Any string value inside (including nested) may use `t.arg(...)`.                                                                                                                                                                                                                                     |
+| `responseMappings` | `Record<string, string>`                                    | `{ fieldName: '@json.path' }` — reshapes the tool endpoint's raw JSON response before it reaches the model. `@` starts every path; dot-separated segments walk the tree, numeric segments index arrays. A path that doesn't resolve returns `undefined` for that field rather than failing the call. |
 
 ### `t.arg(name)`
 
@@ -59,15 +59,15 @@ url: (t) => `https://api.example.com/search?q=${t.arg('query')}`, // -> "...?q={
 
 Each zod field becomes one `RcpToolParam`:
 
-| zod | `RcpToolParam` |
-|---|---|
-| `z.string()` / `z.number()` / `z.boolean()` | `type: 'string' \| 'number' \| 'boolean'` |
-| `.describe('...')` | `description: '...'` |
-| `.optional()` | `required: false` (omitted entirely → `required: true`) |
+| zod                                         | `RcpToolParam`                                          |
+| ------------------------------------------- | ------------------------------------------------------- |
+| `z.string()` / `z.number()` / `z.boolean()` | `type: 'string' \| 'number' \| 'boolean'`               |
+| `.describe('...')`                          | `description: '...'`                                    |
+| `.optional()`                               | `required: false` (omitted entirely → `required: true`) |
 
 A type this can't recognize (a wrapped/refined/union field) falls back to `'string'`.
 
-## What this does *not* do
+## What this does _not_ do
 
 `defineTool()` has no concept of a resolver-bound param, and no way to mark one as "don't ask the
 model for this" — that decision belongs entirely to whoever registers your server as a client (see

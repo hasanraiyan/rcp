@@ -15,9 +15,9 @@ export default function DocsIntroPage() {
       description="RCP (REST Connector Protocol) is a lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server."
     >
       <p>
-        If MCP is the right fit when you need rich, stateful capabilities, RCP is for the much
-        more common case: you already have a REST API, and you just want an AI application to be
-        able to call some of its endpoints as tools.
+        If MCP is the right fit when you need rich, stateful capabilities, RCP is for the much more
+        common case: you already have a REST API, and you just want an AI application to be able to
+        call some of its endpoints as tools.
       </p>
 
       <h2>The shape of it</h2>
@@ -50,9 +50,9 @@ GET  <manifest-url>          -->  200 { "rcpVersion": "0.1", "tools": [...] }
           executes the ones the model calls.
         </li>
         <li>
-          <strong>Server</strong> — anything that answers <code>GET &lt;manifest-url&gt;</code>{" "}
-          with a conformant manifest. A static JSON file behind a CDN is a valid, fully conformant
-          RCP server.
+          <strong>Server</strong> — anything that answers <code>GET &lt;manifest-url&gt;</code> with
+          a conformant manifest. A static JSON file behind a CDN is a valid, fully conformant RCP
+          server.
         </li>
       </ul>
 
@@ -64,12 +64,12 @@ GET  <manifest-url>          -->  200 { "rcpVersion": "0.1", "tools": [...] }
         </li>
         <li>
           <strong>Discovery and execution hit different places.</strong> The manifest is a
-          directory, not a proxy — a tool call goes straight to the tool&rsquo;s own URL, which
-          can be an entirely different host.
+          directory, not a proxy — a tool call goes straight to the tool&rsquo;s own URL, which can
+          be an entirely different host.
         </li>
         <li>
-          <strong>The client is the trust boundary.</strong> A server&rsquo;s manifest is
-          untrusted input until the client&rsquo;s operator has explicitly registered that server.
+          <strong>The client is the trust boundary.</strong> A server&rsquo;s manifest is untrusted
+          input until the client&rsquo;s operator has explicitly registered that server.
         </li>
         <li>
           <strong>Secrets never appear in the manifest</strong>, and never reach the model.

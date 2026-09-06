@@ -52,7 +52,16 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
       <footer className="border-t border-border">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6 text-sm text-muted-foreground">
           <span>
-            RCP v0.1 — in active design. <a href={`${REPO}/blob/master/LICENSE`} target="_blank" rel="noopener noreferrer" className="hover:text-foreground">MIT License</a>.
+            RCP v0.1 — in active design.{" "}
+            <a
+              href={`${REPO}/blob/master/LICENSE`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground"
+            >
+              MIT License
+            </a>
+            .
           </span>
           <span>
             Built by{" "}

@@ -27,7 +27,7 @@ export function DocsSidebar() {
                       "block rounded-sm border-l-2 py-1 pl-3 text-sm transition-colors",
                       active
                         ? "border-primary font-medium text-foreground"
-                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground",
                     )}
                   >
                     {item.title}

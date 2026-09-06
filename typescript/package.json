@@ -1,6 +1,6 @@
 {
   "name": "rcp-sdk",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Reference SDK for RCP (REST Connector Protocol) — a lightweight, open protocol for exposing REST APIs as AI-callable tools.",
   "type": "module",
   "exports": {
@@ -32,7 +32,10 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "example": "tsx examples/basic/run.ts"
+    "example": "tsx examples/basic/run.ts",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [
     "rcp",
@@ -57,10 +60,15 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^22.10.7",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6",
     "tsup": "^8.3.5",
     "tsx": "^4.19.2",
     "typescript": "^5.7.3",
+    "typescript-eslint": "^8.69.0",
     "vitest": "^3.0.4"
   },
   "pnpm": {

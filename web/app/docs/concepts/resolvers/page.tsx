@@ -20,8 +20,8 @@ export default function ResolversPage() {
         already knows and the model would otherwise have to guess, or could spoof.
       </p>
       <p>
-        <strong>Nothing is declared in the manifest.</strong> A param like <code>learnerId</code>{" "}
-        is written exactly like any other model-fillable param — the server doesn&rsquo;t tag it,
+        <strong>Nothing is declared in the manifest.</strong> A param like <code>learnerId</code> is
+        written exactly like any other model-fillable param — the server doesn&rsquo;t tag it,
         doesn&rsquo;t need a reserved name, and doesn&rsquo;t need to know whether some client
         intercepts it. The mechanism lives entirely on the client.
       </p>
@@ -76,10 +76,10 @@ console.log(describeManifest(manifest, tools));
       />
 
       <Callout>
-        This is deliberately general-purpose — the same mechanism covers end-user identity, a
-        tenant id, a region, or anything else an operator wants auto-filled. A client that never
-        configures a resolver for a given param just shows it to the model as an ordinary fillable
-        argument — there&rsquo;s no protocol-level signal warning otherwise. A server&rsquo;s{" "}
+        This is deliberately general-purpose — the same mechanism covers end-user identity, a tenant
+        id, a region, or anything else an operator wants auto-filled. A client that never configures
+        a resolver for a given param just shows it to the model as an ordinary fillable argument —
+        there&rsquo;s no protocol-level signal warning otherwise. A server&rsquo;s{" "}
         <code>description</code> on that param is the only hint a client operator gets.
       </Callout>
     </DocPage>

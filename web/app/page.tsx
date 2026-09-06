@@ -73,9 +73,9 @@ export default function Home() {
                 Your REST API is already the tool.
               </h1>
               <p className="mt-5 text-base leading-7 text-muted-foreground">
-                RCP is a lightweight, open protocol for exposing REST endpoints as AI-callable
-                tools — no protocol server, no persistent connection. A server publishes a
-                manifest; a client fetches it and calls the endpoints directly.
+                RCP is a lightweight, open protocol for exposing REST endpoints as AI-callable tools
+                — no protocol server, no persistent connection. A server publishes a manifest; a
+                client fetches it and calls the endpoints directly.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <Link
@@ -99,13 +99,13 @@ export default function Home() {
                 </span>
               </div>
               <div className="mt-1 text-muted-foreground">
-                {"{ rcpVersion: \"0.1\", tools: […] }"}
+                {'{ rcpVersion: "0.1", tools: […] }'}
               </div>
 
               <div className="my-4 border-t border-dashed border-border" />
 
               <div className="text-muted-foreground">
-                {"// model picks create_order, supplies { item: \"sku_88\" }"}
+                {'// model picks create_order, supplies { item: "sku_88" }'}
               </div>
 
               <div className="mt-4">
@@ -116,7 +116,7 @@ export default function Home() {
                 </span>
               </div>
               <div className="mt-1 text-muted-foreground">
-                {"{ id: \"ord_193\", status: \"confirmed\" }"}
+                {'{ id: "ord_193", status: "confirmed" }'}
               </div>
             </div>
           </div>
@@ -130,8 +130,8 @@ export default function Home() {
               <p className="mt-4 max-w-sm text-[15px] leading-7 text-muted-foreground">
                 Two roles, no third &ldquo;host&rdquo; layer, no persistent connection — every
                 interaction is a plain, stateless HTTP request. Discovery and execution even hit
-                different places: the manifest is only ever a directory, and the model&rsquo;s
-                tool call goes straight to the tool&rsquo;s own URL.
+                different places: the manifest is only ever a directory, and the model&rsquo;s tool
+                call goes straight to the tool&rsquo;s own URL.
               </p>
             </div>
 
@@ -153,7 +153,10 @@ export default function Home() {
                   body: "The client fills resolver-bound params from ctx, renders the request, and calls the tool's own URL directly.",
                 },
               ].map((step) => (
-                <li key={step.n} className="flex gap-4 border-b border-border pb-6 last:border-0 last:pb-0">
+                <li
+                  key={step.n}
+                  className="flex gap-4 border-b border-border pb-6 last:border-0 last:pb-0"
+                >
                   <span className="font-mono text-sm text-muted-foreground">{step.n}</span>
                   <div>
                     <div className="font-medium">{step.title}</div>
@@ -170,9 +173,9 @@ export default function Home() {
           <div className="mx-auto w-full max-w-5xl px-6 py-16 md:py-20">
             <h2 className="text-xl font-semibold tracking-tight">When it&rsquo;s not MCP</h2>
             <p className="mt-4 max-w-2xl text-[15px] leading-7 text-muted-foreground">
-              If MCP is the right fit when you need rich, stateful capabilities, RCP is for the
-              much more common case: you already have a REST API, and you just want an AI
-              application to call some of its endpoints as tools.
+              If MCP is the right fit when you need rich, stateful capabilities, RCP is for the much
+              more common case: you already have a REST API, and you just want an AI application to
+              call some of its endpoints as tools.
             </p>
 
             <div className="mt-8 overflow-x-auto">
@@ -188,7 +191,11 @@ export default function Home() {
                   {[
                     ["Connection", "Stateless HTTP request", "Persistent session"],
                     ["Server", "Your existing REST API", "A dedicated protocol server"],
-                    ["Best fit", "You already have endpoints to expose", "Rich, stateful capabilities"],
+                    [
+                      "Best fit",
+                      "You already have endpoints to expose",
+                      "Rich, stateful capabilities",
+                    ],
                   ].map((row) => (
                     <tr key={row[0]} className="border-b border-border last:border-0">
                       <td className="py-3 pr-6 text-muted-foreground">{row[0]}</td>
@@ -206,13 +213,11 @@ export default function Home() {
         <section className="border-t border-border">
           <div className="mx-auto grid w-full max-w-5xl gap-10 px-6 py-16 md:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] md:py-20">
             <div>
-              <h2 className="text-xl font-semibold tracking-tight">
-                Params the model never sees
-              </h2>
+              <h2 className="text-xl font-semibold tracking-tight">Params the model never sees</h2>
               <p className="mt-4 max-w-sm text-[15px] leading-7 text-muted-foreground">
                 A resolver-bound param never reaches the model — it&rsquo;s removed from the tool
-                schema at discovery time, not just hidden by convention. Use it for a tenant ID,
-                an internal user ID, anything the model shouldn&rsquo;t supply or even see.
+                schema at discovery time, not just hidden by convention. Use it for a tenant ID, an
+                internal user ID, anything the model shouldn&rsquo;t supply or even see.
               </p>
               <Link
                 href="/docs/concepts/resolvers"
@@ -230,7 +235,7 @@ export default function Home() {
               <div className="my-4 border-t border-dashed border-border" />
               <div className="text-muted-foreground">{"// what the model is offered"}</div>
               <div className="mt-1">
-                {"{ tool: \"list_orders\", exposedParams: [\"status\", \"limit\"] }"}
+                {'{ tool: "list_orders", exposedParams: ["status", "limit"] }'}
               </div>
             </div>
           </div>

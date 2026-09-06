@@ -13,4 +13,4 @@ export {
   type RcpToolParam,
   type RcpTool,
   type RcpManifest,
-} from './schema.js';
+} from "./schema.js";

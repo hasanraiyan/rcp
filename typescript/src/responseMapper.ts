@@ -6,7 +6,7 @@
  */
 export function applyResponseMappings(
   data: unknown,
-  mappings: Record<string, string> | undefined
+  mappings: Record<string, string> | undefined,
 ): unknown {
   if (!mappings || Object.keys(mappings).length === 0) return data;
 
@@ -18,8 +18,8 @@ export function applyResponseMappings(
 }
 
 function resolvePath(data: unknown, path: string): unknown {
-  if (!path.startsWith('@')) return undefined;
-  const segments = path.slice(1).split('.').filter(Boolean);
+  if (!path.startsWith("@")) return undefined;
+  const segments = path.slice(1).split(".").filter(Boolean);
 
   let current: unknown = data;
   for (const segment of segments) {
@@ -28,7 +28,7 @@ function resolvePath(data: unknown, path: string): unknown {
       const index = Number(segment);
       if (!Number.isInteger(index)) return undefined;
       current = current[index];
-    } else if (typeof current === 'object') {
+    } else if (typeof current === "object") {
       current = (current as Record<string, unknown>)[segment];
     } else {
       return undefined;

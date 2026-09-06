@@ -11,7 +11,7 @@ export class MissingTemplateValueError extends Error {}
 
 /** Every `{{name}}` occurrence in a string, deduped, in first-seen order. */
 export function extractTokenNames(text: string): string[] {
-  if (typeof text !== 'string' || text.length === 0) return [];
+  if (typeof text !== "string" || text.length === 0) return [];
   const names: string[] = [];
   const seen = new Set<string>();
   let match: RegExpExecArray | null;
@@ -53,11 +53,11 @@ export function collectTokenNames(fields: {
 }
 
 function collectTokensDeep(value: unknown, add: (text: string) => void): void {
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     add(value);
   } else if (Array.isArray(value)) {
     for (const item of value) collectTokensDeep(item, add);
-  } else if (value && typeof value === 'object') {
+  } else if (value && typeof value === "object") {
     for (const item of Object.values(value)) collectTokensDeep(item, add);
   }
 }
@@ -68,23 +68,23 @@ function collectTokensDeep(value: unknown, add: (text: string) => void): void {
  * all is a caller bug, not a legitimate "missing value" case.
  */
 export function renderTemplateString(text: string, values: Record<string, unknown>): string {
-  if (typeof text !== 'string' || text.length === 0) return text ?? '';
+  if (typeof text !== "string" || text.length === 0) return text ?? "";
   return text.replace(TOKEN_PATTERN, (_match, name: string) => {
     if (!Object.prototype.hasOwnProperty.call(values, name)) {
       throw new MissingTemplateValueError(
-        `Template references {{${name}}}, but no value was resolved for it.`
+        `Template references {{${name}}}, but no value was resolved for it.`,
       );
     }
     const value = values[name];
-    return value === undefined || value === null ? '' : String(value);
+    return value === undefined || value === null ? "" : String(value);
   });
 }
 
 /** Renders every string in an arbitrary JSON value (for `body` templates). */
 export function renderDeep(value: unknown, values: Record<string, unknown>): unknown {
-  if (typeof value === 'string') return renderTemplateString(value, values);
+  if (typeof value === "string") return renderTemplateString(value, values);
   if (Array.isArray(value)) return value.map((item) => renderDeep(item, values));
-  if (value && typeof value === 'object') {
+  if (value && typeof value === "object") {
     const out: Record<string, unknown> = {};
     for (const [key, item] of Object.entries(value)) out[key] = renderDeep(item, values);
     return out;
@@ -94,7 +94,7 @@ export function renderDeep(value: unknown, values: Record<string, unknown>): unk
 
 export function renderRecord(
   record: Record<string, string> | undefined,
-  values: Record<string, unknown>
+  values: Record<string, unknown>,
 ): Record<string, string> {
   const out: Record<string, string> = {};
   for (const [key, template] of Object.entries(record ?? {})) {

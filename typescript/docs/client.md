@@ -4,7 +4,7 @@ For whoever is building the AI application — the RCP **client** role. Discover
 manifest, exposes its tools, and executes calls against them.
 
 ```ts
-import { createRcpClient } from 'rcp-sdk/client';
+import { createRcpClient } from "rcp-sdk/client";
 ```
 
 ## `createRcpClient(options?)`
@@ -15,24 +15,24 @@ multi-server registry inside one instance.
 
 ```ts
 const client = createRcpClient({
-  auth: { type: 'header', secret: process.env.SERVER_TOKEN! },
+  auth: { type: "header", secret: process.env.SERVER_TOKEN! },
   resolvers: {
     userId: (ctx) => ctx.currentUserId,
   },
   headers: {
-    'X-Request-Id': () => crypto.randomUUID(),
+    "X-Request-Id": () => crypto.randomUUID(),
   },
 });
 ```
 
 ### Options
 
-| Option | Type | Notes |
-|---|---|---|
-| `auth` | `{ type: 'none' } \| { type: 'header'; header?: string; scheme?: string; secret: string } \| { type: 'oauth2' }` | How this client authenticates to the server. Defaults to `{ type: 'none' }`. **`oauth2` throws immediately at `createRcpClient()`** — the protocol supports it, but this version doesn't implement the OAuth flow yet; use `'none'` or `'header'`. |
-| `resolvers` | `Record<string, (ctx: unknown) => unknown>` | Param name → resolver function. A param with a registered resolver is (a) removed from `exposedParams` at discovery time and (b) filled from the resolver — never from `agentArgs` — at call time. |
-| `headers` | `Record<string, (ctx: unknown) => string>` | Header name → value function. Attached to every outgoing request (manifest fetch and every tool call), independent of anything the manifest declares. |
-| `logger` | `{ info, warn, error }` (each `(message: string) => void`) | Structural logging only — see "Logging" below. Silent (no-op) by default; pass `console` to see it, or your own logger. |
+| Option      | Type                                                                                                             | Notes                                                                                                                                                                                                                                              |
+| ----------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auth`      | `{ type: 'none' } \| { type: 'header'; header?: string; scheme?: string; secret: string } \| { type: 'oauth2' }` | How this client authenticates to the server. Defaults to `{ type: 'none' }`. **`oauth2` throws immediately at `createRcpClient()`** — the protocol supports it, but this version doesn't implement the OAuth flow yet; use `'none'` or `'header'`. |
+| `resolvers` | `Record<string, (ctx: unknown) => unknown>`                                                                      | Param name → resolver function. A param with a registered resolver is (a) removed from `exposedParams` at discovery time and (b) filled from the resolver — never from `agentArgs` — at call time.                                                 |
+| `headers`   | `Record<string, (ctx: unknown) => string>`                                                                       | Header name → value function. Attached to every outgoing request (manifest fetch and every tool call), independent of anything the manifest declares.                                                                                              |
+| `logger`    | `{ info, warn, error }` (each `(message: string) => void`)                                                       | Structural logging only — see "Logging" below. Silent (no-op) by default; pass `console` to see it, or your own logger.                                                                                                                            |
 
 ## Logging
 
@@ -41,7 +41,7 @@ Pass `logger: console` (or any object with `info`/`warn`/`error`) to see what th
 ```ts
 const client = createRcpClient({ logger: console });
 
-await client.discover('https://example.com/rcp/manifest');
+await client.discover("https://example.com/rcp/manifest");
 // info: [RCP] discover: GET https://example.com/rcp/manifest
 // info: [RCP] discover: found 2 tool(s) at ... (auth: header): get_weather, search
 // info: [RCP] discover: "get_weather" hides 1 resolver-bound param(s) from the model: city
@@ -54,7 +54,7 @@ information, use [`describeManifest()`](#describemanifest) instead of parsing lo
 
 **What's never logged**: header values, request/response bodies, resolved values (including
 whatever a resolver returns), or the auth secret. Only structural facts — tool names, HTTP
-methods, status codes, and param *names* — ever reach the logger.
+methods, status codes, and param _names_ — ever reach the logger.
 
 ## `describeManifest(manifest, tools)`
 
@@ -62,10 +62,10 @@ Formats a `discover()` result into a human-readable string — the programmatic 
 server is asking for, without reading logs:
 
 ```ts
-import { createRcpClient, describeManifest } from 'rcp-sdk/client';
+import { createRcpClient, describeManifest } from "rcp-sdk/client";
 
 const client = createRcpClient({ resolvers: { userId: (ctx) => ctx.currentUserId } });
-const { manifest, tools } = await client.discover('https://example.com/rcp/manifest');
+const { manifest, tools } = await client.discover("https://example.com/rcp/manifest");
 
 console.log(describeManifest(manifest, tools));
 // RCP manifest v0.1 — auth: header "Authorization" (scheme: Bearer)
@@ -87,7 +87,7 @@ id, etc.).
 Fetches, validates, and returns a server's manifest.
 
 ```ts
-const { manifest, tools } = await client.discover('https://example.com/rcp/manifest');
+const { manifest, tools } = await client.discover("https://example.com/rcp/manifest");
 ```
 
 Returns `{ manifest: RcpManifest, tools: DiscoveredTool[] }`. Each `DiscoveredTool` is the raw
@@ -96,11 +96,11 @@ Returns `{ manifest: RcpManifest, tools: DiscoveredTool[] }`. Each `DiscoveredTo
 
 Throws:
 
-| Error | When |
-|---|---|
-| `Error` (plain) | The manifest URL returned a non-2xx status. |
-| `RcpManifestValidationError` | The response body doesn't match the manifest schema. |
-| `RcpVersionMismatchError` | `rcpVersion` in the response isn't one this client supports. |
+| Error                        | When                                                         |
+| ---------------------------- | ------------------------------------------------------------ |
+| `Error` (plain)              | The manifest URL returned a non-2xx status.                  |
+| `RcpManifestValidationError` | The response body doesn't match the manifest schema.         |
+| `RcpVersionMismatchError`    | `rcpVersion` in the response isn't one this client supports. |
 
 ## `client.call(tool, agentArgs?, ctx?)`
 
@@ -110,20 +110,20 @@ supplied), attaches auth + injected headers, makes the HTTP request, and applies
 `responseMappings`.
 
 ```ts
-const result = await client.call(tool, { city: 'Paris' }, { currentUserId: 'u_42' });
+const result = await client.call(tool, { city: "Paris" }, { currentUserId: "u_42" });
 // { status: 200, ok: true, raw: {...}, mapped: {...} }
 ```
 
-Pass the *raw* tool object (from `discover()`'s `tools` array, or wherever else you got an
+Pass the _raw_ tool object (from `discover()`'s `tools` array, or wherever else you got an
 `RcpTool`) — not just the ids in `exposedParams`; `call()` needs the full `params` list to know
 which tokens are resolver-bound versus model-fillable.
 
 Throws:
 
-| Error | When |
-|---|---|
-| `MissingTemplateValueError` | A required, non-resolver-bound token has no value in `agentArgs`. |
-| `RcpResolverError` | A registered resolver ran but returned `null`/`undefined`. |
+| Error                                    | When                                                                                                                                                                                    |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `MissingTemplateValueError`              | A required, non-resolver-bound token has no value in `agentArgs`.                                                                                                                       |
+| `RcpResolverError`                       | A registered resolver ran but returned `null`/`undefined`.                                                                                                                              |
 | `RcpToolAuthOverrideNotImplementedError` | The tool declares its own `auth`, overriding the client's — not implemented in this version; register the tool via a separate `createRcpClient()` instance with the right auth instead. |
 
 None of these retry or swallow the problem — a call that can't be safely made throws before any

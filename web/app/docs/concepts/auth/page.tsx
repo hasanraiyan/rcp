@@ -15,9 +15,9 @@ export default function AuthPage() {
       description="One declaration at the top level of the manifest secures both the manifest fetch and every tool call by default."
     >
       <p>
-        A tool may set its own <code>auth</code> to override the server-level default — needed
-        when a tool&rsquo;s <code>url</code> points at a different domain than the manifest — but
-        the common case declares it once. Three modes, the same tiers MCP itself supports.
+        A tool may set its own <code>auth</code> to override the server-level default — needed when
+        a tool&rsquo;s <code>url</code> points at a different domain than the manifest — but the
+        common case declares it once. Three modes, the same tiers MCP itself supports.
       </p>
 
       <h2>

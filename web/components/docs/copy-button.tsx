@@ -20,7 +20,7 @@ export function CopyButton({ code, className }: { code: string; className?: stri
       }}
       className={cn(
         "shrink-0 rounded-sm px-1.5 py-0.5 text-xs text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
-        className
+        className,
       )}
     >
       {copied ? "Copied" : "Copy"}

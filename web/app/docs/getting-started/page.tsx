@@ -31,8 +31,8 @@ import { defineTool } from 'rcp-sdk/server';`}
 
       <h2>1. Define a tool on the server</h2>
       <p>
-        <code>defineTool()</code> never touches the network — it returns a plain object. Serving
-        it is up to you: collect your tools into an array and return them from whatever route your
+        <code>defineTool()</code> never touches the network — it returns a plain object. Serving it
+        is up to you: collect your tools into an array and return them from whatever route your
         server already has.
       </p>
       <CodeBlock

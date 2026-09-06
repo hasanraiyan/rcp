@@ -24,8 +24,8 @@ export default function SpecPage() {
       <h2>The one-line pitch</h2>
       <p>
         MCP for the case where you already just have a REST API and don&rsquo;t want to run a
-        protocol server to expose it — a server publishes a plain JSON manifest at a URL; any
-        client fetches it, builds tools from it, and calls the endpoints it describes directly. No
+        protocol server to expose it — a server publishes a plain JSON manifest at a URL; any client
+        fetches it, builds tools from it, and calls the endpoints it describes directly. No
         JSON-RPC, no persistent connection, no SDK required on the server side at all (a server can
         be a single static JSON file).
       </p>
@@ -34,8 +34,8 @@ export default function SpecPage() {
       <p>
         MCP is the right answer when you want rich, stateful capabilities — resources a user
         browses, prompts a user picks, elicitation/sampling mid-call, a long-lived connection. That
-        power has a cost: implementing an MCP server means implementing JSON-RPC, a transport
-        (stdio or Streamable HTTP), and the base protocol&rsquo;s negotiation flow, even if all you
+        power has a cost: implementing an MCP server means implementing JSON-RPC, a transport (stdio
+        or Streamable HTTP), and the base protocol&rsquo;s negotiation flow, even if all you
         actually have is &ldquo;call this REST endpoint with this shape.&rdquo;
       </p>
       <p>
@@ -56,12 +56,12 @@ export default function SpecPage() {
           <strong>Discovery and execution are different requests to different places.</strong>{" "}
           Fetching the manifest only ever tells the client what exists. Running a tool means the
           client makes an ordinary HTTP request straight to that tool&rsquo;s own declared URL —
-          which can be a completely different domain than the manifest itself. The manifest
-          endpoint is a directory, not a proxy.
+          which can be a completely different domain than the manifest itself. The manifest endpoint
+          is a directory, not a proxy.
         </li>
         <li>
-          <strong>The client is the trust boundary</strong>, same principle MCP states explicitly.
-          A server&rsquo;s manifest is untrusted input until the client&rsquo;s operator has
+          <strong>The client is the trust boundary</strong>, same principle MCP states explicitly. A
+          server&rsquo;s manifest is untrusted input until the client&rsquo;s operator has
           explicitly registered that server.
         </li>
         <li>
@@ -85,13 +85,13 @@ export default function SpecPage() {
       </p>
       <ul>
         <li>
-          <strong>Client</strong> — the AI application. Registers servers (URL + how to
-          authenticate to it), fetches their manifests, presents the tools they describe to a
-          model, executes the ones the model calls.
+          <strong>Client</strong> — the AI application. Registers servers (URL + how to authenticate
+          to it), fetches their manifests, presents the tools they describe to a model, executes the
+          ones the model calls.
         </li>
         <li>
-          <strong>Server</strong> — anything that answers <code>GET &lt;manifest-url&gt;</code>{" "}
-          with a conformant manifest document. Has no obligation beyond that one endpoint; the tool
+          <strong>Server</strong> — anything that answers <code>GET &lt;manifest-url&gt;</code> with
+          a conformant manifest document. Has no obligation beyond that one endpoint; the tool
           endpoints the manifest describes can be the same server or entirely separate ones.
         </li>
       </ul>
@@ -161,9 +161,9 @@ GET  <manifest-url>          -->  200 { "rcpVersion": "0.1", "tools": [...] }
 
       <h2>Reference SDK — what it provides</h2>
       <p>
-        Everything above is a set of behaviors a conformant client must implement — nothing
-        requires a shared library to exist. But without one, every client ends up hand-rolling the
-        same discovery-fetch-template-inject logic. See{" "}
+        Everything above is a set of behaviors a conformant client must implement — nothing requires
+        a shared library to exist. But without one, every client ends up hand-rolling the same
+        discovery-fetch-template-inject logic. See{" "}
         <a href="/docs/sdk/client">Client — rcp-sdk/client</a> and{" "}
         <a href="/docs/sdk/server">Server — rcp-sdk/server</a> for the full reference.
       </p>
@@ -188,29 +188,29 @@ const result = await rcpClient.call(tool, agentArgs, ctx);`}
 
       <h2>Fitting into an agent framework</h2>
       <p>
-        Most agent frameworks reduce to: a flat list of callable tools handed to the model. RCP
-        only needs to plug into that half — a client resolves a manifest&rsquo;s tools into
-        whatever tool representation its framework expects and adds them to that same flat list. A
-        framework doesn&rsquo;t need to know or care that a given tool came from an RCP server
-        rather than a hand-built one. RCP v0.1 deliberately has no equivalent of a
+        Most agent frameworks reduce to: a flat list of callable tools handed to the model. RCP only
+        needs to plug into that half — a client resolves a manifest&rsquo;s tools into whatever tool
+        representation its framework expects and adds them to that same flat list. A framework
+        doesn&rsquo;t need to know or care that a given tool came from an RCP server rather than a
+        hand-built one. RCP v0.1 deliberately has no equivalent of a
         &ldquo;skills&rdquo;/instructions concept — the same posture MCP itself takes toward its own
         optional Skills extension.
       </p>
 
       <h2>Versioning</h2>
       <p>
-        <code>rcpVersion</code> is a plain string on every manifest response. A client that
-        receives a manifest with a <code>rcpVersion</code> it doesn&rsquo;t understand should
-        refuse to load that server&rsquo;s tools rather than guess — same explicit-over-implicit
-        posture as MCP&rsquo;s capability negotiation.
+        <code>rcpVersion</code> is a plain string on every manifest response. A client that receives
+        a manifest with a <code>rcpVersion</code> it doesn&rsquo;t understand should refuse to load
+        that server&rsquo;s tools rather than guess — same explicit-over-implicit posture as
+        MCP&rsquo;s capability negotiation.
       </p>
 
       <h2>Security & trust</h2>
       <p>Adapted from MCP&rsquo;s stated principles:</p>
       <ul>
         <li>
-          <strong>Registration is consent.</strong> A client must not fetch or execute anything
-          from a server the client&rsquo;s operator didn&rsquo;t explicitly register — no automatic
+          <strong>Registration is consent.</strong> A client must not fetch or execute anything from
+          a server the client&rsquo;s operator didn&rsquo;t explicitly register — no automatic
           discovery of arbitrary URLs.
         </li>
         <li>
@@ -232,9 +232,9 @@ const result = await rcpClient.call(tool, agentArgs, ctx);`}
       <h2>What&rsquo;s explicitly out of scope for v0.1</h2>
       <ul>
         <li>
-          Resources, Prompts, Sampling, Elicitation, Roots — all MCP concepts with no RCP
-          equivalent yet. If real demand shows up, they&rsquo;d be additive, opt-in extensions
-          layered on the same manifest+HTTP model, not a rewrite of it.
+          Resources, Prompts, Sampling, Elicitation, Roots — all MCP concepts with no RCP equivalent
+          yet. If real demand shows up, they&rsquo;d be additive, opt-in extensions layered on the
+          same manifest+HTTP model, not a rewrite of it.
         </li>
         <li>
           A bidirectional/streaming transport. Every RCP interaction is a plain request/response
@@ -257,9 +257,9 @@ const result = await rcpClient.call(tool, agentArgs, ctx);`}
           just make that one tool silently unavailable for turns with no verified caller?
         </li>
         <li>
-          Should the spec recommend (not require) a naming convention for commonly-resolved
-          params — e.g. servers document their identity param as <code>identity</code> or{" "}
-          <code>userId</code> by convention?
+          Should the spec recommend (not require) a naming convention for commonly-resolved params —
+          e.g. servers document their identity param as <code>identity</code> or <code>userId</code>{" "}
+          by convention?
         </li>
         <li>
           Does a server ever need to push a manifest-changed notification, or is &ldquo;clients may

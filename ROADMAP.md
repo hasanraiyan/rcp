@@ -50,7 +50,9 @@ elsewhere.
 - [x] End-to-end example (`examples/basic`) verified working live.
 - [x] API docs for both entry points (`docs/client.md`, `docs/server.md`).
 - [x] Architecture diagrams (root `README.md`).
-- [ ] Lint/formatting setup (eslint/prettier) — deliberately deferred, not started.
+- [x] Lint/formatting setup (eslint/prettier) — flat `eslint.config.js` (typescript-eslint
+      recommended) + `.prettierrc.json`, wired to `lint`/`format`/`format:check` scripts. `web/`
+      got the same Prettier setup layered onto its existing `eslint-config-next` config.
 - [ ] Published to npm — package name decided (`rcp-sdk`, unscoped, confirmed available), not
       actually published yet.
 - [ ] Pushed to a GitHub remote — local git repo only so far.

@@ -4,19 +4,19 @@ import {
   type RcpManifest,
   type RcpTool,
   type RcpToolParam,
-} from './schema.js';
+} from "./schema.js";
 import {
   collectTokenNames,
   renderDeep,
   renderRecord,
   renderTemplateString,
   MissingTemplateValueError,
-} from './templateEngine.js';
-import { applyResponseMappings } from './responseMapper.js';
+} from "./templateEngine.js";
+import { applyResponseMappings } from "./responseMapper.js";
 
 // Re-exported so a caller can `instanceof`-check every error call() can
 // throw from a single import, without also reaching into templateEngine.js.
-export { MissingTemplateValueError } from './templateEngine.js';
+export { MissingTemplateValueError } from "./templateEngine.js";
 
 const DEFAULT_TIMEOUT_MS = 15000;
 
@@ -27,9 +27,9 @@ const DEFAULT_TIMEOUT_MS = 15000;
  * (RCP_SPEC.md §Security & trust, "Secrets are client-side only").
  */
 export type RcpClientAuth =
-  | { type: 'none' }
-  | { type: 'header'; header?: string; scheme?: string; secret: string }
-  | { type: 'oauth2' };
+  | { type: "none" }
+  | { type: "header"; header?: string; scheme?: string; secret: string }
+  | { type: "oauth2" };
 
 export type RcpResolver = (ctx: unknown) => unknown;
 export type RcpHeaderInjector = (ctx: unknown) => string;
@@ -88,7 +88,7 @@ export class RcpToolAuthOverrideNotImplementedError extends Error {}
 function appendQuery(url: string, queryParams: Record<string, string>): string {
   const parsed = new URL(url);
   for (const [key, value] of Object.entries(queryParams)) {
-    if (value !== '' && value !== undefined && value !== null) {
+    if (value !== "" && value !== undefined && value !== null) {
       parsed.searchParams.set(key, value);
     }
   }
@@ -102,10 +102,10 @@ function appendQuery(url: string, queryParams: Record<string, string>): string {
  * RCP_SPEC.md's own "Reference SDK" section sketches it.
  */
 export function createRcpClient(options: CreateRcpClientOptions = {}) {
-  if (options.auth?.type === 'oauth2') {
+  if (options.auth?.type === "oauth2") {
     throw new RcpAuthNotImplementedError(
       "auth.type 'oauth2' is specified in RCP_SPEC.md but not implemented by this reference " +
-        "client yet — use 'none' or 'header'."
+        "client yet — use 'none' or 'header'.",
     );
   }
 
@@ -114,9 +114,9 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
   const logger = options.logger ?? noopLogger;
 
   function buildAuthHeaders(): Record<string, string> {
-    if (!options.auth || options.auth.type !== 'header') return {};
-    const header = options.auth.header ?? 'Authorization';
-    const scheme = options.auth.scheme ?? 'Bearer';
+    if (!options.auth || options.auth.type !== "header") return {};
+    const header = options.auth.header ?? "Authorization";
+    const scheme = options.auth.scheme ?? "Bearer";
     const value = scheme ? `${scheme} ${options.auth.secret}` : options.auth.secret;
     return { [header]: value };
   }
@@ -133,7 +133,7 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
     logger.info(`[RCP] discover: GET ${url}`);
 
     const res = await fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: { ...buildAuthHeaders(), ...buildInjectedHeaders(ctx) },
       signal: AbortSignal.timeout(DEFAULT_TIMEOUT_MS),
     });
@@ -147,18 +147,18 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
     if (!parsed.success) {
       logger.error(`[RCP] discover: manifest at ${url} failed schema validation`);
       throw new RcpManifestValidationError(
-        `Manifest at ${url} failed validation: ${parsed.error.message}`
+        `Manifest at ${url} failed validation: ${parsed.error.message}`,
       );
     }
 
     const manifest = parsed.data;
     if (manifest.rcpVersion !== SUPPORTED_RCP_VERSION) {
       logger.error(
-        `[RCP] discover: ${url} declares rcpVersion "${manifest.rcpVersion}", expected "${SUPPORTED_RCP_VERSION}"`
+        `[RCP] discover: ${url} declares rcpVersion "${manifest.rcpVersion}", expected "${SUPPORTED_RCP_VERSION}"`,
       );
       throw new RcpVersionMismatchError(
         `Manifest at ${url} declares rcpVersion "${manifest.rcpVersion}", but this client only ` +
-          `supports "${SUPPORTED_RCP_VERSION}".`
+          `supports "${SUPPORTED_RCP_VERSION}".`,
       );
     }
 
@@ -169,14 +169,14 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
 
     logger.info(
       `[RCP] discover: found ${tools.length} tool(s) at ${url} (auth: ${manifest.auth.type}): ` +
-        tools.map((t) => t.name).join(', ')
+        tools.map((t) => t.name).join(", "),
     );
     for (const tool of tools) {
       const hidden = tool.params.filter((p) => !tool.exposedParams.includes(p));
       if (hidden.length > 0) {
         logger.info(
           `[RCP] discover: "${tool.name}" hides ${hidden.length} resolver-bound param(s) from the model: ` +
-            hidden.map((p) => p.name).join(', ')
+            hidden.map((p) => p.name).join(", "),
         );
       }
     }
@@ -187,7 +187,7 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
   async function call(
     tool: RcpTool,
     agentArgs: Record<string, unknown> = {},
-    ctx?: unknown
+    ctx?: unknown,
   ): Promise<CallResult> {
     logger.info(`[RCP] call: "${tool.name}" (${tool.method})`);
 
@@ -196,7 +196,7 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
       throw new RcpToolAuthOverrideNotImplementedError(
         `Tool "${tool.name}" declares its own auth override, but per-tool auth overrides aren't ` +
           `implemented by this reference client yet — register it via a separate ` +
-          `createRcpClient() instance instead.`
+          `createRcpClient() instance instead.`,
       );
     }
 
@@ -211,7 +211,7 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
           logger.error(`[RCP] call: "${tool.name}" resolver for "${name}" produced no value`);
           throw new RcpResolverError(
             `Tool "${tool.name}" needs {{${name}}}, resolved via a registered resolver, but it ` +
-              `produced no value for this call.`
+              `produced no value for this call.`,
           );
         }
         values[name] = resolved;
@@ -223,7 +223,7 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
       if ((value === undefined || value === null) && param?.required !== false) {
         logger.error(`[RCP] call: "${tool.name}" missing required value for "${name}"`);
         throw new MissingTemplateValueError(
-          `Tool "${tool.name}" requires a value for {{${name}}}, but none was supplied.`
+          `Tool "${tool.name}" requires a value for {{${name}}}, but none was supplied.`,
         );
       }
       values[name] = value;
@@ -235,7 +235,7 @@ export function createRcpClient(options: CreateRcpClientOptions = {}) {
     const renderedBody = tool.body !== undefined ? renderDeep(tool.body, values) : undefined;
 
     const headers: Record<string, string> = {
-      ...(renderedBody !== undefined ? { 'Content-Type': 'application/json' } : {}),
+      ...(renderedBody !== undefined ? { "Content-Type": "application/json" } : {}),
       ...renderedHeaders,
       ...buildAuthHeaders(),
       ...buildInjectedHeaders(ctx),
@@ -289,20 +289,22 @@ export function describeManifest(manifest: RcpManifest, tools: DiscoveredTool[])
     lines.push(`  - ${tool.name} (${tool.method}) — ${tool.description}`);
     for (const param of tool.params) {
       const hidden = !tool.exposedParams.includes(param);
-      const requiredLabel = param.required === false ? 'optional' : 'required';
-      const hiddenLabel = hidden ? ' [resolved by client, hidden from model]' : '';
-      const descriptionLabel = param.description ? ` — ${param.description}` : '';
-      lines.push(`      ${param.name}: ${param.type}, ${requiredLabel}${hiddenLabel}${descriptionLabel}`);
+      const requiredLabel = param.required === false ? "optional" : "required";
+      const hiddenLabel = hidden ? " [resolved by client, hidden from model]" : "";
+      const descriptionLabel = param.description ? ` — ${param.description}` : "";
+      lines.push(
+        `      ${param.name}: ${param.type}, ${requiredLabel}${hiddenLabel}${descriptionLabel}`,
+      );
     }
   }
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
-function describeAuth(auth: RcpManifest['auth']): string {
-  if (auth.type === 'none') return 'none';
-  if (auth.type === 'header') {
-    return `header "${auth.header}"${auth.scheme ? ` (scheme: ${auth.scheme})` : ''}`;
+function describeAuth(auth: RcpManifest["auth"]): string {
+  if (auth.type === "none") return "none";
+  if (auth.type === "header") {
+    return `header "${auth.header}"${auth.scheme ? ` (scheme: ${auth.scheme})` : ""}`;
   }
   return `oauth2 (resource: ${auth.resource})`;
 }
