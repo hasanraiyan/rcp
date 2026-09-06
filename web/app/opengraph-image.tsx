@@ -33,10 +33,9 @@ export default async function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <div style={{ fontSize: 56, fontWeight: 600, letterSpacing: -1.5, lineHeight: 1.1 }}>
-            Your REST API is
-            <br />
-            already the tool.
+          <div style={{ display: "flex", flexDirection: "column", fontSize: 56, fontWeight: 600, letterSpacing: -1.5, lineHeight: 1.1 }}>
+            <div style={{ display: "flex" }}>Your REST API is</div>
+            <div style={{ display: "flex" }}>already the tool.</div>
           </div>
           <div style={{ display: "flex", gap: 10, fontSize: 22, color: "#9aa0aa" }}>
             <span style={{ color: "#5b9ae8" }}>GET</span>
