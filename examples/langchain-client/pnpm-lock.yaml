@@ -21,8 +21,8 @@ importers:
         specifier: ^1.5.10
         version: 1.5.10(@langchain/core@1.2.9(openai@7.10.0(zod@4.5.4)))(openai@7.10.0(zod@4.5.4))
       rcp-sdk:
-        specifier: file:../../typescript
-        version: file:../../typescript(@langchain/core@1.2.9(openai@7.10.0(zod@4.5.4)))
+        specifier: ^0.2.0
+        version: 0.2.0(@langchain/core@1.2.9(openai@7.10.0(zod@4.5.4)))
     devDependencies:
       '@types/node':
         specifier: ^26.4.1
@@ -470,8 +470,8 @@ packages:
     resolution: {integrity: sha512-AxTM2wDGORHGEkPCt8yqxOTMgpfbEHqF51f/5fJCmwFC3C/zNcGT63SymH2ttOAaiIws2zVg4+izQCjrakcwHg==}
     engines: {node: '>=20'}
 
-  rcp-sdk@file:../../typescript:
-    resolution: {directory: ../../typescript, type: directory}
+  rcp-sdk@0.2.0:
+    resolution: {integrity: sha512-sG4Pk/bSh/FmlNsi2BLwB/krJv/4eq3PL+OyxUW1aHRk2bPbPZR/VXwUrwSHpxMopsfxGlrlFxXbDGUYlhqRqg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@langchain/core': '>=0.3.0'
@@ -799,7 +799,7 @@ snapshots:
 
   p-timeout@7.0.1: {}
 
-  rcp-sdk@file:../../typescript(@langchain/core@1.2.9(openai@7.10.0(zod@4.5.4))):
+  rcp-sdk@0.2.0(@langchain/core@1.2.9(openai@7.10.0(zod@4.5.4))):
     dependencies:
       zod: 3.25.76
     optionalDependencies:

@@ -94,7 +94,7 @@ const interaction = await ai.interactions.create({
 });
 ```
 
-See [`examples/gemini-client`](../examples/gemini-client) for a full example with tool-calling loop.
+See [`examples/gemini-client`](../examples/gemini-client) for a full interactive chat example.
 
 ## Docs
 

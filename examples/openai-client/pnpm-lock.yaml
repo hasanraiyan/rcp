@@ -15,8 +15,8 @@ importers:
         specifier: ^7.10.0
         version: 7.10.0(zod@3.25.76)
       rcp-sdk:
-        specifier: file:../../typescript
-        version: file:../../typescript
+        specifier: ^0.2.0
+        version: 0.2.0
     devDependencies:
       '@types/node':
         specifier: ^26.4.1
@@ -347,8 +347,8 @@ packages:
       zod:
         optional: true
 
-  rcp-sdk@file:../../typescript:
-    resolution: {directory: ../../typescript, type: directory}
+  rcp-sdk@0.2.0:
+    resolution: {integrity: sha512-sG4Pk/bSh/FmlNsi2BLwB/krJv/4eq3PL+OyxUW1aHRk2bPbPZR/VXwUrwSHpxMopsfxGlrlFxXbDGUYlhqRqg==}
     engines: {node: '>=18'}
     peerDependencies:
       '@langchain/core': '>=0.3.0'
@@ -554,7 +554,7 @@ snapshots:
     optionalDependencies:
       zod: 3.25.76
 
-  rcp-sdk@file:../../typescript:
+  rcp-sdk@0.2.0:
     dependencies:
       zod: 3.25.76
 

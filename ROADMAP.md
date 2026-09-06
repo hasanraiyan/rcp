@@ -61,11 +61,11 @@ elsewhere.
 
 - [x] `examples/express` — an Express REST API + one route serving an RCP manifest via
       `defineTool()`. Server-only; no AI/model code.
-- [x] `examples/openai-client` — discovers a manifest and runs an OpenAI tool-calling loop against
-      it. Client-only; no Express/FastAPI code. Uses `rcp-sdk/adapters/openai`.
+- [x] `examples/openai-client` — interactive CLI chat using OpenAI with RCP tools. Client-only;
+      uses `rcp-sdk/adapters/openai`.
 - [x] `examples/langchain-client` — interactive CLI chat using LangChain with RCP tools. Client-only;
       uses `rcp-sdk/adapters/langchain`.
-- [x] `examples/gemini-client` — discovers tools and runs a Gemini tool-calling loop. Client-only;
+- [x] `examples/gemini-client` — interactive CLI chat using Gemini with RCP tools. Client-only;
       uses `rcp-sdk/adapters/gemini`.
 - [x] Framework adapters (`rcp-sdk/adapters/openai`, `/langchain`, ...) so the
       manifest-to-tool-schema conversion currently hand-rolled in `examples/openai-client` doesn't
