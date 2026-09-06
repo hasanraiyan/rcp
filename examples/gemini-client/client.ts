@@ -1,4 +1,6 @@
 import "dotenv/config";
+import * as readline from "node:readline/promises";
+import { stdin as input, stdout as output } from "node:process";
 import { GoogleGenAI } from "@google/genai";
 import type { Interactions } from "@google/genai";
 import { createRcpClient } from "rcp-sdk/client";
@@ -37,80 +39,97 @@ function startSpinner() {
   };
 }
 
-async function main() {
-  const prompt =
-    process.argv.slice(2).join(" ") ||
-    "List my tasks, then mark the first incomplete one as done.";
+const SYSTEM_PROMPT =
+  "You can manage the user's tasks using the provided tools. Be concise. Keep conversation history across turns.";
 
-  // 1. Discover tools from an RCP manifest.
+async function main() {
   const rcp = createRcpClient();
   const { manifest, tools } = await rcp.discover(MANIFEST_URL);
   console.log(
     `\x1b[35mConnected to ${MANIFEST_URL} — ${tools.length} tool(s) available (manifest v${manifest.rcpVersion}):\x1b[0m`,
   );
   for (const tool of tools) console.log(`  - ${tool.name}: ${tool.description}`);
-  console.log();
+  console.log(`\x1b[90mType "exit" or "quit" to stop.\x1b[0m\n`);
 
-  // 2. Convert to Gemini Interactions API format.
   const geminiTools = rcpToolsToGeminiInteractionsTools(tools);
-  const toolByName = new Map(tools.map((t) => [t.name, t]));
 
-  console.log(`\x1b[32mYou:\x1b[0m ${prompt}\n`);
+  const rl = readline.createInterface({ input, output });
 
-  // 3. Tool-calling loop via Interactions API (stateful, chained with previous_interaction_id).
-  let input: string | Interactions.Step[] = prompt;
-  let previousId: string | undefined;
+  while (true) {
+    const input_ = await rl.question("\x1b[32mYou:\x1b[0m ");
+    const trimmed = input_.trim();
+    if (!trimmed || trimmed.toLowerCase() === "exit" || trimmed.toLowerCase() === "quit") {
+      console.log("Bye!");
+      break;
+    }
 
-  for (let turn = 0; turn < 8; turn++) {
     const spinner = startSpinner();
+    try {
+      // Stateful tool-calling loop via Interactions API.
+      // Start with the user's text; chain via previous_interaction_id after each turn.
+      let interactionInput: string | Interactions.Step[] =
+        `${SYSTEM_PROMPT}\n\nUser: ${trimmed}`;
+      let previousId: string | undefined;
+      let finalText: string | undefined;
 
-    const interaction = await ai.interactions.create({
-      model: `models/${MODEL}`,
-      input,
-      tools: geminiTools,
-      previous_interaction_id: previousId,
-    });
+      for (let turn = 0; turn < 8; turn++) {
+        const interaction = await ai.interactions.create({
+          model: `models/${MODEL}`,
+          input: interactionInput,
+          tools: geminiTools,
+          previous_interaction_id: previousId,
+        });
 
-    spinner.stop();
+        const steps = interaction.steps ?? [];
+        const functionResults: Interactions.FunctionResultStep[] = [];
 
-    const steps = interaction.steps ?? [];
-    const functionResults: Interactions.FunctionResultStep[] = [];
+        for (const step of steps) {
+          if (step.type === "function_call") {
+            console.log(`\x1b[90m  [tool]\x1b[0m ${step.name}(${JSON.stringify(step.arguments)})`);
 
-    for (const step of steps) {
-      if (step.type === "function_call") {
-        console.log(`\x1b[90m  [tool]\x1b[0m ${step.name}(${JSON.stringify(step.arguments)})`);
+            const tool = tools.find((t) => t.name === step.name);
+            if (!tool) {
+              console.log(`\x1b[90m  [error]\x1b[0m Unknown tool: ${step.name}`);
+              continue;
+            }
 
-        const tool = toolByName.get(step.name);
-        if (!tool) {
-          console.log(`\x1b[90m  [error]\x1b[0m Unknown tool: ${step.name}`);
-          continue;
+            const result = await rcp.call(tool, step.arguments);
+            console.log(`\x1b[90m  [result]\x1b[0m ${JSON.stringify(result.mapped)}`);
+
+            functionResults.push({
+              type: "function_result",
+              name: step.name,
+              call_id: step.id,
+              result: [{ type: "text", text: JSON.stringify(result.mapped) }],
+            });
+          }
         }
 
-        const result = await rcp.call(tool, step.arguments);
-        console.log(`\x1b[90m  [result]\x1b[0m ${JSON.stringify(result.mapped)}`);
+        // No function calls — this is the final text response.
+        if (functionResults.length === 0) {
+          finalText = interaction.output_text;
+          break;
+        }
 
-        functionResults.push({
-          type: "function_result",
-          name: step.name,
-          call_id: step.id,
-          result: [{ type: "text", text: JSON.stringify(result.mapped) }],
-        });
+        // Chain: send function results as the next input, linking to this interaction.
+        interactionInput = functionResults;
+        previousId = interaction.id;
       }
-    }
 
-    // No function calls — this is the final text response.
-    if (functionResults.length === 0) {
-      const outputText = interaction.output_text;
-      if (outputText) console.log(`\x1b[36mAssistant:\x1b[0m ${outputText}\n`);
-      return;
-    }
+      spinner.stop();
 
-    // Chain: send function results as the next input, linking to this interaction.
-    input = functionResults;
-    previousId = interaction.id;
+      if (finalText) {
+        console.log(`\x1b[36mAssistant:\x1b[0m ${finalText}\n`);
+      } else {
+        console.warn("Stopped after 8 turns without a final answer.\n");
+      }
+    } catch (err) {
+      spinner.stop();
+      console.error(`\x1b[31mError:\x1b[0m ${err}\n`);
+    }
   }
 
-  console.warn("Stopped after 8 turns without a final answer.");
+  rl.close();
 }
 
 main().catch((err) => {
