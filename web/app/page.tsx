@@ -95,10 +95,10 @@ const faqJsonLd = {
     },
     {
       "@type": "Question",
-      name: "How do I expose my REST API to ChatGPT / OpenAI with RCP?",
+      name: "How do I use my REST API in an AI agent with RCP?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Install rcp-sdk (npm i rcp-sdk), define each endpoint with defineTool() and a Zod schema, serve { rcpVersion, auth, tools } at GET /manifest, then on the client use createRcpClient() + rcpToolsToOpenAiTools() to get ChatCompletionTool[] and pass it to openai.chat.completions.create().",
+        text: "Install rcp-sdk (npm i rcp-sdk), define each endpoint with defineTool() and a Zod schema, serve { rcpVersion, auth, tools } at GET /manifest, then in your AI agent use createRcpClient() + an adapter (e.g. rcpToolsToOpenAiTools() for OpenAI SDK, rcpToolsToLangChainTools() for LangChain) to expose them as tools. RCP is new — ChatGPT/Claude don't speak it natively, your agent does.",
       },
     },
     {
@@ -426,16 +426,16 @@ export default function Home() {
                 <p className="mt-1 text-muted-foreground">When stateless HTTP beats a dedicated MCP server.</p>
               </div>
               <div>
-                <h3 className="font-medium"><Link href="/docs/sdk/openai" className="hover:text-primary hover:underline">Connect REST API to ChatGPT</Link></h3>
-                <p className="mt-1 text-muted-foreground">OpenAI function calling via rcpToolsToOpenAiTools().</p>
+                <h3 className="font-medium"><Link href="/docs/sdk/openai" className="hover:text-primary hover:underline">Build AI agent with OpenAI tools</Link></h3>
+                <p className="mt-1 text-muted-foreground">Via OpenAI SDK — rcpToolsToOpenAiTools() to ChatCompletionTool[].</p>
               </div>
               <div>
-                <h3 className="font-medium"><Link href="/docs/sdk/langchain" className="hover:text-primary hover:underline">REST API as LangChain tools</Link></h3>
+                <h3 className="font-medium"><Link href="/docs/sdk/langchain" className="hover:text-primary hover:underline">Build AI agent with LangChain</Link></h3>
                 <p className="mt-1 text-muted-foreground">DynamicStructuredTool + LangGraph + MultiServerRcpClient.</p>
               </div>
               <div>
-                <h3 className="font-medium"><Link href="/docs/sdk/gemini" className="hover:text-primary hover:underline">Expose REST API to Gemini</Link></h3>
-                <p className="mt-1 text-muted-foreground">Google GenAI function calling for Gemini 2.5.</p>
+                <h3 className="font-medium"><Link href="/docs/sdk/gemini" className="hover:text-primary hover:underline">Build AI agent with Gemini</Link></h3>
+                <p className="mt-1 text-muted-foreground">Google GenAI function calling for Gemini 2.5 — Interactions + classic.</p>
               </div>
               <div>
                 <h3 className="font-medium"><Link href="/docs/concepts/manifest" className="hover:text-primary hover:underline">RCP manifest format</Link></h3>

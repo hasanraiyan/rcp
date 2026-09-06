@@ -260,10 +260,10 @@ await client.discover('https://example.com/rcp/manifest');
           <a href="/docs/sdk/server">rcp-sdk/server — defineTool() to expose REST endpoint as AI tool</a>
         </li>
         <li>
-          <a href="/docs/sdk/openai">OpenAI adapter — connect REST API to ChatGPT</a>
+          <a href="/docs/sdk/openai">Build AI agent with OpenAI SDK — REST API as tools</a>
         </li>
         <li>
-          <a href="/docs/sdk/langchain">LangChain adapter — DynamicStructuredTool</a>
+          <a href="/docs/sdk/langchain">Build AI agent with LangChain — DynamicStructuredTool</a>
         </li>
         <li>
           <a href="/docs/concepts/resolvers">Resolvers — hide tenant ID from LLM</a> and <a href="/docs/concepts/auth">Auth — secure REST API for AI</a>

@@ -108,10 +108,10 @@ GET  <manifest-url>          -->  200 { "rcpVersion": "0.1", "tools": [...] }
           <a href="/docs/concepts/resolvers">Resolvers — hide tenant ID & user ID from the LLM</a> — resolver-bound params for secure multi-tenant isolation
         </li>
         <li>
-          <a href="/docs/sdk/openai">Connect REST API to ChatGPT with OpenAI function calling</a> — <code>rcpToolsToOpenAiTools()</code> adapter
+          <a href="/docs/sdk/openai">Build AI agent with OpenAI SDK — REST API as tools</a> — <code>rcpToolsToOpenAiTools()</code> adapter
         </li>
         <li>
-          <a href="/docs/sdk/langchain">REST API as LangChain DynamicStructuredTool</a> — LangChain & LangGraph adapter with MultiServerRcpClient
+          <a href="/docs/sdk/langchain">Build AI agent with LangChain — REST API as DynamicStructuredTool</a> — LangChain & LangGraph adapter with MultiServerRcpClient
         </li>
         <li>
           <a href="/docs/spec">Full RCP specification v0.1</a> — architecture, security & trust model

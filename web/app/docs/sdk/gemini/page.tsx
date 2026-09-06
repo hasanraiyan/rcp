@@ -160,16 +160,16 @@ const { interactionsTools, classicTools, discovered } = await loadGeminiTools(
       <h2>Related</h2>
       <ul>
         <li>
-          <a href="/docs/sdk/openai">OpenAI adapter — connect REST API to ChatGPT</a>
+          <a href="/docs/sdk/openai">Build AI agent with OpenAI SDK — REST API as tools</a>
         </li>
         <li>
-          <a href="/docs/sdk/langchain">LangChain adapter — DynamicStructuredTool & LangGraph</a>
+          <a href="/docs/sdk/langchain">Build AI agent with LangChain — DynamicStructuredTool</a>
         </li>
         <li>
           <a href="/docs/sdk/client">rcp-sdk/client — createRcpClient, discover() & call()</a>
         </li>
         <li>
-          <a href="/docs/getting-started">Getting started — expose REST API to AI</a>
+          <a href="/docs/getting-started">Build AI agent from REST API in 5 minutes</a>
         </li>
       </ul>
     </DocPage>

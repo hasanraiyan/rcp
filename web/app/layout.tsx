@@ -20,7 +20,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rcp.hasanraiyan.me";
 const SITE_DESCRIPTION =
-  "Expose your existing REST API as AI-callable tools without running an MCP server. Lightweight alternative to Model Context Protocol for OpenAI, LangChain & Gemini tool calling — just a manifest + plain HTTP. Start with rcp-sdk.";
+  "Build an AI agent that uses your existing REST API as tools — without running an MCP server. Lightweight alternative to Model Context Protocol for AI agents via OpenAI SDK, LangChain & Gemini — just a manifest + plain HTTP. Start with rcp-sdk.";
 
 // Google-searchable keyword clusters — keep in priority order (most important first)
 // Cluster 1: Brand | 2: Primary intent (expose REST to AI) | 3: MCP comparison | 4: Tool/function calling | 5: Framework adapters | 6: Long-tail
@@ -30,14 +30,15 @@ const SITE_KEYWORDS = [
   "REST Connector Protocol",
   "rcp-sdk",
   "RCP protocol",
-  // Primary intent — what devs actually type into Google
-  "expose REST API to AI",
-  "turn REST API into AI tools",
-  "connect REST API to LLM",
+  // Primary intent — cold user never heard of RCP, searches problem
+  "build AI agent with REST API",
+  "build AI agent from REST API",
+  "expose REST API to AI agent",
+  "turn REST API into AI agent tools",
   "REST API to AI agent",
-  "make REST API callable by AI",
-  "expose existing API as AI tool",
-  "REST API AI integration",
+  "make REST API callable by AI agent",
+  "expose existing API as AI agent tool",
+  "REST API AI agent integration",
   "AI callable REST endpoints",
   // MCP comparison — highest volume 2025-2026
   "MCP alternative",
@@ -47,22 +48,22 @@ const SITE_KEYWORDS = [
   "Model Context Protocol alternative",
   "without MCP server",
   "no protocol server",
-  // Tool / function calling
-  "LLM tool calling",
-  "OpenAI function calling",
-  "OpenAI tool calling",
+  // Tool / function calling for AI agents (not ChatGPT native)
+  "AI agent tool calling",
+  "LLM tool calling for AI agent",
+  "OpenAI function calling for AI agent",
   "function calling REST API",
-  "AI tool calling protocol",
-  "AI agent tools",
-  "LLM function calling tutorial",
-  // Framework adapters
-  "OpenAI tools adapter",
-  "LangChain tools",
-  "LangChain DynamicStructuredTool",
-  "Gemini function calling",
-  "Google GenAI tools",
-  "Vercel AI SDK tools",
-  "Express REST API AI",
+  "AI agent tools protocol",
+  "build AI agent tools",
+  "AI agent function calling tutorial",
+  // Framework adapters for AI agents
+  "OpenAI SDK AI agent adapter",
+  "LangChain AI agent tools",
+  "LangChain DynamicStructuredTool AI agent",
+  "Gemini AI agent function calling",
+  "Google GenAI AI agent",
+  "build AI agent with LangChain",
+  "Express REST API to AI agent",
   // Technical long-tail
   "stateless HTTP AI protocol",
   "REST API manifest for AI",

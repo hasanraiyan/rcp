@@ -225,22 +225,22 @@ export default function VsMcpPage() {
         <a href="/docs/roadmap">RCP roadmap</a>.
       </p>
 
-      <h2>Start with RCP</h2>
+      <h2>Start with RCP — build your AI agent</h2>
       <ul>
         <li>
-          <a href="/docs/getting-started">Getting started — expose REST API to AI in 5 minutes with rcp-sdk</a>
+          <a href="/docs/getting-started">Build AI agent from REST API in 5 minutes with rcp-sdk</a>
         </li>
         <li>
-          <a href="/docs/sdk/openai">Connect REST API to ChatGPT via OpenAI function calling adapter</a>
+          <a href="/docs/sdk/openai">Build AI agent with OpenAI SDK — REST API as tools</a>
         </li>
         <li>
-          <a href="/docs/sdk/langchain">REST API as LangChain DynamicStructuredTool + LangGraph</a>
+          <a href="/docs/sdk/langchain">Build AI agent with LangChain — DynamicStructuredTool + LangGraph</a>
         </li>
         <li>
           <a href="/docs/spec">Read the full RCP specification v0.1</a>
         </li>
         <li>
-          <a href="/docs/examples">Working examples — Express + OpenAI</a>
+          <a href="/docs/examples">Working examples — Express + AI agent</a>
         </li>
       </ul>
     </DocPage>

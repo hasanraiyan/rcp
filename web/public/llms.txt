@@ -23,9 +23,9 @@ RCP (REST Connector Protocol) is an open standard and TypeScript SDK for turning
 
 - [Client — rcp-sdk/client: createRcpClient, discover() & call()](https://rcp.hasanraiyan.me/docs/sdk/client): createRcpClient() with resolvers/auth, discover(manifestUrl), call(tool, args), describeManifest()
 - [Server — rcp-sdk/server: defineTool()](https://rcp.hasanraiyan.me/docs/sdk/server): defineTool() with Zod schema, t.arg(), queryParams, responseMappings — turn REST endpoint into AI tool
-- [OpenAI Adapter — Connect REST API to ChatGPT](https://rcp.hasanraiyan.me/docs/sdk/openai): rcpToolsToOpenAiTools() to ChatCompletionTool[] for openai.chat.completions.create()
-- [LangChain Adapter — DynamicStructuredTool](https://rcp.hasanraiyan.me/docs/sdk/langchain): rcpToolsToLangChainTools() to LangChain DynamicStructuredTool, LangGraph, MultiServerRcpClient
-- [Gemini Adapter — Google GenAI Function Calling](https://rcp.hasanraiyan.me/docs/sdk/gemini): rcpToolsToGeminiInteractionsTools() & classicTools for Gemini 2.5 Interactions + generateContent
+- [OpenAI Adapter — Build AI Agent with REST API via OpenAI SDK](https://rcp.hasanraiyan.me/docs/sdk/openai): Build AI agent that uses REST API as tools via OpenAI SDK — rcpToolsToOpenAiTools() to ChatCompletionTool[] (your agent speaks RCP, ChatGPT doesn't need to)
+- [LangChain Adapter — Build AI Agent with DynamicStructuredTool](https://rcp.hasanraiyan.me/docs/sdk/langchain): Build AI agent with LangChain/LangGraph — rcpToolsToLangChainTools() to DynamicStructuredTool, MultiServerRcpClient
+- [Gemini Adapter — Build AI Agent with Google GenAI](https://rcp.hasanraiyan.me/docs/sdk/gemini): Build AI agent with Gemini 2.5 — rcpToolsToGeminiInteractionsTools() & classicTools for Interactions + generateContent
 
 ## Quick Start
 
@@ -61,6 +61,10 @@ const result = await client.call(tools[0], { city: 'Paris' });
 - Spec: https://rcp.hasanraiyan.me/docs/spec
 - RCP vs MCP: https://rcp.hasanraiyan.me/docs/vs-mcp
 
+## Note
+
+RCP is new — ChatGPT / Claude don't speak RCP natively. Your AI agent does: it fetches the manifest and exposes tools to the model via OpenAI/LangChain/Gemini SDKs. Build an AI agent, not a ChatGPT plugin.
+
 ## Keywords
 
-RCP, REST Connector Protocol, rcp-sdk, expose REST API to AI, MCP alternative, lightweight MCP alternative, RCP vs MCP, LLM tool calling, OpenAI function calling, LangChain tools, Gemini function calling, REST API to AI agent
+RCP, REST Connector Protocol, rcp-sdk, build AI agent REST API, expose REST API to AI agent, MCP alternative, lightweight MCP alternative, RCP vs MCP, LLM tool calling, AI agent tool calling, OpenAI SDK adapter, LangChain DynamicStructuredTool, Gemini function calling

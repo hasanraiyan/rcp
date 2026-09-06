@@ -3,17 +3,17 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Getting Started with rcp-sdk — Expose REST API to AI in 5 Minutes",
+  title: "Getting Started with rcp-sdk — Build AI Agent from REST API in 5 Minutes",
   description:
-    "Install rcp-sdk, expose a REST endpoint as an AI tool with defineTool(), serve a manifest, and call it via OpenAI tool calling — complete end-to-end tutorial.",
+    "Build an AI agent from your REST API: install rcp-sdk, defineTool() with Zod, serve manifest, then use OpenAI/LangChain/Gemini adapters — complete tutorial.",
   keywords: [
     "rcp-sdk getting started",
     "rcp-sdk tutorial",
-    "expose REST API to AI tutorial",
-    "connect REST API to OpenAI",
+    "build AI agent REST API",
+    "expose REST API to AI agent",
     "defineTool example",
     "createRcpClient tutorial",
-    "REST API to ChatGPT",
+    "AI agent tool calling tutorial",
   ],
   alternates: { canonical: "/docs/getting-started" },
 };
@@ -163,16 +163,16 @@ console.log(result.mapped);
       <h2>Next steps</h2>
       <ul>
         <li>
-          <a href="/docs/vs-mcp">RCP vs MCP — do you need a lightweight MCP alternative?</a> — decide if stateless HTTP fits vs a dedicated protocol server
+          <a href="/docs/vs-mcp">RCP vs MCP — lightweight alternative for AI agents</a> — decide if stateless HTTP fits vs a dedicated protocol server
         </li>
         <li>
-          <a href="/docs/sdk/openai">Connect REST API to ChatGPT via OpenAI adapter</a> — <code>rcpToolsToOpenAiTools()</code> for <code>openai.chat.completions.create()</code>
+          <a href="/docs/sdk/openai">Build AI agent with OpenAI tools — via OpenAI SDK adapter</a> — <code>rcpToolsToOpenAiTools()</code> for <code>openai.chat.completions.create()</code>
         </li>
         <li>
-          <a href="/docs/sdk/langchain">REST API as LangChain tools — DynamicStructuredTool + LangGraph</a>
+          <a href="/docs/sdk/langchain">Build AI agent with LangChain — DynamicStructuredTool + LangGraph</a>
         </li>
         <li>
-          <a href="/docs/sdk/gemini">Expose REST API to Gemini — Google GenAI function calling</a>
+          <a href="/docs/sdk/gemini">Build AI agent with Gemini — Google GenAI function calling</a>
         </li>
         <li>
           <a href="/docs/concepts/manifest">Understand the RCP manifest format</a> — JSON directory of AI tools

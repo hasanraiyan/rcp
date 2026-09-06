@@ -276,16 +276,16 @@ multi.invalidateCache('weather');`}
       <h2>Related</h2>
       <ul>
         <li>
-          <a href="/docs/sdk/openai">OpenAI adapter — connect REST API to ChatGPT</a>
+          <a href="/docs/sdk/openai">Build AI agent with OpenAI SDK — REST API as tools</a>
         </li>
         <li>
-          <a href="/docs/sdk/gemini">Gemini adapter — Google GenAI function calling</a>
+          <a href="/docs/sdk/gemini">Build AI agent with Gemini — Google GenAI</a>
         </li>
         <li>
           <a href="/docs/sdk/client">rcp-sdk/client — createRcpClient & discover()</a>
         </li>
         <li>
-          <a href="/docs/getting-started">Getting started — expose REST API to AI</a>
+          <a href="/docs/getting-started">Build AI agent from REST API in 5 minutes</a>
         </li>
         <li>
           <a href="/docs/concepts/resolvers">Hide tenant ID from LLM with resolvers</a>

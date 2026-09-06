@@ -3,17 +3,18 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "OpenAI Adapter — Connect REST API to ChatGPT Function Calling",
+  title: "OpenAI Adapter — Build AI Agent with REST API Tools via OpenAI SDK",
   description:
-    "rcp-sdk/adapters/openai: rcpToolsToOpenAiTools() converts RCP tools to OpenAI ChatCompletionTool format. Connect any REST API to ChatGPT / GPT-4o tool calling in one line.",
+    "Build an AI agent that uses your REST API as tools via OpenAI SDK. rcpToolsToOpenAiTools() converts RCP manifest to ChatCompletionTool[] for openai.chat.completions.create() — no ChatGPT native RCP support needed.",
   keywords: [
+    "build AI agent OpenAI",
     "OpenAI function calling REST API",
-    "connect REST API to ChatGPT",
-    "connect REST API to OpenAI",
+    "AI agent REST API tools",
+    "OpenAI SDK tools adapter",
     "rcpToolsToOpenAiTools",
     "OpenAI ChatCompletionTool",
     "GPT-4o tools REST API",
-    "OpenAI adapter RCP",
+    "AI agent tool calling",
   ],
   alternates: { canonical: "/docs/sdk/openai" },
 };
@@ -22,20 +23,20 @@ export default function OpenAiSdkPage() {
   const techArticleJsonLd = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    headline: "OpenAI Adapter — Connect REST API to ChatGPT Function Calling",
+    headline: "OpenAI Adapter — Build AI Agent with REST API Tools via OpenAI SDK",
     description:
-      "Turn any REST API into OpenAI ChatGPT tools with rcp-sdk/adapters/openai. rcpToolsToOpenAiTools() converts RCP manifests to ChatCompletionTool[] for GPT-4o.",
+      "Build an AI agent that uses REST API as tools via OpenAI SDK. rcpToolsToOpenAiTools() converts RCP manifests to ChatCompletionTool[] for openai.chat.completions.create(). RCP is new — your agent speaks it, ChatGPT doesn't need to.",
     author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
     datePublished: "2026-09-06",
     dateModified: "2026-09-06",
-    keywords: "OpenAI function calling, ChatGPT REST API, rcpToolsToOpenAiTools, ChatCompletionTool, GPT-4o tools",
+    keywords: "build AI agent OpenAI, AI agent REST API tools, rcpToolsToOpenAiTools, ChatCompletionTool",
     mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/sdk/openai",
   };
 
   return (
     <DocPage
       title="OpenAI — rcp-sdk/adapters/openai"
-      description="Convert RCP-discovered tools into OpenAI ChatCompletionTool format for ChatGPT / GPT-4o. Pass the result directly to openai.chat.completions.create() — no wrapper, no extra abstraction."
+      description="Build an AI agent that uses your REST API as tools via OpenAI SDK. Converts RCP tools to ChatCompletionTool[] for openai.chat.completions.create() — your agent speaks RCP, ChatGPT doesn't need to."
     >
       <script
         type="application/ld+json"
@@ -46,9 +47,11 @@ export default function OpenAiSdkPage() {
         code={`import { rcpToolsToOpenAiTools, loadOpenAiTools } from 'rcp-sdk/adapters/openai';`}
       />
       <p>
-        The OpenAI adapter converts <code>DiscoveredTool[]</code> from{" "}
-        <code>rcp.discover()</code> into <code>ChatCompletionTool[]</code> — the format the OpenAI
-        SDK expects. No wrapper around the SDK, just a format converter.
+        The OpenAI adapter lets you <strong>build an AI agent</strong> that uses your REST API as
+        tools via the OpenAI SDK. It converts <code>DiscoveredTool[]</code> from{" "}
+        <code>rcp.discover()</code> into <code>ChatCompletionTool[]</code> — the format{" "}
+        <code>openai.chat.completions.create()</code> expects. Your agent speaks RCP; ChatGPT/Claude
+        don&apos;t need to — they just see normal OpenAI tools.
       </p>
 
       <h2>rcpToolsToOpenAiTools(tools, options?)</h2>
@@ -210,19 +213,19 @@ const { tools, discovered } = await loadOpenAiTools(
       <h2>Related</h2>
       <ul>
         <li>
-          <a href="/docs/getting-started">Getting started — expose REST API to AI in 5 minutes</a>
+          <a href="/docs/getting-started">Getting started — build AI agent from REST API in 5 minutes</a>
         </li>
         <li>
-          <a href="/docs/sdk/langchain">LangChain adapter — REST API as DynamicStructuredTool</a>
+          <a href="/docs/sdk/langchain">Build AI agent with LangChain — DynamicStructuredTool</a>
         </li>
         <li>
-          <a href="/docs/sdk/gemini">Gemini adapter — Google GenAI function calling</a>
+          <a href="/docs/sdk/gemini">Build AI agent with Gemini — Google GenAI</a>
         </li>
         <li>
           <a href="/docs/sdk/client">rcp-sdk/client — createRcpClient, discover() & call()</a>
         </li>
         <li>
-          <a href="/docs/vs-mcp">RCP vs MCP comparison — lightweight MCP alternative</a>
+          <a href="/docs/vs-mcp">RCP vs MCP — lightweight MCP alternative for AI agents</a>
         </li>
       </ul>
     </DocPage>
