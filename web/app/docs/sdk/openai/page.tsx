@@ -80,6 +80,7 @@ const { tools, discovered } = await loadOpenAiTools(
       />
 
       <h2>Options</h2>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -123,12 +124,14 @@ const { tools, discovered } = await loadOpenAiTools(
           </tr>
         </tbody>
       </table>
+      </div>
 
       <h2>How it works</h2>
       <p>
         The adapter converts <code>exposedParams</code> into a JSON Schema{" "}
         <code>parameters</code> object matching OpenAI&apos;s function-calling format:
       </p>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -163,6 +166,7 @@ const { tools, discovered } = await loadOpenAiTools(
           </tr>
         </tbody>
       </table>
+      </div>
       <p>
         Parameters with <code>required: false</code> are omitted from the <code>required</code>{" "}
         array. The result is a standard <code>ChatCompletionTool</code> that you pass directly to{" "}

@@ -55,6 +55,7 @@ const agent = createAgent({ model, tools });`}
       />
 
       <h3>Options</h3>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -69,7 +70,7 @@ const agent = createAgent({ model, tools });`}
               <code>context</code>
             </td>
             <td>
-              <code>Record&lt;string, unknown&gt; | (() =&gt; Record&lt;string, unknown&gt;)</code>
+              <code>{"Record<string, unknown> | (() => Record<string, unknown>)"}</code>
             </td>
             <td>
               Static value or zero-arg function. Passed to <code>rcp.call()</code> as the context for
@@ -84,7 +85,7 @@ const agent = createAgent({ model, tools });`}
               <code>string</code>
             </td>
             <td>
-              Prefix for tool names: <code>"myApi__get_weather"</code>. Useful when combining tools
+              Prefix for tool names: <code>&quot;myApi__get_weather&quot;</code>. Useful when combining tools
               from multiple servers.
             </td>
           </tr>
@@ -101,6 +102,7 @@ const agent = createAgent({ model, tools });`}
           </tr>
         </tbody>
       </table>
+      </div>
 
       <h2>rcpToolsToLangChainTools(tools, client, options?)</h2>
       <p>
@@ -157,6 +159,7 @@ multi.invalidateCache('weather');`}
       />
 
       <h3>Constructor options</h3>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -171,7 +174,7 @@ multi.invalidateCache('weather');`}
               <code>servers</code>
             </td>
             <td>
-              <code>{"Record<string, { manifestUrl: string; client: RcpClient }>"}</code>
+              <code>{"Record<string, servers config>"}</code>
             </td>
             <td>Required. Map of server name to config.</td>
           </tr>
@@ -180,7 +183,7 @@ multi.invalidateCache('weather');`}
               <code>context</code>
             </td>
             <td>
-              <code>Record&lt;string, unknown&gt; | (() =&gt; Record&lt;string, unknown&gt;)</code>
+              <code>{"Record<string, unknown> | (() => Record<string, unknown>)"}</code>
             </td>
             <td>Default context for all servers.</td>
           </tr>
@@ -189,7 +192,7 @@ multi.invalidateCache('weather');`}
               <code>getContextForServer</code>
             </td>
             <td>
-              <code>Record&lt;string, Record&lt;string, unknown&gt;&gt;</code>
+              <code>{"Record<string, Record<string, unknown>>"}</code>
             </td>
             <td>Per-server context overrides.</td>
           </tr>
@@ -225,6 +228,7 @@ multi.invalidateCache('weather');`}
           </tr>
         </tbody>
       </table>
+      </div>
 
       <h2>How it works</h2>
       <p>The adapter does three things for each tool:</p>

@@ -44,6 +44,7 @@ export default function ClientSdkPage() {
       </Callout>
 
       <h3>Options</h3>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -101,6 +102,7 @@ export default function ClientSdkPage() {
           </tr>
         </tbody>
       </table>
+      </div>
 
       <h2>client.discover(url, ctx?)</h2>
       <p>Fetches, validates, and returns a server&rsquo;s manifest.</p>
@@ -111,8 +113,9 @@ export default function ClientSdkPage() {
       <p>
         Returns <code>{"{ manifest, tools }"}</code>. Each discovered tool is the raw tool plus{" "}
         <code>exposedParams</code> — the same <code>params</code> array with every resolver-bound
-        name removed. Show <code>exposedParams</code>, not <code>params</code>, to your model.
+        name removed.         Show <code>exposedParams</code>, not <code>params</code>, to your model.
       </p>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -143,6 +146,7 @@ export default function ClientSdkPage() {
           </tr>
         </tbody>
       </table>
+      </div>
 
       <h2>client.call(tool, agentArgs?, ctx?)</h2>
       <p>
@@ -161,6 +165,7 @@ export default function ClientSdkPage() {
         <code>call()</code> needs the full <code>params</code> list to know which tokens are
         resolver-bound versus model-fillable.
       </p>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -195,6 +200,7 @@ export default function ClientSdkPage() {
           </tr>
         </tbody>
       </table>
+      </div>
       <Callout>
         None of these retry or swallow the problem — a call that can&rsquo;t be safely made throws
         before any HTTP request goes out.

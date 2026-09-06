@@ -41,6 +41,7 @@ const getWeather = defineTool({
       />
 
       <h3>Options</h3>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -134,6 +135,7 @@ const getWeather = defineTool({
           </tr>
         </tbody>
       </table>
+      </div>
 
       <h2>t.arg(name)</h2>
       <p>
@@ -150,6 +152,7 @@ url: (t) => \`https://api.example.com/search?q=\${t.arg('query')}\`, // -> "...?
       />
 
       <h2>args → params</h2>
+      <div className="overflow-x-auto">
       <table>
         <thead>
           <tr>
@@ -184,6 +187,7 @@ url: (t) => \`https://api.example.com/search?q=\${t.arg('query')}\`, // -> "...?
           </tr>
         </tbody>
       </table>
+      </div>
       <p>
         A type this can&rsquo;t recognize (a wrapped/refined/union field) falls back to{" "}
         <code>&apos;string&apos;</code>.
