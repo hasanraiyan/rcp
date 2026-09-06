@@ -11,7 +11,7 @@
   "dependencies": {
     "@google/genai": "latest",
     "dotenv": "^17.4.2",
-    "rcp-sdk": "file:../../typescript"
+    "rcp-sdk": "^0.2.0"
   },
   "devDependencies": {
     "@types/node": "^26.4.1",
