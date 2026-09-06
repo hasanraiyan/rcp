@@ -171,7 +171,7 @@ multi.invalidateCache('weather');`}
               <code>servers</code>
             </td>
             <td>
-              <code>Record&lt;string, { manifestUrl: string; client: RcpClient }&gt;</code>
+              <code>{"Record<string, { manifestUrl: string; client: RcpClient }>"}</code>
             </td>
             <td>Required. Map of server name to config.</td>
           </tr>
