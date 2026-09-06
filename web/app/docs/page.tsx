@@ -3,9 +3,18 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Introduction",
+  title: "Introduction — What is RCP? REST Connector Protocol Explained",
   description:
-    "RCP (REST Connector Protocol) is a lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server.",
+    "What is RCP? A lightweight, stateless alternative to MCP for exposing your existing REST API as AI-callable tools — no protocol server, just a JSON manifest + plain HTTP.",
+  keywords: [
+    "what is RCP",
+    "REST Connector Protocol explained",
+    "RCP protocol overview",
+    "expose REST API to AI",
+    "lightweight MCP alternative",
+    "stateless AI protocol",
+    "REST API to AI tools",
+  ],
   alternates: { canonical: "/docs" },
 };
 
@@ -84,8 +93,30 @@ GET  <manifest-url>          -->  200 { "rcpVersion": "0.1", "tools": [...] }
       <p>
         Want the full picture of what&rsquo;s built versus still open? See the{" "}
         <a href="/docs/roadmap">roadmap</a>. Ready to see RCP end to end? Continue to{" "}
-        <a href="/docs/getting-started">Getting started</a>.
+        <a href="/docs/getting-started">Getting started — expose your REST API to AI in 5 minutes</a>.
       </p>
+
+      <h2>Explore RCP</h2>
+      <ul>
+        <li>
+          <a href="/docs/vs-mcp">RCP vs MCP — lightweight alternative to Model Context Protocol</a> — when to use stateless HTTP vs a dedicated MCP server
+        </li>
+        <li>
+          <a href="/docs/concepts/manifest">The manifest — JSON directory of AI tools</a> — how <code>GET /manifest</code> turns REST endpoints into AI-callable tools
+        </li>
+        <li>
+          <a href="/docs/concepts/resolvers">Resolvers — hide tenant ID & user ID from the LLM</a> — resolver-bound params for secure multi-tenant isolation
+        </li>
+        <li>
+          <a href="/docs/sdk/openai">Connect REST API to ChatGPT with OpenAI function calling</a> — <code>rcpToolsToOpenAiTools()</code> adapter
+        </li>
+        <li>
+          <a href="/docs/sdk/langchain">REST API as LangChain DynamicStructuredTool</a> — LangChain & LangGraph adapter with MultiServerRcpClient
+        </li>
+        <li>
+          <a href="/docs/spec">Full RCP specification v0.1</a> — architecture, security & trust model
+        </li>
+      </ul>
     </DocPage>
   );
 }

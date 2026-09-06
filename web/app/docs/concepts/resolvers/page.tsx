@@ -3,18 +3,40 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Resolvers",
+  title: "Resolvers — Hide Tenant ID & User ID from the LLM",
   description:
-    "A resolver-bound param never reaches the model — it's removed from the tool schema at discovery time, not just hidden by convention.",
+    "Resolver-bound params never reach the model — stripped at discovery, filled from trusted context at call time. Secure tenantId, userId, and internal IDs from LLM spoofing.",
+  keywords: [
+    "RCP resolvers",
+    "resolver-bound parameters",
+    "hide param from LLM",
+    "tenant ID LLM security",
+    "userId hidden from model",
+    "LLM parameter injection prevention",
+  ],
   alternates: { canonical: "/docs/concepts/resolvers" },
 };
 
 export default function ResolversPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "Resolvers — Hide Tenant ID & User ID from the LLM",
+    description: "Resolver-bound params stripped from exposedParams at discovery, filled from trusted context at call time — secure tenantId from LLM spoofing.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "RCP resolvers, resolver-bound parameters, hide param from LLM, tenant ID security",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/concepts/resolvers",
+  };
+
+
   return (
     <DocPage
       title="Resolvers"
       description="A resolver-bound param never reaches the model — it's removed from the tool schema at discovery time, not just hidden by convention."
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }} />
       <p>
         A tool often needs a value that shouldn&rsquo;t come from the model at all: which end user
         is asking, which tenant they belong to, a locale — anything the client&rsquo;s own operator
@@ -83,6 +105,22 @@ console.log(describeManifest(manifest, tools));
         there&rsquo;s no protocol-level signal warning otherwise. A server&rsquo;s{" "}
         <code>description</code> on that param is the only hint a client operator gets.
       </Callout>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/concepts/manifest">The manifest — JSON directory of AI tools</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/client">rcp-sdk/client — resolver config in createRcpClient()</a>
+        </li>
+        <li>
+          <a href="/docs/vs-mcp">RCP vs MCP — why resolvers have no MCP equivalent</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started">Getting started — expose REST API to AI</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

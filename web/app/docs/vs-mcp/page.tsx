@@ -2,13 +2,36 @@ import type { Metadata } from "next";
 import { DocPage } from "@/components/docs/doc-page";
 
 export const metadata: Metadata = {
-  title: "RCP vs MCP",
+  title: "RCP vs MCP — Lightweight Alternative to Model Context Protocol",
   description:
-    "The difference between RCP and MCP, and a concrete checklist for deciding which one fits your case.",
+    "RCP vs MCP compared: when to use RCP's stateless HTTP manifest vs MCP's stateful server. Decision checklist for exposing REST APIs to AI without a protocol server.",
+  keywords: [
+    "RCP vs MCP",
+    "MCP alternative",
+    "lightweight alternative to MCP",
+    "MCP vs REST API",
+    "Model Context Protocol vs RCP",
+    "do I need MCP",
+    "MCP comparison 2026",
+    "stateless vs stateful AI protocol",
+  ],
   alternates: { canonical: "/docs/vs-mcp" },
 };
 
 export default function VsMcpPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "RCP vs MCP — Lightweight Alternative to Model Context Protocol",
+    description:
+      "Compare RCP stateless HTTP manifest vs MCP persistent server. Decision guide for exposing REST APIs as AI tools without a protocol server.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "RCP vs MCP, MCP alternative, lightweight MCP alternative, MCP vs REST API",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/vs-mcp",
+  };
+
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -45,6 +68,10 @@ export default function VsMcpPage() {
       title="RCP vs MCP"
       description="Not a replacement for MCP — a narrower protocol for a narrower, much more common case."
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
@@ -195,8 +222,27 @@ export default function VsMcpPage() {
 
       <p>
         See the full breakdown of what&rsquo;s built and what&rsquo;s still open on the{" "}
-        <a href="/docs/roadmap">roadmap</a>.
+        <a href="/docs/roadmap">RCP roadmap</a>.
       </p>
+
+      <h2>Start with RCP</h2>
+      <ul>
+        <li>
+          <a href="/docs/getting-started">Getting started — expose REST API to AI in 5 minutes with rcp-sdk</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/openai">Connect REST API to ChatGPT via OpenAI function calling adapter</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/langchain">REST API as LangChain DynamicStructuredTool + LangGraph</a>
+        </li>
+        <li>
+          <a href="/docs/spec">Read the full RCP specification v0.1</a>
+        </li>
+        <li>
+          <a href="/docs/examples">Working examples — Express + OpenAI</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

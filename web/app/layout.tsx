@@ -20,27 +20,64 @@ const jetbrainsMono = JetBrains_Mono({
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://rcp.hasanraiyan.me";
 const SITE_DESCRIPTION =
-  "A lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server. Compare RCP vs MCP, read the spec, and get started with rcp-sdk.";
+  "Expose your existing REST API as AI-callable tools without running an MCP server. Lightweight alternative to Model Context Protocol for OpenAI, LangChain & Gemini tool calling — just a manifest + plain HTTP. Start with rcp-sdk.";
+
+// Google-searchable keyword clusters — keep in priority order (most important first)
+// Cluster 1: Brand | 2: Primary intent (expose REST to AI) | 3: MCP comparison | 4: Tool/function calling | 5: Framework adapters | 6: Long-tail
+const SITE_KEYWORDS = [
+  // Brand / core
+  "RCP",
+  "REST Connector Protocol",
+  "rcp-sdk",
+  "RCP protocol",
+  // Primary intent — what devs actually type into Google
+  "expose REST API to AI",
+  "turn REST API into AI tools",
+  "connect REST API to LLM",
+  "REST API to AI agent",
+  "make REST API callable by AI",
+  "expose existing API as AI tool",
+  "REST API AI integration",
+  "AI callable REST endpoints",
+  // MCP comparison — highest volume 2025-2026
+  "MCP alternative",
+  "lightweight alternative to MCP",
+  "RCP vs MCP",
+  "MCP vs REST API",
+  "Model Context Protocol alternative",
+  "without MCP server",
+  "no protocol server",
+  // Tool / function calling
+  "LLM tool calling",
+  "OpenAI function calling",
+  "OpenAI tool calling",
+  "function calling REST API",
+  "AI tool calling protocol",
+  "AI agent tools",
+  "LLM function calling tutorial",
+  // Framework adapters
+  "OpenAI tools adapter",
+  "LangChain tools",
+  "LangChain DynamicStructuredTool",
+  "Gemini function calling",
+  "Google GenAI tools",
+  "Vercel AI SDK tools",
+  "Express REST API AI",
+  // Technical long-tail
+  "stateless HTTP AI protocol",
+  "REST API manifest for AI",
+  "AI agent REST API protocol",
+  "resolver bound parameters",
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "RCP — REST Connector Protocol",
+    default: "RCP — REST Connector Protocol | Your REST API is Already the Tool",
     template: "%s — RCP",
   },
   description: SITE_DESCRIPTION,
-  keywords: [
-    "RCP",
-    "REST Connector Protocol",
-    "MCP",
-    "Model Context Protocol",
-    "AI tools",
-    "REST API",
-    "LLM tool calling",
-    "function calling",
-    "rcp-sdk",
-    "AI agent protocol",
-  ],
+  keywords: SITE_KEYWORDS,
   authors: [{ name: "Raiyan Hasan", url: "https://hasanraiyan.me" }],
   creator: "Raiyan Hasan",
   publisher: "Raiyan Hasan",
@@ -65,7 +102,7 @@ export const metadata: Metadata = {
     type: "website",
     url: "/",
     siteName: "RCP — REST Connector Protocol",
-    title: "RCP — REST Connector Protocol",
+    title: "RCP — REST Connector Protocol | Expose REST API as AI Tools Without MCP Server",
     description: SITE_DESCRIPTION,
     locale: "en_US",
     images: [
@@ -79,7 +116,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RCP — REST Connector Protocol",
+    title: "RCP — REST Connector Protocol | Expose REST API as AI Tools",
     description: SITE_DESCRIPTION,
     images: ["/opengraph-image"],
   },

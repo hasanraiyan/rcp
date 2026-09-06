@@ -1,7 +1,16 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { VersionBadge } from "@/components/docs/version-badge";
 import { InView } from "@/components/home/in-view";
 import { cn } from "@/lib/utils";
+
+export const metadata: Metadata = {
+  // Homepage is the strongest SEO page — extra Google-friendly title that includes primary intent
+  title: "RCP — Expose Your REST API as AI Tools | Lightweight MCP Alternative",
+  description:
+    "Expose your existing REST API as AI-callable tools without running an MCP server. RCP is a stateless, OpenAPI-friendly alternative to Model Context Protocol — OpenAI, LangChain & Gemini ready via rcp-sdk.",
+  alternates: { canonical: "/" },
+};
 
 const REPO = "https://github.com/hasanraiyan/rcp";
 
@@ -52,9 +61,11 @@ const jsonLd = {
   "@type": "SoftwareSourceCode",
   name: "RCP — REST Connector Protocol",
   description:
-    "A lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server.",
+    "Expose your existing REST API as AI-callable tools without running an MCP server. Lightweight, stateless alternative to Model Context Protocol for OpenAI, LangChain & Gemini tool calling.",
   codeRepository: REPO,
   programmingLanguage: "TypeScript",
+  keywords:
+    "REST API to AI, MCP alternative, OpenAI function calling, LLM tool calling, rcp-sdk",
   author: {
     "@type": "Person",
     name: "Raiyan Hasan",
@@ -71,7 +82,7 @@ const faqJsonLd = {
       name: "What is RCP?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "RCP (REST Connector Protocol) is a lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server. A server publishes a manifest; a client fetches it and calls the endpoints directly.",
+        text: "RCP (REST Connector Protocol) is a lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server. A server publishes a manifest at /manifest; a client fetches it and calls the endpoints directly via plain HTTP.",
       },
     },
     {
@@ -79,7 +90,39 @@ const faqJsonLd = {
       name: "How is RCP different from MCP?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "MCP requires a persistent session and dedicated protocol server for rich, stateful capabilities. RCP is stateless HTTP — your existing REST API plus one manifest route. Use RCP when you already have endpoints to expose; use MCP for resources, prompts, and elicitation.",
+        text: "MCP requires a persistent session and dedicated protocol server for rich, stateful capabilities like resources, prompts, and elicitation. RCP is stateless HTTP — your existing REST API plus one manifest route. Use RCP when you already have endpoints to expose; use MCP when you need browsing, prompts, or long-lived sessions.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I expose my REST API to ChatGPT / OpenAI with RCP?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Install rcp-sdk (npm i rcp-sdk), define each endpoint with defineTool() and a Zod schema, serve { rcpVersion, auth, tools } at GET /manifest, then on the client use createRcpClient() + rcpToolsToOpenAiTools() to get ChatCompletionTool[] and pass it to openai.chat.completions.create().",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Do I need MCP if I already have a REST API?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No — if you just want an AI to call your existing REST endpoints as tools, RCP is the shortest path. You add one GET /manifest route to your API; no JSON-RPC, no persistent connection, no separate protocol server. Reach for MCP only when you need stateful resources, prompts, sampling, or elicitation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I use RCP with LangChain and Gemini?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. rcp-sdk ships adapters: rcp-sdk/adapters/langchain converts RCP tools to LangChain DynamicStructuredTool (also works with LangGraph and MultiServerRcpClient), and rcp-sdk/adapters/gemini converts to Google GenAI function-calling format for Gemini 2.5 (both Interactions and classic generateContent APIs).",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How does RCP keep tenant ID and user ID secure from the LLM?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Via resolver-bound parameters. A resolver like (ctx) => ctx.tenantId is registered on the client; at discover() time that param is stripped from exposedParams so the model never sees it, and at call() time the client fills the real value from trusted context. The model cannot see, guess, or spoof it.",
       },
     },
     {
@@ -87,7 +130,7 @@ const faqJsonLd = {
       name: "How do I get started with RCP?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Install rcp-sdk via npm i rcp-sdk, define tools with defineTool() on the server, serve a manifest at /manifest, then discover and call from the client with createRcpClient().",
+        text: "Install rcp-sdk via npm i rcp-sdk, define tools with defineTool() on the server, serve a manifest at /manifest, then discover and call from the client with createRcpClient(). See /docs/getting-started for the 5-minute walkthrough and /docs/examples for Express + OpenAI.",
       },
     },
   ],
@@ -366,6 +409,39 @@ export default function Home() {
             <p className="mt-4 text-sm text-muted-foreground">
               More languages land the same way — self-contained, own package manifest, own tests.
             </p>
+          </div>
+        </section>
+
+        {/* Popular guides — SEO internal linking hub */}
+        <section className="border-t border-border bg-secondary/30">
+          <div className="mx-auto w-full max-w-5xl px-6 py-12">
+            <h2 className="text-sm font-semibold tracking-wide uppercase text-muted-foreground">Popular guides</h2>
+            <div className="mt-6 grid gap-6 text-sm sm:grid-cols-2 lg:grid-cols-3">
+              <div>
+                <h3 className="font-medium"><Link href="/docs/getting-started" className="hover:text-primary hover:underline">Expose REST API to AI in 5 minutes</Link></h3>
+                <p className="mt-1 text-muted-foreground">Install rcp-sdk, defineTool(), serve manifest, discover with createRcpClient().</p>
+              </div>
+              <div>
+                <h3 className="font-medium"><Link href="/docs/vs-mcp" className="hover:text-primary hover:underline">RCP vs MCP — lightweight alternative</Link></h3>
+                <p className="mt-1 text-muted-foreground">When stateless HTTP beats a dedicated MCP server.</p>
+              </div>
+              <div>
+                <h3 className="font-medium"><Link href="/docs/sdk/openai" className="hover:text-primary hover:underline">Connect REST API to ChatGPT</Link></h3>
+                <p className="mt-1 text-muted-foreground">OpenAI function calling via rcpToolsToOpenAiTools().</p>
+              </div>
+              <div>
+                <h3 className="font-medium"><Link href="/docs/sdk/langchain" className="hover:text-primary hover:underline">REST API as LangChain tools</Link></h3>
+                <p className="mt-1 text-muted-foreground">DynamicStructuredTool + LangGraph + MultiServerRcpClient.</p>
+              </div>
+              <div>
+                <h3 className="font-medium"><Link href="/docs/sdk/gemini" className="hover:text-primary hover:underline">Expose REST API to Gemini</Link></h3>
+                <p className="mt-1 text-muted-foreground">Google GenAI function calling for Gemini 2.5.</p>
+              </div>
+              <div>
+                <h3 className="font-medium"><Link href="/docs/concepts/manifest" className="hover:text-primary hover:underline">RCP manifest format</Link></h3>
+                <p className="mt-1 text-muted-foreground">GET /manifest — JSON directory of AI tools.</p>
+              </div>
+            </div>
           </div>
         </section>
       </main>

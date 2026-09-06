@@ -3,18 +3,44 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "OpenAI — rcp-sdk/adapters/openai",
+  title: "OpenAI Adapter — Connect REST API to ChatGPT Function Calling",
   description:
-    "API reference for the OpenAI adapter: convert RCP-discovered tools into OpenAI function-calling format.",
+    "rcp-sdk/adapters/openai: rcpToolsToOpenAiTools() converts RCP tools to OpenAI ChatCompletionTool format. Connect any REST API to ChatGPT / GPT-4o tool calling in one line.",
+  keywords: [
+    "OpenAI function calling REST API",
+    "connect REST API to ChatGPT",
+    "connect REST API to OpenAI",
+    "rcpToolsToOpenAiTools",
+    "OpenAI ChatCompletionTool",
+    "GPT-4o tools REST API",
+    "OpenAI adapter RCP",
+  ],
   alternates: { canonical: "/docs/sdk/openai" },
 };
 
 export default function OpenAiSdkPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "OpenAI Adapter — Connect REST API to ChatGPT Function Calling",
+    description:
+      "Turn any REST API into OpenAI ChatGPT tools with rcp-sdk/adapters/openai. rcpToolsToOpenAiTools() converts RCP manifests to ChatCompletionTool[] for GPT-4o.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "OpenAI function calling, ChatGPT REST API, rcpToolsToOpenAiTools, ChatCompletionTool, GPT-4o tools",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/sdk/openai",
+  };
+
   return (
     <DocPage
       title="OpenAI — rcp-sdk/adapters/openai"
-      description="Convert RCP-discovered tools into OpenAI function-calling format. Pass the result directly to the OpenAI SDK — no wrapper, no extra abstraction."
+      description="Convert RCP-discovered tools into OpenAI ChatCompletionTool format for ChatGPT / GPT-4o. Pass the result directly to openai.chat.completions.create() — no wrapper, no extra abstraction."
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }}
+      />
       <CodeBlock
         lang="typescript"
         code={`import { rcpToolsToOpenAiTools, loadOpenAiTools } from 'rcp-sdk/adapters/openai';`}
@@ -180,6 +206,25 @@ const { tools, discovered } = await loadOpenAiTools(
         extend <code>Record&lt;string, unknown&gt;</code> to match the OpenAI SDK&apos;s index
         signature requirement.
       </Callout>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/getting-started">Getting started — expose REST API to AI in 5 minutes</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/langchain">LangChain adapter — REST API as DynamicStructuredTool</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/gemini">Gemini adapter — Google GenAI function calling</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/client">rcp-sdk/client — createRcpClient, discover() & call()</a>
+        </li>
+        <li>
+          <a href="/docs/vs-mcp">RCP vs MCP comparison — lightweight MCP alternative</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

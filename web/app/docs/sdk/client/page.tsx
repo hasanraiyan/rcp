@@ -3,18 +3,40 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Client — rcp-sdk/client",
+  title: "rcp-sdk Client — createRcpClient, discover() & call() API",
   description:
-    "API reference for createRcpClient(): options, discover(), call(), logging, describeManifest(), and error classes.",
+    "rcp-sdk/client API: createRcpClient() with resolvers & auth, discover(manifestUrl) to fetch tools, call(tool, args) to execute REST endpoints as AI tools.",
+  keywords: [
+    "rcp-sdk client",
+    "createRcpClient",
+    "rcp discover",
+    "rcp call",
+    "rcp-sdk API reference",
+    "connect REST API to AI client",
+  ],
   alternates: { canonical: "/docs/sdk/client" },
 };
 
 export default function ClientSdkPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "rcp-sdk Client — createRcpClient, discover() & call()",
+    description: "rcp-sdk/client API: createRcpClient with resolvers & auth, discover(manifestUrl), call(tool, args) to execute REST endpoints as AI tools.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "rcp-sdk client, createRcpClient, discover call, REST API AI client",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/sdk/client",
+  };
+
+
   return (
     <DocPage
       title="Client — rcp-sdk/client"
       description="For whoever is building the AI application. Discovers a server's manifest, exposes its tools, and executes calls against them."
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }} />
       <CodeBlock lang="typescript" code={`import { createRcpClient } from 'rcp-sdk/client';`} />
 
       <h2>createRcpClient(options?)</h2>
@@ -231,6 +253,22 @@ await client.discover('https://example.com/rcp/manifest');
         <code>RcpResolverError</code>, <code>RcpToolAuthOverrideNotImplementedError</code>,{" "}
         <code>MissingTemplateValueError</code>.
       </p>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/sdk/server">rcp-sdk/server — defineTool() to expose REST endpoint as AI tool</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/openai">OpenAI adapter — connect REST API to ChatGPT</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/langchain">LangChain adapter — DynamicStructuredTool</a>
+        </li>
+        <li>
+          <a href="/docs/concepts/resolvers">Resolvers — hide tenant ID from LLM</a> and <a href="/docs/concepts/auth">Auth — secure REST API for AI</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

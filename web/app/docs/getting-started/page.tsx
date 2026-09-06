@@ -3,9 +3,18 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Getting started",
+  title: "Getting Started with rcp-sdk — Expose REST API to AI in 5 Minutes",
   description:
-    "Install rcp-sdk, expose one tool from a server, and discover + call it from a client — a complete end-to-end walkthrough.",
+    "Install rcp-sdk, expose a REST endpoint as an AI tool with defineTool(), serve a manifest, and call it via OpenAI tool calling — complete end-to-end tutorial.",
+  keywords: [
+    "rcp-sdk getting started",
+    "rcp-sdk tutorial",
+    "expose REST API to AI tutorial",
+    "connect REST API to OpenAI",
+    "defineTool example",
+    "createRcpClient tutorial",
+    "REST API to ChatGPT",
+  ],
   alternates: { canonical: "/docs/getting-started" },
 };
 
@@ -43,7 +52,7 @@ export default function GettingStartedPage() {
   return (
     <DocPage
       title="Getting started"
-      description="Install the reference SDK, expose one tool from a server, and call it from a client — end to end."
+      description="Install rcp-sdk, expose one tool from a server, and call it from a client — end to end. Works with OpenAI, LangChain & Gemini."
     >
       <script
         type="application/ld+json"
@@ -148,8 +157,30 @@ console.log(result.mapped);
       <p>
         That&rsquo;s the whole loop. For a real-world Express + OpenAI tool-calling walkthrough, or
         the smallest possible runnable version with no framework at all, see{" "}
-        <a href="/docs/examples">Examples</a>.
+        <a href="/docs/examples">RCP examples — Express + OpenAI demo</a>.
       </p>
+
+      <h2>Next steps</h2>
+      <ul>
+        <li>
+          <a href="/docs/vs-mcp">RCP vs MCP — do you need a lightweight MCP alternative?</a> — decide if stateless HTTP fits vs a dedicated protocol server
+        </li>
+        <li>
+          <a href="/docs/sdk/openai">Connect REST API to ChatGPT via OpenAI adapter</a> — <code>rcpToolsToOpenAiTools()</code> for <code>openai.chat.completions.create()</code>
+        </li>
+        <li>
+          <a href="/docs/sdk/langchain">REST API as LangChain tools — DynamicStructuredTool + LangGraph</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/gemini">Expose REST API to Gemini — Google GenAI function calling</a>
+        </li>
+        <li>
+          <a href="/docs/concepts/manifest">Understand the RCP manifest format</a> — JSON directory of AI tools
+        </li>
+        <li>
+          <a href="/docs/concepts/resolvers">Secure tenant ID from LLM with resolvers</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

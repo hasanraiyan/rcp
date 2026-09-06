@@ -3,18 +3,40 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Server — rcp-sdk/server",
+  title: "rcp-sdk Server — defineTool() Turn REST Endpoint into AI Tool",
   description:
-    "API reference for defineTool(): options, t.arg(), and how a zod args schema maps to manifest params.",
+    "rcp-sdk/server: defineTool() with Zod schema creates AI-callable tools from REST endpoints. t.arg(), queryParams, responseMappings — no server rewrite needed.",
+  keywords: [
+    "defineTool",
+    "rcp-sdk server",
+    "turn REST endpoint into AI tool",
+    "Zod to AI tool",
+    "expose Express API to AI",
+    "rcp-sdk defineTool example",
+  ],
   alternates: { canonical: "/docs/sdk/server" },
 };
 
 export default function ServerSdkPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "rcp-sdk Server — defineTool() Turn REST Endpoint into AI Tool",
+    description: "defineTool() with Zod schema creates AI-callable tools from REST endpoints — t.arg(), queryParams, responseMappings.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "defineTool, rcp-sdk server, REST endpoint AI tool, Zod schema",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/sdk/server",
+  };
+
+
   return (
     <DocPage
       title="Server — rcp-sdk/server"
       description="For whoever is exposing their own REST endpoints as tools. Builds a manifest tool entry in code instead of hand-writing the JSON shape."
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }} />
       <CodeBlock lang="typescript" code={`import { defineTool } from 'rcp-sdk/server';`} />
       <p>
         <code>defineTool()</code> never touches the network — it returns a plain tool object.
@@ -199,8 +221,24 @@ url: (t) => \`https://api.example.com/search?q=\${t.arg('query')}\`, // -> "...?
         as &ldquo;don&rsquo;t ask the model for this&rdquo; — that decision belongs entirely to
         whoever registers your server as a client. Write a clear <code>description</code> on a param
         like <code>userId</code> so a client operator knows to intercept it. See{" "}
-        <a href="/docs/concepts/resolvers">Resolvers</a>.
+        <a href="/docs/concepts/resolvers">Resolvers — hide tenant ID from LLM</a>.
       </Callout>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/sdk/client">rcp-sdk/client — createRcpClient, discover() & call()</a>
+        </li>
+        <li>
+          <a href="/docs/concepts/manifest">The manifest — JSON directory of AI tools</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started">Getting started — expose REST API to AI in 5 minutes</a>
+        </li>
+        <li>
+          <a href="/docs/examples">Examples — Express + OpenAI demo</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

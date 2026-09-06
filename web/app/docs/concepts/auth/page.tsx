@@ -3,18 +3,40 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Auth",
+  title: "RCP Authentication — none, header & OAuth2 for AI Tools",
   description:
-    "RCP's three auth modes — none, header, and oauth2 — and how client-injected headers work alongside them.",
+    "Secure RCP manifests and tool calls: none, header (Bearer auth), and OAuth2 (RFC 9728/8414). Plus client-injected headers for tracing and tenant isolation.",
+  keywords: [
+    "RCP authentication",
+    "RCP auth header bearer",
+    "RCP OAuth2",
+    "secure REST API for AI",
+    "AI tool authentication",
+    "client injected headers",
+  ],
   alternates: { canonical: "/docs/concepts/auth" },
 };
 
 export default function AuthPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "RCP Authentication — none, header & OAuth2",
+    description: "Secure RCP manifests and tool calls with none, header Bearer, and OAuth2 — plus client-injected headers for tracing.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "RCP authentication, header bearer, OAuth2, secure REST API AI",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/concepts/auth",
+  };
+
+
   return (
     <DocPage
       title="Auth"
       description="One declaration at the top level of the manifest secures both the manifest fetch and every tool call by default."
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }} />
       <p>
         A tool may set its own <code>auth</code> to override the server-level default — needed when
         a tool&rsquo;s <code>url</code> points at a different domain than the manifest — but the
@@ -78,6 +100,22 @@ export default function AuthPage() {
         rejecting the request — a client is always free to add more later without that being a
         breaking change.
       </p>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/concepts/manifest">The manifest — auth field and per-tool overrides</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/client">rcp-sdk/client — auth config in createRcpClient()</a>
+        </li>
+        <li>
+          <a href="/docs/concepts/resolvers">Resolvers — hide tenant ID from LLM</a>
+        </li>
+        <li>
+          <a href="/docs/spec">Full RCP spec — security & trust model</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

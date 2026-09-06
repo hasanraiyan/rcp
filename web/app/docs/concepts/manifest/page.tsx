@@ -3,18 +3,39 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "The manifest",
+  title: "RCP Manifest Format — JSON Directory of AI Tools",
   description:
-    "GET <manifest-url> is RCP's entire discovery surface — a JSON directory of tools, not a proxy for calling them.",
+    "RCP manifest: GET /manifest returns { rcpVersion, auth, tools[] } — a JSON directory that turns REST endpoints into AI-callable tools. No proxy, no JSON-RPC.",
+  keywords: [
+    "RCP manifest",
+    "REST API manifest",
+    "RCP manifest format",
+    "JSON manifest AI tools",
+    "define REST API for AI",
+    "rcpVersion tools auth",
+  ],
   alternates: { canonical: "/docs/concepts/manifest" },
 };
 
 export default function ManifestPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "RCP Manifest Format — JSON Directory of AI Tools",
+    description: "RCP manifest: GET /manifest returns { rcpVersion, auth, tools[] } turning REST endpoints into AI-callable tools.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "RCP manifest, REST API manifest, rcpVersion, JSON manifest",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/concepts/manifest",
+  };
+
   return (
     <DocPage
       title="The manifest"
       description="GET <manifest-url> is the entire discovery surface — a directory of tools, not a proxy for calling them."
     >
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }} />
       <CodeBlock
         label="GET /manifest -> 200"
         lang="json"
@@ -149,6 +170,22 @@ export default function ManifestPage() {
         a manifest with a version it doesn&rsquo;t understand should refuse to load that
         server&rsquo;s tools rather than guess.
       </p>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/concepts/resolvers">Resolvers — hide tenant ID from the LLM</a>
+        </li>
+        <li>
+          <a href="/docs/concepts/auth">Auth — secure REST API for AI agents</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/server">defineTool() — turn REST endpoint into AI tool</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started">Getting started — expose REST API to AI</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

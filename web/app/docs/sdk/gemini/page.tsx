@@ -3,18 +3,43 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Gemini — rcp-sdk/adapters/gemini",
+  title: "Gemini Adapter — Google GenAI Function Calling from REST API",
   description:
-    "API reference for the Gemini adapter: convert RCP-discovered tools into Google GenAI function-calling format.",
+    "rcp-sdk/adapters/gemini: rcpToolsToGeminiInteractionsTools() & classicTools for Gemini 2.5 function calling. Expose REST API to Gemini via Google GenAI SDK.",
+  keywords: [
+    "Gemini function calling REST API",
+    "Google GenAI tools",
+    "Gemini 2.5 function calling",
+    "connect REST API to Gemini",
+    "rcpToolsToGeminiTools",
+    "Gemini Interactions API tools",
+  ],
   alternates: { canonical: "/docs/sdk/gemini" },
 };
 
 export default function GeminiSdkPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "Gemini Adapter — Google GenAI Function Calling from REST API",
+    description:
+      "Turn REST APIs into Gemini 2.5 function-calling tools with rcp-sdk/adapters/gemini. Supports Interactions API and classic generateContent via Google GenAI SDK.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "Gemini function calling, Google GenAI, Gemini 2.5, REST API to Gemini, rcpToolsToGeminiTools",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/sdk/gemini",
+  };
+
   return (
     <DocPage
       title="Gemini — rcp-sdk/adapters/gemini"
-      description="Convert RCP-discovered tools into Google GenAI (Gemini) function-calling format. Supports both the Interactions API and the classic generateContent API."
+      description="Convert RCP-discovered tools into Google GenAI (Gemini) function-calling format. Supports both Gemini Interactions API and classic generateContent — expose REST API to Gemini 2.5."
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }}
+      />
       <CodeBlock
         lang="typescript"
         code={`import { rcpToolsToGeminiInteractionsTools, loadGeminiTools } from 'rcp-sdk/adapters/gemini';`}
@@ -131,6 +156,22 @@ const { interactionsTools, classicTools, discovered } = await loadGeminiTools(
         The classic API wraps declarations in{" "}
         <code>{`{ functionDeclarations: [...] }`}</code>. Both produce valid Gemini tool schemas.
       </Callout>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/sdk/openai">OpenAI adapter — connect REST API to ChatGPT</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/langchain">LangChain adapter — DynamicStructuredTool & LangGraph</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/client">rcp-sdk/client — createRcpClient, discover() & call()</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started">Getting started — expose REST API to AI</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

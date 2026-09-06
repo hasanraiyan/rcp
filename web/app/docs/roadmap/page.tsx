@@ -3,9 +3,16 @@ import { DocPage } from "@/components/docs/doc-page";
 import { Checklist } from "@/components/docs/checklist";
 
 export const metadata: Metadata = {
-  title: "Roadmap",
+  title: "RCP Roadmap — v0.1 Done vs Planned Features",
   description:
-    "What's actually done vs. what's still open in RCP, across the protocol design, the TypeScript SDK, and what's planned beyond v1.",
+    "RCP roadmap: implemented manifest, resolvers, rcp-sdk vs planned OAuth2, Python SDK, and beyond v1. Track REST Connector Protocol progress.",
+  keywords: [
+    "RCP roadmap",
+    "REST Connector Protocol roadmap",
+    "RCP v0.1 status",
+    "rcp-sdk roadmap",
+    "RCP Python SDK",
+  ],
   alternates: { canonical: "/docs/roadmap" },
 };
 

@@ -3,18 +3,43 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "LangChain — rcp-sdk/adapters/langchain",
+  title: "LangChain Adapter — REST API as LangChain DynamicStructuredTool",
   description:
-    "API reference for the LangChain adapter: convert RCP-discovered tools into LangChain DynamicStructuredTool instances.",
+    "rcp-sdk/adapters/langchain: rcpToolsToLangChainTools() turns RCP manifests into LangChain DynamicStructuredTool + LangGraph tools. MultiServerRcpClient included.",
+  keywords: [
+    "LangChain REST API tools",
+    "LangChain DynamicStructuredTool",
+    "LangGraph tools REST API",
+    "rcpToolsToLangChainTools",
+    "LangChain adapter RCP",
+    "expose REST API to LangChain agent",
+  ],
   alternates: { canonical: "/docs/sdk/langchain" },
 };
 
 export default function LangChainSdkPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "LangChain Adapter — REST API as DynamicStructuredTool & LangGraph",
+    description:
+      "Expose any REST API as LangChain DynamicStructuredTool with rcp-sdk/adapters/langchain. Works with LangGraph agents, MultiServerRcpClient, and resolver-bound context.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "LangChain REST API, DynamicStructuredTool, LangGraph tools, rcpToolsToLangChainTools, MultiServerRcpClient",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/sdk/langchain",
+  };
+
   return (
     <DocPage
       title="LangChain — rcp-sdk/adapters/langchain"
-      description="Convert RCP-discovered tools into LangChain DynamicStructuredTool instances. Handles schema conversion, response mapping, and resolver-bound context injection automatically."
+      description="Convert RCP-discovered tools into LangChain DynamicStructuredTool + LangGraph tools. Handles schema conversion, response mapping, and resolver-bound context injection automatically."
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }}
+      />
       <CodeBlock
         lang="typescript"
         code={`import { rcpToolsToLangChainTools, loadRcpLangChainTools } from 'rcp-sdk/adapters/langchain';`}
@@ -247,6 +272,25 @@ multi.invalidateCache('weather');`}
           gets a clean object, not raw JSON paths.
         </li>
       </ol>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/sdk/openai">OpenAI adapter — connect REST API to ChatGPT</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/gemini">Gemini adapter — Google GenAI function calling</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/client">rcp-sdk/client — createRcpClient & discover()</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started">Getting started — expose REST API to AI</a>
+        </li>
+        <li>
+          <a href="/docs/concepts/resolvers">Hide tenant ID from LLM with resolvers</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }

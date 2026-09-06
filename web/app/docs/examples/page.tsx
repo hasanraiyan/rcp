@@ -5,9 +5,17 @@ import { CodeBlock, Callout } from "@/components/docs/code-block";
 const REPO = "https://github.com/hasanraiyan/rcp";
 
 export const metadata: Metadata = {
-  title: "Examples",
+  title: "RCP Examples — Express + OpenAI & Minimal End-to-End Demo",
   description:
-    "A real-world Express + OpenAI tool-calling example, plus the smallest possible end-to-end RCP run with no framework on either side.",
+    "Working RCP examples: Express REST API + OpenAI tool-calling loop, and minimal no-framework demo (plain Node http). Clone, npm i, run — real code, not snippets.",
+  keywords: [
+    "RCP examples",
+    "Express REST API AI example",
+    "OpenAI tool calling example",
+    "RCP minimal example",
+    "rcp-sdk example GitHub",
+    "REST API AI demo",
+  ],
   alternates: { canonical: "/docs/examples" },
 };
 

@@ -3,18 +3,43 @@ import { DocPage } from "@/components/docs/doc-page";
 import { CodeBlock, Callout } from "@/components/docs/code-block";
 
 export const metadata: Metadata = {
-  title: "Full spec",
+  title: "RCP Specification v0.1 — Full Protocol Spec",
   description:
-    "The complete RCP v0.1 specification — architecture, the manifest, resolvers, auth, security & trust, what's out of scope, and open questions.",
+    "Complete RCP v0.1 spec: manifest format, resolver-bound params, auth (none/header/oauth2), security model, and architecture for exposing REST APIs as AI tools.",
+  keywords: [
+    "RCP specification",
+    "REST Connector Protocol spec",
+    "RCP v0.1 spec",
+    "AI protocol specification",
+    "REST API AI spec",
+    "RCP architecture",
+  ],
   alternates: { canonical: "/docs/spec" },
 };
 
 export default function SpecPage() {
+  const techArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: "RCP Specification v0.1 — Full Protocol Spec",
+    description:
+      "Complete RCP v0.1 specification: manifest format, resolver-bound params, auth, security model, and architecture for exposing REST APIs as AI tools.",
+    author: { "@type": "Person", name: "Raiyan Hasan", url: "https://hasanraiyan.me" },
+    datePublished: "2026-09-06",
+    dateModified: "2026-09-06",
+    keywords: "RCP spec, REST Connector Protocol specification, AI protocol spec",
+    mainEntityOfPage: "https://rcp.hasanraiyan.me/docs/spec",
+  };
+
   return (
     <DocPage
       title="Full spec"
       description="RCP v0.1 — draft. Not finalized, not yet implemented in full. This is the starting point for discussion, not a committed spec."
     >
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(techArticleJsonLd) }}
+      />
       <Callout>
         The spec documents all three <code>auth</code> modes, but the first implementation only
         needs to actually build <code>none</code> and <code>header</code> — those cover the common
@@ -273,9 +298,25 @@ const result = await rcpClient.call(tool, agentArgs, ctx);`}
       </ul>
 
       <p>
-        See <a href="/docs/roadmap">the roadmap</a> for what&rsquo;s actually built versus still
+        See <a href="/docs/roadmap">the RCP roadmap</a> for what&rsquo;s actually built versus still
         open.
       </p>
+
+      <h2>Related</h2>
+      <ul>
+        <li>
+          <a href="/docs/vs-mcp">RCP vs MCP — lightweight MCP alternative comparison</a>
+        </li>
+        <li>
+          <a href="/docs/getting-started">Getting started — expose REST API to AI with rcp-sdk</a>
+        </li>
+        <li>
+          <a href="/docs/concepts/manifest">The manifest — JSON directory of AI tools</a>
+        </li>
+        <li>
+          <a href="/docs/sdk/client">rcp-sdk/client reference</a> and <a href="/docs/sdk/server">rcp-sdk/server defineTool()</a>
+        </li>
+      </ul>
     </DocPage>
   );
 }
