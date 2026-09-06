@@ -1,11 +1,31 @@
 import Link from "next/link";
 import { VersionBadge } from "@/components/docs/version-badge";
+import { InView } from "@/components/home/in-view";
+import { cn } from "@/lib/utils";
 
 const REPO = "https://github.com/hasanraiyan/rcp";
 
-function StatusPill({ code }: { code: number }) {
+type Method = "GET" | "POST";
+
+const METHOD_CLASS: Record<Method, string> = {
+  GET: "text-method-get",
+  POST: "text-method-post",
+};
+
+function MethodTag({ method }: { method: Method }) {
+  return <span className={cn("font-semibold", METHOD_CLASS[method])}>{method}</span>;
+}
+
+function StatusPill({ code, animate = false }: { code: number; animate?: boolean }) {
+  const tone = code >= 400 ? "bg-method-delete/10 text-method-delete" : "bg-method-post/10 text-method-post";
   return (
-    <span className="inline-flex items-center rounded-sm bg-primary/10 px-1.5 py-0.5 text-[13px] font-semibold text-primary">
+    <span
+      className={cn(
+        "inline-flex items-center rounded-sm px-1.5 py-0.5 text-[13px] font-semibold",
+        tone,
+        animate && "rcp-anim-ping",
+      )}
+    >
       {code}
     </span>
   );
@@ -42,6 +62,33 @@ const jsonLd = {
   },
 };
 
+const HERO_LINES: { delay: string }[] = [
+  { delay: "0.05s" },
+  { delay: "0.16s" },
+  { delay: "0.28s" },
+  { delay: "0.42s" },
+  { delay: "0.6s" },
+  { delay: "0.78s" },
+];
+
+const STEPS = [
+  {
+    n: "1",
+    title: "Discovery",
+    body: "The client fetches the manifest URL once per session. The server returns its rcpVersion, auth mode, and tool list.",
+  },
+  {
+    n: "2",
+    title: "Selection",
+    body: "The model sees only exposedParams — anything bound to a resolver was already stripped from the schema.",
+  },
+  {
+    n: "3",
+    title: "Execution",
+    body: "The client fills resolver-bound params from ctx, renders the request, and calls the tool's own URL directly.",
+  },
+];
+
 export default function Home() {
   return (
     <div className="flex flex-1 flex-col bg-background text-foreground">
@@ -69,53 +116,74 @@ export default function Home() {
         <section className="mx-auto w-full max-w-5xl px-6 pt-20 pb-16 md:pt-28 md:pb-24">
           <div className="grid gap-14 md:grid-cols-2 md:items-center">
             <div className="max-w-md">
-              <h1 className="text-[2.75rem] font-semibold leading-[1.08] tracking-tight text-balance">
+              <h1 className="rcp-anim-rise text-[2.75rem] font-semibold leading-[1.08] tracking-tight text-balance">
                 Your REST API is already the tool.
               </h1>
-              <p className="mt-5 text-base leading-7 text-muted-foreground">
+              <p
+                className="rcp-anim-rise mt-5 text-base leading-7 text-muted-foreground"
+                style={{ animationDelay: "0.1s" }}
+              >
                 RCP is a lightweight, open protocol for exposing REST endpoints as AI-callable tools
                 — no protocol server, no persistent connection. A server publishes a manifest; a
                 client fetches it and calls the endpoints directly.
               </p>
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div
+                className="rcp-anim-rise mt-8 flex flex-wrap items-center gap-3"
+                style={{ animationDelay: "0.2s" }}
+              >
                 <Link
                   href="/docs/getting-started"
-                  className="inline-flex h-10 items-center rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                  className="inline-flex h-10 items-center rounded-sm bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
                 >
                   Read the docs
                 </Link>
-                <code className="inline-flex h-10 items-center gap-2 rounded-md border border-border bg-card px-4 font-mono text-sm text-foreground">
+                <code className="inline-flex h-10 items-center gap-2 rounded-sm border border-border bg-card px-4 font-mono text-sm text-foreground">
                   <span className="text-muted-foreground">$</span> npm i rcp-sdk
                 </code>
               </div>
             </div>
 
-            <div className="rounded-md border border-border bg-card p-5 font-mono text-[13px] leading-6 shadow-sm">
-              <div>
-                <span className="font-semibold">GET</span>{" "}
+            <div className="rounded-sm border border-border bg-card p-5 font-mono text-[13px] leading-6">
+              <div className="rcp-anim-rise" style={{ animationDelay: HERO_LINES[0].delay }}>
+                <MethodTag method="GET" />{" "}
                 <span className="text-muted-foreground">/manifest</span>
                 <span className="float-right">
-                  <StatusPill code={200} />
+                  <StatusPill code={200} animate />
                 </span>
               </div>
-              <div className="mt-1 text-muted-foreground">
+              <div
+                className="rcp-anim-rise mt-1 text-muted-foreground"
+                style={{ animationDelay: HERO_LINES[1].delay }}
+              >
                 {'{ rcpVersion: "0.1", tools: […] }'}
               </div>
 
-              <div className="my-4 border-t border-dashed border-border" />
+              <div
+                className="rcp-anim-rise my-4 border-t border-dashed border-border"
+                style={{ animationDelay: HERO_LINES[2].delay }}
+              />
 
-              <div className="text-muted-foreground">
+              <div
+                className="rcp-cursor rcp-anim-rise text-muted-foreground"
+                style={{ animationDelay: HERO_LINES[3].delay }}
+              >
                 {'// model picks create_order, supplies { item: "sku_88" }'}
               </div>
 
-              <div className="mt-4">
-                <span className="font-semibold">POST</span>{" "}
+              <div
+                className="rcp-anim-rise mt-4"
+                style={{ animationDelay: HERO_LINES[4].delay }}
+              >
+                <MethodTag method="POST" />{" "}
                 <span className="text-muted-foreground">https://api.acme.dev/orders</span>
                 <span className="float-right">
                   <StatusPill code={200} />
                 </span>
               </div>
-              <div className="mt-1 text-muted-foreground">
+              <div
+                className="rcp-anim-rise mt-1 text-muted-foreground"
+                style={{ animationDelay: HERO_LINES[5].delay }}
+              >
                 {'{ id: "ord_193", status: "confirmed" }'}
               </div>
             </div>
@@ -135,41 +203,37 @@ export default function Home() {
               </p>
             </div>
 
-            <ol className="space-y-6">
-              {[
-                {
-                  n: "1",
-                  title: "Discovery",
-                  body: "The client fetches the manifest URL once per session. The server returns its rcpVersion, auth mode, and tool list.",
-                },
-                {
-                  n: "2",
-                  title: "Selection",
-                  body: "The model sees only exposedParams — anything bound to a resolver was already stripped from the schema.",
-                },
-                {
-                  n: "3",
-                  title: "Execution",
-                  body: "The client fills resolver-bound params from ctx, renders the request, and calls the tool's own URL directly.",
-                },
-              ].map((step) => (
-                <li
-                  key={step.n}
-                  className="flex gap-4 border-b border-border pb-6 last:border-0 last:pb-0"
-                >
-                  <span className="font-mono text-sm text-muted-foreground">{step.n}</span>
-                  <div>
-                    <div className="font-medium">{step.title}</div>
-                    <p className="mt-1 text-[15px] leading-6 text-muted-foreground">{step.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
+            <InView className="relative">
+              <div
+                className="rcp-wire-line absolute top-2 bottom-2 left-[7px] w-px bg-border"
+                aria-hidden
+              />
+              <ol className="space-y-10">
+                {STEPS.map((step, i) => (
+                  <li key={step.n} className="relative flex gap-5 pl-8">
+                    <span
+                      className="rcp-wire-dot absolute top-0.5 left-0 size-3.5 rounded-full border-2 border-signal bg-background"
+                      style={{ "--dot-delay": `${0.15 + i * 0.28}s` } as React.CSSProperties}
+                      aria-hidden
+                    />
+                    <div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-mono text-xs text-muted-foreground">{step.n}</span>
+                        <span className="font-medium">{step.title}</span>
+                      </div>
+                      <p className="mt-1 text-[15px] leading-6 text-muted-foreground">
+                        {step.body}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </InView>
           </div>
         </section>
 
         {/* Comparison */}
-        <section className="border-t border-border">
+        <section className="border-t border-border bg-secondary/50">
           <div className="mx-auto w-full max-w-5xl px-6 py-16 md:py-20">
             <h2 className="text-xl font-semibold tracking-tight">When it&rsquo;s not MCP</h2>
             <p className="mt-4 max-w-2xl text-[15px] leading-7 text-muted-foreground">
@@ -178,13 +242,13 @@ export default function Home() {
               call some of its endpoints as tools.
             </p>
 
-            <div className="mt-8 overflow-x-auto">
+            <div className="mt-8 overflow-x-auto rounded-sm border border-border bg-card">
               <table className="w-full min-w-[520px] border-collapse text-left text-[15px]">
                 <thead>
                   <tr className="border-b border-border text-sm text-muted-foreground">
-                    <th className="py-3 pr-6 font-medium"></th>
+                    <th className="py-3 pr-6 pl-5 font-medium"></th>
                     <th className="py-3 pr-6 font-medium">RCP</th>
-                    <th className="py-3 font-medium">MCP</th>
+                    <th className="py-3 pr-5 font-medium">MCP</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -198,9 +262,9 @@ export default function Home() {
                     ],
                   ].map((row) => (
                     <tr key={row[0]} className="border-b border-border last:border-0">
-                      <td className="py-3 pr-6 text-muted-foreground">{row[0]}</td>
+                      <td className="py-3 pr-6 pl-5 text-muted-foreground">{row[0]}</td>
                       <td className="py-3 pr-6">{row[1]}</td>
-                      <td className="py-3 text-muted-foreground">{row[2]}</td>
+                      <td className="py-3 pr-5 text-muted-foreground">{row[2]}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -227,10 +291,10 @@ export default function Home() {
               </Link>
             </div>
 
-            <div className="rounded-md border border-border bg-card p-5 font-mono text-[13px] leading-6">
+            <div className="rounded-sm border border-border bg-card p-5 font-mono text-[13px] leading-6">
               <div className="text-muted-foreground">{"// server declares the resolver"}</div>
               <div className="mt-1">
-                tenantId: <span className="text-primary">resolver</span>(ctx =&gt; ctx.tenantId)
+                tenantId: <span className="text-signal">resolver</span>(ctx =&gt; ctx.tenantId)
               </div>
               <div className="my-4 border-t border-dashed border-border" />
               <div className="text-muted-foreground">{"// what the model is offered"}</div>
@@ -245,7 +309,7 @@ export default function Home() {
         <section className="border-t border-border">
           <div className="mx-auto w-full max-w-5xl px-6 py-16 md:py-20">
             <h2 className="text-xl font-semibold tracking-tight">SDKs</h2>
-            <div className="mt-8 flex flex-col justify-between gap-4 rounded-md border border-border bg-card p-5 sm:flex-row sm:items-center">
+            <div className="mt-8 flex flex-col justify-between gap-4 rounded-sm border border-border bg-card p-5 sm:flex-row sm:items-center">
               <div>
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-sm font-medium">rcp-sdk</span>
@@ -259,7 +323,7 @@ export default function Home() {
               </div>
               <Link
                 href="/docs/sdk/client"
-                className="inline-flex h-9 items-center rounded-md border border-border px-4 text-sm font-medium transition-colors hover:bg-muted"
+                className="inline-flex h-9 items-center rounded-sm border border-border px-4 text-sm font-medium transition-colors hover:bg-muted"
               >
                 View SDK docs
               </Link>
