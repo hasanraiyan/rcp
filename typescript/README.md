@@ -21,7 +21,7 @@ GET  <manifest-url>          -->  200 { "rcpVersion": "0.1", "tools": [...] }
 
 ## This package
 
-`rcp-sdk` ships four entry points:
+`rcp-sdk` ships five entry points:
 
 ```ts
 // Building the AI application? Import the client.
@@ -35,6 +35,9 @@ import { rcpToolsToOpenAiTools, loadOpenAiTools } from "rcp-sdk/adapters/openai"
 
 // Using LangChain? Import the adapter to convert RCP tools to LangChain tools.
 import { rcpToolsToLangChainTools, loadRcpLangChainTools } from "rcp-sdk/adapters/langchain";
+
+// Using Gemini? Import the adapter to convert RCP tools to Gemini format.
+import { rcpToolsToGeminiInteractionsTools, loadGeminiTools } from "rcp-sdk/adapters/gemini";
 ```
 
 See [`examples/basic`](./examples/basic) for a minimal end-to-end example: a tiny server exposing
@@ -69,6 +72,30 @@ const agent = createAgent({ model: "gpt-4o-mini", tools: langchainTools });
 
 See [`examples/langchain-client`](../examples/langchain-client) for a full interactive chat example.
 
+## Gemini adapter
+
+The `rcp-sdk/adapters/gemini` entry point converts RCP-discovered tools into Google GenAI format.
+It supports both the Interactions API and the classic `generateContent` API.
+
+```ts
+import { createRcpClient } from "rcp-sdk/client";
+import { rcpToolsToGeminiInteractionsTools } from "rcp-sdk/adapters/gemini";
+import { GoogleGenAI } from "@google/genai";
+
+const rcp = createRcpClient();
+const { tools } = await rcp.discover("https://example.com/rcp/manifest");
+const geminiTools = rcpToolsToGeminiInteractionsTools(tools);
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const interaction = await ai.interactions.create({
+  model: "models/gemini-2.5-flash",
+  input: prompt,
+  tools: geminiTools,
+});
+```
+
+See [`examples/gemini-client`](../examples/gemini-client) for a full example with tool-calling loop.
+
 ## Docs
 
 - [`docs/client.md`](./docs/client.md) — `createRcpClient()` API reference: options, `discover()`,
@@ -78,6 +105,7 @@ See [`examples/langchain-client`](../examples/langchain-client) for a full inter
 - [`docs/langchain.md`](./docs/langchain.md) — LangChain adapter API reference: options,
   context providers, `MultiServerRcpClient`.
 - [`docs/openai.md`](./docs/openai.md) — OpenAI adapter API reference: tool format conversion.
+- [`docs/gemini.md`](./docs/gemini.md) — Gemini adapter API reference: Interactions + classic format.
 
 ## Status
 
@@ -93,6 +121,9 @@ v0.2.0, in active design.
   and `rcpToolToLangChainTool` are implemented and tested (43 tests).
 - OpenAI adapter: `rcpToolToOpenAiTool`, `rcpToolsToOpenAiTools`, `loadOpenAiTools` are
   implemented and tested (10 tests).
+- Gemini adapter: `rcpToolToGeminiInteractionsTool`, `rcpToolsToGeminiInteractionsTools`,
+  `rcpToolToGeminiFunctionDeclaration`, `rcpToolsToGeminiClassicTools`, `loadGeminiTools` are
+  implemented and tested (12 tests).
 - No `skills`/resources-equivalent primitive — tools only, for now.
 
 ## Development

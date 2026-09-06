@@ -45,7 +45,7 @@ elsewhere.
 - [x] zod → `params` derivation (type, required, description).
 
 **Tooling & quality**
-- [x] 82 tests passing (schema, template engine, response mapper, client, server, langchain adapter).
+- [x] 104 tests passing (schema, template engine, response mapper, client, server, langchain adapter, openai adapter, gemini adapter).
 - [x] Clean `tsc --noEmit`, `tsup` build (ESM + CJS + `.d.ts`).
 - [x] End-to-end example (`examples/basic`) verified working live.
 - [x] API docs for both entry points (`docs/client.md`, `docs/server.md`).
@@ -65,6 +65,8 @@ elsewhere.
       it. Client-only; no Express/FastAPI code. Uses `rcp-sdk/adapters/openai`.
 - [x] `examples/langchain-client` — interactive CLI chat using LangChain with RCP tools. Client-only;
       uses `rcp-sdk/adapters/langchain`.
+- [x] `examples/gemini-client` — discovers tools and runs a Gemini tool-calling loop. Client-only;
+      uses `rcp-sdk/adapters/gemini`.
 - [x] Framework adapters (`rcp-sdk/adapters/openai`, `/langchain`, ...) so the
       manifest-to-tool-schema conversion currently hand-rolled in `examples/openai-client` doesn't
       have to be re-derived by every consumer — tracked in
@@ -72,7 +74,8 @@ elsewhere.
       - [x] LangChain adapter — `rcpToolsToLangChainTools`, `loadRcpLangChainTools`,
             `MultiServerRcpClient`, `rcpToolToLangChainTool` (43 tests).
       - [x] OpenAI adapter — `rcpToolToOpenAiTool`, `rcpToolsToOpenAiTools`, `loadOpenAiTools` (10 tests).
-      - [ ] Gemini adapter — planned next.
+      - [x] Gemini adapter — `rcpToolToGeminiInteractionsTool`, `rcpToolsToGeminiInteractionsTools`,
+            `rcpToolToGeminiFunctionDeclaration`, `rcpToolsToGeminiClassicTools`, `loadGeminiTools` (12 tests).
 - [ ] A Python/FastAPI server example — deliberately dropped from this pass; would double as proof
       that an RCP server needs no SDK in any language (a hand-built manifest dict is fully
       conformant).

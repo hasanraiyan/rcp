@@ -7,6 +7,7 @@ export default defineConfig({
     "src/server.ts",
     "src/adapters/langchain.ts",
     "src/adapters/openai.ts",
+    "src/adapters/gemini.ts",
   ],
   format: ["esm", "cjs"],
   dts: true,

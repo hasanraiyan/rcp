@@ -1,0 +1,21 @@
+{
+  "name": "rcp-example-gemini-client",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An AI application: discovers tools from any RCP manifest and hands them to Google GenAI (Gemini). Works against ../express, ../fastapi, or any other RCP server.",
+  "type": "module",
+  "scripts": {
+    "start": "tsx client.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@google/genai": "latest",
+    "dotenv": "^17.4.2",
+    "rcp-sdk": "file:../../typescript"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2"
+  }
+}

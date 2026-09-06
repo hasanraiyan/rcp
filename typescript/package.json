@@ -24,6 +24,11 @@
       "import": "./dist/adapters/openai.js",
       "require": "./dist/adapters/openai.cjs"
     },
+    "./adapters/gemini": {
+      "types": "./dist/adapters/gemini.d.ts",
+      "import": "./dist/adapters/gemini.js",
+      "require": "./dist/adapters/gemini.cjs"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
