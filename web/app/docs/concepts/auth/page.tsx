@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Auth",
   description:
     "RCP's three auth modes — none, header, and oauth2 — and how client-injected headers work alongside them.",
+  alternates: { canonical: "/docs/concepts/auth" },
 };
 
 export default function AuthPage() {

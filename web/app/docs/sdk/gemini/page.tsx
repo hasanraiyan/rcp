@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Gemini — rcp-sdk/adapters/gemini",
   description:
     "API reference for the Gemini adapter: convert RCP-discovered tools into Google GenAI function-calling format.",
+  alternates: { canonical: "/docs/sdk/gemini" },
 };
 
 export default function GeminiSdkPage() {

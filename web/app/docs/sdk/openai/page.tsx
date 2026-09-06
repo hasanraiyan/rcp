@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "OpenAI — rcp-sdk/adapters/openai",
   description:
     "API reference for the OpenAI adapter: convert RCP-discovered tools into OpenAI function-calling format.",
+  alternates: { canonical: "/docs/sdk/openai" },
 };
 
 export default function OpenAiSdkPage() {

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "The manifest",
   description:
     "GET <manifest-url> is RCP's entire discovery surface — a JSON directory of tools, not a proxy for calling them.",
+  alternates: { canonical: "/docs/concepts/manifest" },
 };
 
 export default function ManifestPage() {

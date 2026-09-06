@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Introduction",
   description:
     "RCP (REST Connector Protocol) is a lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server.",
+  alternates: { canonical: "/docs" },
 };
 
 export default function DocsIntroPage() {

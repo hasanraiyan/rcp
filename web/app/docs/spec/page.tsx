@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Full spec",
   description:
     "The complete RCP v0.1 specification — architecture, the manifest, resolvers, auth, security & trust, what's out of scope, and open questions.",
+  alternates: { canonical: "/docs/spec" },
 };
 
 export default function SpecPage() {

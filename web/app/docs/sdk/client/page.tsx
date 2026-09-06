@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Client — rcp-sdk/client",
   description:
     "API reference for createRcpClient(): options, discover(), call(), logging, describeManifest(), and error classes.",
+  alternates: { canonical: "/docs/sdk/client" },
 };
 
 export default function ClientSdkPage() {

@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Server — rcp-sdk/server",
   description:
     "API reference for defineTool(): options, t.arg(), and how a zod args schema maps to manifest params.",
+  alternates: { canonical: "/docs/sdk/server" },
 };
 
 export default function ServerSdkPage() {

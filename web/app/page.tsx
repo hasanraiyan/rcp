@@ -62,6 +62,37 @@ const jsonLd = {
   },
 };
 
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is RCP?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "RCP (REST Connector Protocol) is a lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server. A server publishes a manifest; a client fetches it and calls the endpoints directly.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How is RCP different from MCP?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "MCP requires a persistent session and dedicated protocol server for rich, stateful capabilities. RCP is stateless HTTP — your existing REST API plus one manifest route. Use RCP when you already have endpoints to expose; use MCP for resources, prompts, and elicitation.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How do I get started with RCP?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Install rcp-sdk via npm i rcp-sdk, define tools with defineTool() on the server, serve a manifest at /manifest, then discover and call from the client with createRcpClient().",
+      },
+    },
+  ],
+};
+
 const HERO_LINES: { delay: string }[] = [
   { delay: "0.05s" },
   { delay: "0.16s" },
@@ -95,6 +126,10 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <header className="border-b border-border">
         <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between px-6">

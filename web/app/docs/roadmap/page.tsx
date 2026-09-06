@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Roadmap",
   description:
     "What's actually done vs. what's still open in RCP, across the protocol design, the TypeScript SDK, and what's planned beyond v1.",
+  alternates: { canonical: "/docs/roadmap" },
 };
 
 export default function RoadmapPage() {

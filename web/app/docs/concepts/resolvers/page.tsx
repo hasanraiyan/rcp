@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Resolvers",
   description:
     "A resolver-bound param never reaches the model — it's removed from the tool schema at discovery time, not just hidden by convention.",
+  alternates: { canonical: "/docs/concepts/resolvers" },
 };
 
 export default function ResolversPage() {

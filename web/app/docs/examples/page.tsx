@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Examples",
   description:
     "A real-world Express + OpenAI tool-calling example, plus the smallest possible end-to-end RCP run with no framework on either side.",
+  alternates: { canonical: "/docs/examples" },
 };
 
 export default function ExamplesPage() {

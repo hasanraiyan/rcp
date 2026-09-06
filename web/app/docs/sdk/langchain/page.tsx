@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "LangChain — rcp-sdk/adapters/langchain",
   description:
     "API reference for the LangChain adapter: convert RCP-discovered tools into LangChain DynamicStructuredTool instances.",
+  alternates: { canonical: "/docs/sdk/langchain" },
 };
 
 export default function LangChainSdkPage() {
