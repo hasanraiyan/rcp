@@ -1,0 +1,49 @@
+# RCP — REST Connector Protocol
+
+> A lightweight, open protocol for exposing REST APIs as AI-callable tools — without running a protocol server. If MCP is the right fit when you need rich, stateful capabilities, RCP is for the much more common case: you already have a REST API, and you just want an AI application to be able to call some of its endpoints as tools.
+
+RCP (REST Connector Protocol) is an open standard and TypeScript SDK for turning existing REST APIs into AI-callable tools. A server publishes a plain JSON manifest at a URL. A client fetches it, builds callable tools from it, and calls the endpoints it describes directly — no JSON-RPC, no persistent connection, no protocol server.
+
+## Key concepts
+
+- **Manifest**: A JSON document at a URL describing available tools, their parameters, HTTP methods, URL templates, auth requirements, and response mappings.
+- **Client**: Fetches manifests, renders URL templates, injects auth/resolvers, calls endpoints, and maps responses.
+- **Server**: Exposes REST endpoints and publishes an RCP manifest via `defineTool()`.
+- **Resolvers**: Client-side-only values (like API keys or user IDs) that are injected at call time and never sent to the model.
+- **Auth**: Supports `none`, `header`, and (specified but not yet implemented) `oauth2`.
+
+## SDK
+
+`rcp-sdk` is published on npm: https://www.npmjs.com/package/rcp-sdk
+
+### Entry points
+
+- `rcp-sdk/client` — `createRcpClient()`, `discover()`, `call()`, `describeManifest()`
+- `rcp-sdk/server` — `defineTool()`, `t.arg()` for building manifests from zod schemas
+- `rcp-sdk/adapters/openai` — Convert RCP tools to OpenAI function-calling format
+- `rcp-sdk/adapters/langchain` — Convert RCP tools to LangChain `DynamicStructuredTool` instances
+- `rcp-sdk/adapters/gemini` — Convert RCP tools to Google GenAI (Gemini) format (Interactions API + classic)
+
+### Install
+
+```bash
+npm install rcp-sdk
+# or
+pnpm add rcp-sdk
+```
+
+## Examples
+
+- `examples/express` — Express REST API serving an RCP manifest
+- `examples/openai-client` — Interactive CLI chat with OpenAI + RCP tools
+- `examples/langchain-client` — Interactive CLI chat with LangChain + RCP tools
+- `examples/gemini-client` — Interactive CLI chat with Gemini + RCP tools
+
+## Links
+
+- GitHub: https://github.com/hasanraiyan/rcp
+- npm: https://www.npmjs.com/package/rcp-sdk
+- Spec: https://rcp.hasanraiyan.me/docs/spec
+- Getting started: https://rcp.hasanraiyan.me/docs/getting-started
+- SDK reference: https://rcp.hasanraiyan.me/docs/sdk/client
+- RCP vs MCP: https://rcp.hasanraiyan.me/docs/vs-mcp
