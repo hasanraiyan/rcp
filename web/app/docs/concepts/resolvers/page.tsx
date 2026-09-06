@@ -109,6 +109,9 @@ console.log(describeManifest(manifest, tools));
       <h2>Related</h2>
       <ul>
         <li>
+          <a href="/docs/guides/secure-tenant-isolation">Secure tenant isolation — killer feature, why resolvers matter (with hijack example)</a>
+        </li>
+        <li>
           <a href="/docs/concepts/manifest">The manifest — JSON directory of AI tools</a>
         </li>
         <li>
@@ -118,7 +121,7 @@ console.log(describeManifest(manifest, tools));
           <a href="/docs/vs-mcp">RCP vs MCP — why resolvers have no MCP equivalent</a>
         </li>
         <li>
-          <a href="/docs/getting-started">Getting started — expose REST API to AI</a>
+          <a href="/docs/getting-started">Build AI agent from REST API in 5 minutes</a>
         </li>
       </ul>
     </DocPage>

@@ -26,6 +26,12 @@ export const docsNav: DocsNavGroup[] = [
     ],
   },
   {
+    title: "Guides",
+    items: [
+      { title: "Secure tenant isolation", href: "/docs/guides/secure-tenant-isolation" },
+    ],
+  },
+  {
     title: "SDK reference",
     items: [
       { title: "Client — rcp-sdk/client", href: "/docs/sdk/client" },

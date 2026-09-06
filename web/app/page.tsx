@@ -441,6 +441,10 @@ export default function Home() {
                 <h3 className="font-medium"><Link href="/docs/concepts/manifest" className="hover:text-primary hover:underline">RCP manifest format</Link></h3>
                 <p className="mt-1 text-muted-foreground">GET /manifest — JSON directory of AI tools.</p>
               </div>
+              <div>
+                <h3 className="font-medium"><Link href="/docs/guides/secure-tenant-isolation" className="hover:text-primary hover:underline">Secure tenant isolation — killer feature</Link></h3>
+                <p className="mt-1 text-muted-foreground">Params the model never sees — stop prompt injection from leaking tenant data.</p>
+              </div>
             </div>
           </div>
         </section>
