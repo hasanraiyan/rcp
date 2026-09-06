@@ -274,7 +274,7 @@ export default function Home() {
       <footer className="border-t border-border">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-4 px-6 py-10 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
-            <div>RCP v0.1 — in active design.</div>
+            <div>RCP v0.2.0 — in active design.</div>
             <div>
               Built by{" "}
               <a

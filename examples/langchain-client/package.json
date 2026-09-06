@@ -1,16 +1,18 @@
 {
-  "name": "rcp-example-openai-client",
+  "name": "rcp-example-langchain-client",
   "version": "1.0.0",
   "private": true,
-  "description": "An AI application: discovers tools from any RCP manifest and hands them to an OpenAI tool-calling loop. Works against ../express, ../fastapi, or any other RCP server — it never imports Express or FastAPI.",
+  "description": "An AI application: discovers tools from any RCP manifest and hands them to LangChain/LangGraph. Works against ../express, ../fastapi, or any other RCP server.",
   "type": "module",
   "scripts": {
     "start": "tsx client.ts"
   },
   "license": "MIT",
   "dependencies": {
+    "@langchain/core": "^1.2.9",
+    "@langchain/openai": "^1.5.11",
     "dotenv": "^17.4.2",
-    "openai": "^7.10.0",
+    "langchain": "^1.5.10",
     "rcp-sdk": "file:../../typescript"
   },
   "devDependencies": {

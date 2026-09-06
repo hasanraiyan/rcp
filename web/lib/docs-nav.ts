@@ -30,6 +30,8 @@ export const docsNav: DocsNavGroup[] = [
     items: [
       { title: "Client — rcp-sdk/client", href: "/docs/sdk/client" },
       { title: "Server — rcp-sdk/server", href: "/docs/sdk/server" },
+      { title: "OpenAI — rcp-sdk/adapters/openai", href: "/docs/sdk/openai" },
+      { title: "LangChain — rcp-sdk/adapters/langchain", href: "/docs/sdk/langchain" },
     ],
   },
   {

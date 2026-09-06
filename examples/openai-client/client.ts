@@ -1,40 +1,12 @@
 import "dotenv/config";
 import OpenAI from "openai";
-import { createRcpClient, type DiscoveredTool } from "rcp-sdk/client";
+import { createRcpClient } from "rcp-sdk/client";
+import { rcpToolsToOpenAiTools } from "rcp-sdk/adapters/openai";
 
 const MANIFEST_URL = process.env.RCP_MANIFEST_URL ?? "http://localhost:4321/rcp/manifest";
 const MODEL = process.env.OPENAI_MODEL ?? "gpt-4o-mini";
 
-const openai = new OpenAI(); // reads OPENAI_API_KEY from the environment
-
-// ---------------------------------------------------------------------------
-// The only piece of glue RCP needs to plug into ANY tool-calling model: turn
-// a discovered tool's exposedParams into the JSON Schema `parameters` object
-// OpenAI's tool-calling API expects. This has nothing Express- or
-// FastAPI-specific about it — it works against whatever manifest URL you
-// point RCP_MANIFEST_URL at.
-// ---------------------------------------------------------------------------
-function toOpenAITool(tool: DiscoveredTool): OpenAI.ChatCompletionTool {
-  const properties: Record<string, { type: string; description?: string }> = {};
-  const required: string[] = [];
-
-  for (const param of tool.exposedParams) {
-    properties[param.name] = {
-      type: param.type,
-      ...(param.description ? { description: param.description } : {}),
-    };
-    if (param.required !== false) required.push(param.name);
-  }
-
-  return {
-    type: "function",
-    function: {
-      name: tool.name,
-      description: tool.description,
-      parameters: { type: "object", properties, required, additionalProperties: false },
-    },
-  };
-}
+const openai = new OpenAI();
 
 async function main() {
   const prompt =
@@ -52,8 +24,8 @@ async function main() {
   for (const tool of tools) console.log(`  - ${tool.name}: ${tool.description}`);
   console.log();
 
-  // 2. Convert them to OpenAI's tool-calling format.
-  const openaiTools = tools.map(toOpenAITool);
+  // 2. Convert them to OpenAI's tool-calling format via the adapter.
+  const openaiTools = rcpToolsToOpenAiTools(tools);
 
   const messages: OpenAI.ChatCompletionMessageParam[] = [
     {
@@ -70,6 +42,7 @@ async function main() {
       model: MODEL,
       messages,
       tools: openaiTools,
+      reasoning_effort: "none"
     });
 
     const message = completion.choices[0]?.message;
@@ -97,9 +70,7 @@ async function main() {
       const args = toolCall.function.arguments ? JSON.parse(toolCall.function.arguments) : {};
       console.log(`-> ${tool.name}(${JSON.stringify(args)})`);
 
-      // 4. Execute it: RCP renders the URL, attaches auth, makes the real
-      //    HTTP call against the actual REST API, and applies any
-      //    responseMappings — the model never talks to the API directly.
+      // 4. Execute it via RCP — renders URL, attaches auth, applies responseMappings.
       const result = await rcp.call(tool, args);
       console.log(`<- ${JSON.stringify(result.mapped)}`);
 
