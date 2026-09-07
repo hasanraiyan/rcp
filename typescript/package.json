@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "description": "Reference SDK for RCP (REST Connector Protocol) — a lightweight, open protocol for exposing REST APIs as AI-callable tools.",
   "type": "module",
+  "bin": {
+    "rcp": "./bin/rcp.js"
+  },
   "exports": {
     "./client": {
       "types": "./dist/client.d.ts",
@@ -13,6 +16,11 @@
       "types": "./dist/server.d.ts",
       "import": "./dist/server.js",
       "require": "./dist/server.cjs"
+    },
+    "./openapi": {
+      "types": "./dist/openapi.d.ts",
+      "import": "./dist/openapi.js",
+      "require": "./dist/openapi.cjs"
     },
     "./adapters/langchain": {
       "types": "./dist/adapters/langchain.d.ts",
@@ -28,6 +36,11 @@
       "types": "./dist/adapters/gemini.d.ts",
       "import": "./dist/adapters/gemini.js",
       "require": "./dist/adapters/gemini.cjs"
+    },
+    "./adapters/mcp": {
+      "types": "./dist/adapters/mcp.d.ts",
+      "import": "./dist/adapters/mcp.js",
+      "require": "./dist/adapters/mcp.cjs"
     },
     ".": {
       "types": "./dist/index.d.ts",
@@ -82,6 +95,7 @@
   },
   "sideEffects": false,
   "dependencies": {
+    "js-yaml": "^5.4.1",
     "zod": "^3.25.76"
   },
   "peerDependencies": {
@@ -95,6 +109,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@langchain/core": "^0.3.72",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.10.7",
     "eslint": "^10.10.0",
     "eslint-config-prettier": "^10.1.8",

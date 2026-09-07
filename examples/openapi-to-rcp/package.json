@@ -1,0 +1,13 @@
+{
+  "name": "example-openapi-to-rcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "tsx index.ts"
+  },
+  "dependencies": {
+    "rcp-sdk": "workspace:*",
+    "tsx": "^4.19.2"
+  }
+}
